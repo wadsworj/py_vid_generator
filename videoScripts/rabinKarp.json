@@ -1,0 +1,21 @@
+{
+  "name" : "rubin-kahn",
+  "scenes" :
+  [
+    {
+      "scene_name" : "intro",
+      "scene_index" : 1,
+      "elements" :
+      [
+        {
+          "type" : "TEXT",
+          "name" : "01_how_to",
+          "text" : "How to find 'ell' in the string",
+          "position" :  [10, 10],
+          "bounding_box" : [10, 10],
+          "duration" : 10
+        }
+      ]
+    }
+  ]
+}
