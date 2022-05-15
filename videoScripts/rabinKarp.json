@@ -1,5 +1,6 @@
 {
   "name" : "rubin-kahn",
+  "resolution" : [1280, 720],
   "scenes" :
   [
     {
@@ -13,7 +14,9 @@
           "text" : "How to find 'ell' in the string",
           "position" :  [10, 10],
           "bounding_box" : [10, 10],
-          "duration" : 10
+          "duration" : 10,
+          "font_size" : 30,
+          "font_type" : "Comic Sans MS"
         }
       ]
     }
