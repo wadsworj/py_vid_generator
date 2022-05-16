@@ -8,5 +8,5 @@ class Element:
         self.scenes = []
 
     @abstract
-    def render(self):
+    def render(self, scene_seconds):
         pass

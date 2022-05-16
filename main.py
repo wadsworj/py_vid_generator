@@ -40,7 +40,9 @@ for data_scene in data["scenes"]:
                               data_element["bounding_box"],
                               data_element["duration"],
                               data_element["font_size"],
-                              data_element["font_type"])
+                              data_element["font_type"],
+                              data_element["text_align"],
+                              data_element["start_time"])
 
         scene.add_element(element)
 

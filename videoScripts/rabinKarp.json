@@ -1,6 +1,6 @@
 {
   "name" : "rubin-kahn",
-  "resolution" : [1280, 720],
+  "resolution" : [1920, 1080],
   "scenes" :
   [
     {
@@ -12,11 +12,25 @@
           "type" : "TEXT",
           "name" : "01_how_to",
           "text" : "How to find 'ell' in the string",
-          "position" :  [10, 10],
+          "position" :  [10, 300],
           "bounding_box" : [10, 10],
-          "duration" : 10,
-          "font_size" : 30,
-          "font_type" : "Comic Sans MS"
+          "duration" : 2,
+          "font_size" : 50,
+          "font_type" : "Comic Sans MS",
+          "start_time" : 0.0,
+          "text_align" : "top_center"
+        },
+        {
+          "type" : "TEXT",
+          "name" : "02_text",
+          "text" : "\"She sells sea-shells by the sea shore.\"",
+          "position" :  [10, 500],
+          "bounding_box" : [10, 10],
+          "duration" : 1,
+          "font_size" : 50,
+          "font_type" : "Comic Sans MS",
+          "start_time" : 2.0,
+          "text_align" : "center"
         }
       ]
     }

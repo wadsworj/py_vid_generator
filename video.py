@@ -28,6 +28,8 @@ class Video:
             # image = self.cam.get_image()
             # self.screen.blit(image, (0, 0))
             pygame.display.update()
+            self.screen.fill(config.BLACK)
+
             clock.tick(config.FRAME_RATE)
 
             # Save every frame
