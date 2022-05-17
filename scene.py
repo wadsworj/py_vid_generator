@@ -8,6 +8,7 @@ class Scene:
         self.elements = []
         self.finished = False
         self.start_time = None
+        self.duration = None
 
     def add_element(self, element):
         self.elements.append(element)
@@ -21,3 +22,6 @@ class Scene:
 
         for element in self.elements:
             element.render(screen, seconds)
+
+        if self.duration <= seconds:
+            self.finished = True

@@ -44,7 +44,10 @@ class Video:
                 self.current_scene.render(self.screen)
 
                 if self.current_scene.finished:
-                    self.current_scene = self.scenes.pop(0)
+                    if self.scenes:
+                        self.current_scene = self.scenes.pop(0)
+                    else:
+                        return
 
 
         # Combine frames to make video

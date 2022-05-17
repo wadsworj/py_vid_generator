@@ -11,6 +11,7 @@ class SceneBuilder:
         scene = Scene()
         scene.scene_name = data["scene_name"]
         scene.scene_index = data["scene_index"]
+        scene.duration = data["duration"]
 
         for data_element in data["elements"]:
             element = self.element_builder.build(data_element)

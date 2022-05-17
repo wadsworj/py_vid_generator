@@ -6,6 +6,7 @@
     {
       "scene_name" : "intro",
       "scene_index" : 1,
+      "duration" : 3.5,
       "elements" :
       [
         {
@@ -30,6 +31,26 @@
           "font_size" : 50,
           "font_type" : "Comic Sans MS",
           "start_time" : 2.0,
+          "text_align" : "center"
+        }
+      ]
+    },
+    {
+      "scene_name" : "questions",
+      "scene_index" : 2,
+      "duration" : 3,
+      "elements" :
+      [
+        {
+          "type" : "TEXT",
+          "name" : "03_questions",
+          "text" : "???",
+          "position" :  [10, 300],
+          "bounding_box" : [10, 10],
+          "duration" : 1,
+          "font_size" : 100,
+          "font_type" : "Comic Sans MS",
+          "start_time" : 0.0,
           "text_align" : "center"
         }
       ]
