@@ -2,10 +2,10 @@ import pygame
 
 
 class Scene:
-    def __init__(self, name, scene_index):
-        self.name = name
+    def __init__(self):
+        self.name = None
+        self.scene_index = None
         self.elements = []
-        self.scene_index = scene_index
         self.finished = False
         self.start_time = None
 

@@ -5,8 +5,10 @@ import pygame.camera
 from pygame.locals import *
 
 from elements.element import Element
+from elements.elementBuilder import ElementBuilder
 from elements.textElement import TextElement
 from scene import Scene
+from sceneBuilder import SceneBuilder
 from video import Video
 
 pygame.init()
@@ -30,22 +32,10 @@ with open('videoScripts/rabinKarp.json') as data_file:
 
 video = Video(data["name"], data["resolution"])
 
+scene_builder = SceneBuilder(ElementBuilder())
+
 for data_scene in data["scenes"]:
-    scene = Scene(data_scene["scene_name"], data_scene["scene_index"])
-    for data_element in data_scene["elements"]:
-        # def __init__(self, name, text, position, bounding_box, duration):
-        element = TextElement(data_element["name"],
-                              data_element["text"],
-                              data_element["position"],
-                              data_element["bounding_box"],
-                              data_element["duration"],
-                              data_element["font_size"],
-                              data_element["font_type"],
-                              data_element["text_align"],
-                              data_element["start_time"])
-
-        scene.add_element(element)
-
+    scene = scene_builder.build(data_scene)
     video.add_scene(scene)
 
 video.render()
