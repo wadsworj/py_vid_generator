@@ -39,6 +39,9 @@ class Video:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     done_capturing = True
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        done_capturing = True
 
             if self.current_scene:
                 self.current_scene.render(self.screen)

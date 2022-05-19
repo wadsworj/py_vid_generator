@@ -22,23 +22,34 @@ class TextElement:
         if self.start_time > scene_seconds:
             return
 
-        length = len(self.text)
+        lines = self.text.splitlines()
+        line_count = 0
 
-        current = math.floor(self.count * length / (self.duration * config.FRAME_RATE))
+        for line in lines:
+            length = len(self.text)
 
-        my_font = pygame.font.SysFont(self.font_type, self.font_size)
-        text_surface = my_font.render(self.text[0:current], True, config.WHITE)
-        text_surface_center = my_font.render(self.text, True, config.WHITE)
+            if self.duration == 0:
+                current = length
+            else:
+                current = math.floor(self.count * length / (self.duration * config.FRAME_RATE))
 
-        screen_rect = screen.get_rect()
-        if self.text_align == "top_center":
-            top_center_rect = pygame.Rect(screen_rect.left, screen_rect.top, screen_rect.width, screen_rect.height / 2)
-            text_position = text_surface_center.get_rect(center = top_center_rect.center)
-        elif self.text_align == "center":
-            top_center_rect = pygame.Rect(screen_rect.left, screen_rect.top, screen_rect.width, screen_rect.height / 2)
-            text_position = text_surface_center.get_rect(center = screen_rect.center)
-        else:
-            text_position = self.position
 
-        screen.blit(text_surface, text_position)
+            my_font = pygame.font.SysFont(self.font_type, self.font_size)
+            text_surface = my_font.render(line[0:current], True, config.WHITE)
+            text_surface_center = my_font.render(line, True, config.WHITE)
+
+            screen_rect = screen.get_rect()
+            if self.text_align == "top_center":
+                top_center_rect = pygame.Rect(screen_rect.left, screen_rect.top, screen_rect.width, screen_rect.height / 2)
+                text_position = text_surface_center.get_rect(center = top_center_rect.center)
+            elif self.text_align == "center":
+                top_center_rect = pygame.Rect(screen_rect.left, screen_rect.top, screen_rect.width, screen_rect.height / 2)
+                text_position = text_surface_center.get_rect(center = screen_rect.center)
+            else:
+                text_position = self.position
+
+            text_surface = my_font.render(line[0:current], True, config.WHITE)
+            screen.blit(text_surface, (text_position.left, (text_position.top + (line_count * self.font_size))))
+            line_count = line_count + 1
+
         self.count = self.count + 1
