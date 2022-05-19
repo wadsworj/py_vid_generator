@@ -25,14 +25,19 @@ class TextElement:
         lines = self.text.splitlines()
         line_count = 0
 
+        length = len(self.text)
+
+        if self.duration == 0:
+            current = length
+        else:
+            current = math.floor(self.count * length / (self.duration * config.FRAME_RATE))
+
+        previous_line = 0
+
         for line in lines:
-            length = len(self.text)
-
-            if self.duration == 0:
-                current = length
-            else:
-                current = math.floor(self.count * length / (self.duration * config.FRAME_RATE))
-
+            current_line_end = 0
+            if current - previous_line > 0:
+                current_line_end = current - previous_line
 
             my_font = pygame.font.SysFont(self.font_type, self.font_size)
             text_surface = my_font.render(line[0:current], True, config.WHITE)
@@ -48,8 +53,10 @@ class TextElement:
             else:
                 text_position = self.position
 
-            text_surface = my_font.render(line[0:current], True, config.WHITE)
+            text_surface = my_font.render(line[0:current_line_end], True, config.WHITE)
             screen.blit(text_surface, (text_position.left, (text_position.top + (line_count * self.font_size))))
             line_count = line_count + 1
+
+            previous_line = length = len(line)
 
         self.count = self.count + 1

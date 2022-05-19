@@ -1,4 +1,12 @@
+ToDo:
 -switch from using clock to using frame count to avoid rendering lagging (can't gaurentee realtime rendering)
 -consider how to easily time stamp multiple audio files
--render multiple images into video files
 -auto export a timeline to davinchi resolve
+-add transitions between scenes
+-play video files
+-add images
+
+
+Completed:
+-render multiple images into video files
+-fix duration on multi-line text element
