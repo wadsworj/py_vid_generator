@@ -6,7 +6,7 @@
     {
       "scene_name" : "intro",
       "scene_index" : 1,
-      "duration" : 3,
+      "duration" : 3.5,
       "elements" :
       [
         {
