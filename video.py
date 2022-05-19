@@ -1,7 +1,7 @@
 import os
 import pygame
 from pygame.locals import *
-
+import cv2
 import config
 from pygame import mixer
 
@@ -10,6 +10,7 @@ class Video:
     def __init__(self, name, resolution, audio_file):
         self.name = name
         self.video = None
+        self.resolution = resolution
         self.screen = pygame.display.set_mode(resolution)
         self.scenes = []
         self.current_scene = None
@@ -25,6 +26,7 @@ class Video:
         done_capturing = False
 
         file_num = 0
+        scene_file_start = 1
         self.current_scene = self.scenes.pop(0)
         clock = pygame.time.Clock()
         while not done_capturing:
@@ -54,6 +56,9 @@ class Video:
                 self.current_scene.render(self.screen)
 
                 if self.current_scene.finished:
+                    self.save_video_file(scene_file_start, file_num)
+                    scene_file_start = file_num + 1
+
                     if self.scenes:
                         self.current_scene = self.scenes.pop(0)
                     else:
@@ -62,6 +67,18 @@ class Video:
 
         # Combine frames to make video
         # os.system("avconv -r 8 -f image2 -i Snaps/%04d.png -y -qscale 0 -s 640x480 -aspect 4:3 result.avi")
+
+    def save_video_file(self, scene_file_start, scene_file_end):
+        images = [img for img in os.listdir("output") if img.endswith(".png")]
+        frame = cv2.imread(os.path.join("output", images[0]))
+        fourcc = cv2.VideoWriter_fourcc(*'XVID')
+        video = cv2.VideoWriter(str(scene_file_start) + "_" + str(scene_file_end) + ".avi", fourcc, config.FRAME_RATE, (self.resolution[0], self.resolution[1]))
+
+        for image in images[scene_file_start:scene_file_end]:
+            video.write(cv2.imread(os.path.join("output", image)))
+
+        cv2.destroyAllWindows()
+        video.release()
 
     def play_audio(self):
         # play music if it is configured
