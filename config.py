@@ -3,4 +3,4 @@ WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = ( 255, 0, 0)
 
-FRAME_RATE = 24
+FRAME_RATE = 10

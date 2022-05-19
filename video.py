@@ -15,35 +15,26 @@ class Video:
         self.current_scene = None
         self.audio_file = audio_file
         self.playing_audio = False
-        # self.cam = pygame.camera.Camera("/dev/video0",(640,480))
-        # self.cam.start()
 
     def add_scene(self, scene):
         self.scenes.append(scene)
 
     def render(self):
-        if self.audio_file and not self.playing_audio:
-            count = 0
-            mixer.init()
-            for audio in self.audio_file:
-                mixer.music.load("audio/" + audio)
-                # Setting the volume
-                if count > 0:
-                    mixer.music.set_volume(0.5)
-
-                # Start playing the song
-                mixer.music.play()
-                count = count + 1
+        self.play_audio()
 
         done_capturing = False
 
+        file_num = 0
         self.current_scene = self.scenes.pop(0)
         clock = pygame.time.Clock()
         while not done_capturing:
-            # file_num = file_num + 1
-            # image = self.cam.get_image()
-            # self.screen.blit(image, (0, 0))
             pygame.display.update()
+
+            file_num = file_num + 1
+            # Save every frame
+            filename = "output/%04d.png" % file_num
+            pygame.image.save(self.screen, filename)
+
             self.screen.fill(config.BLACK)
 
             clock.tick(config.FRAME_RATE)
@@ -71,3 +62,18 @@ class Video:
 
         # Combine frames to make video
         # os.system("avconv -r 8 -f image2 -i Snaps/%04d.png -y -qscale 0 -s 640x480 -aspect 4:3 result.avi")
+
+    def play_audio(self):
+        # play music if it is configured
+        if self.audio_file and not self.playing_audio:
+            count = 0
+            mixer.init()
+            for audio in self.audio_file:
+                mixer.music.load("audio/" + audio)
+                # Setting the volume
+                if count > 0:
+                    mixer.music.set_volume(0.5)
+
+                # Start playing the song
+                mixer.music.play()
+                count = count + 1
