@@ -30,7 +30,7 @@ pygame.font.init()  # you have to call this at the start,
 with open('videoScripts/rabinKarp.json') as data_file:
     data = json.load(data_file)
 
-video = Video(data["name"], data["resolution"])
+video = Video(data["name"], data["resolution"], data["audio"])
 
 scene_builder = SceneBuilder(ElementBuilder())
 

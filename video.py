@@ -3,15 +3,18 @@ import pygame
 from pygame.locals import *
 
 import config
+from pygame import mixer
 
 
 class Video:
-    def __init__(self, name, resolution):
+    def __init__(self, name, resolution, audio_file):
         self.name = name
         self.video = None
         self.screen = pygame.display.set_mode(resolution)
         self.scenes = []
         self.current_scene = None
+        self.audio_file = audio_file
+        self.playing_audio = False
         # self.cam = pygame.camera.Camera("/dev/video0",(640,480))
         # self.cam.start()
 
@@ -19,6 +22,19 @@ class Video:
         self.scenes.append(scene)
 
     def render(self):
+        if self.audio_file and not self.playing_audio:
+            count = 0
+            mixer.init()
+            for audio in self.audio_file:
+                mixer.music.load("audio/" + audio)
+                # Setting the volume
+                if count > 0:
+                    mixer.music.set_volume(0.5)
+
+                # Start playing the song
+                mixer.music.play()
+                count = count + 1
+
         done_capturing = False
 
         self.current_scene = self.scenes.pop(0)
