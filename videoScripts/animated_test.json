@@ -19,7 +19,9 @@
           "text_align" : "center",
           "key_frames" :  [
             { "second" : 0, "grid_position" : [0,0] },
-            { "second" : 6.5, "grid_position" : [8,15] }
+            { "second" : 2.5, "grid_position" : [2,3] },
+            { "second" : 5.5, "grid_position" : [2,6] }
+
           ]
         }
       ]
