@@ -19,6 +19,9 @@ class AnimatedTextElement:
 
     # https://stackoverflow.com/questions/46732939/how-to-interpolate-2-d-points-between-two-timesteps
     def interpolate(self, t, time_1, time_2, point_1, point_2):
+        if time_1 == time_2:
+            return point_1
+
         dx = point_2[0] - point_1[0]
         dy = point_2[1] - point_1[1]
         dt = (t - time_1) / (time_2 - time_1)
@@ -35,6 +38,10 @@ class AnimatedTextElement:
                 previous_key_frame = key_frame
             elif not next_key_frame and scene_seconds <= key_frame["second"]:
                 next_key_frame = key_frame
+
+        # if done next animation then set to previous
+        if not next_key_frame:
+            next_key_frame = previous_key_frame
 
         lines = self.text.splitlines()
         length = len(self.text)
