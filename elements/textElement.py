@@ -15,6 +15,7 @@ class TextElement:
         self.count = 0
         self.font_size = None
         self.font_type = None
+        self.font_color = config.WHITE
         self.text_align = None
         self.start_time = None
 
@@ -51,9 +52,9 @@ class TextElement:
                 top_center_rect = pygame.Rect(screen_rect.left, screen_rect.top, screen_rect.width, screen_rect.height / 2)
                 text_position = text_surface_center.get_rect(center = screen_rect.center)
             else:
-                text_position = self.position
+                text_position = pygame.Rect(self.position[0], self.position[1], screen_rect.width, screen_rect.height)
 
-            text_surface = my_font.render(line[0:current_line_end], True, config.WHITE)
+            text_surface = my_font.render(line[0:current_line_end], True, self.font_color)
             screen.blit(text_surface, (text_position.left, (text_position.top + (line_count * self.font_size))))
             line_count = line_count + 1
 

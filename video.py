@@ -7,7 +7,7 @@ from pygame import mixer
 
 
 class Video:
-    def __init__(self, name, resolution, audio_file):
+    def __init__(self, name, resolution, audio_file, back_color):
         self.name = name
         self.video = None
         self.resolution = resolution
@@ -16,6 +16,7 @@ class Video:
         self.current_scene = None
         self.audio_file = audio_file
         self.playing_audio = False
+        self.back_color = back_color
 
     def add_scene(self, scene):
         self.scenes.append(scene)
@@ -37,7 +38,7 @@ class Video:
             filename = "output/%04d.png" % file_num
             pygame.image.save(self.screen, filename)
 
-            self.screen.fill(config.BLACK)
+            self.screen.fill(self.back_color)
 
             clock.tick(config.FRAME_RATE)
 
