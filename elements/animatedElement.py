@@ -34,7 +34,7 @@ class AnimatedTextElement:
         next_key_frame = None
 
         for key_frame in self.key_frames:
-            if scene_seconds >= key_frame["second"]:
+            if scene_seconds >= key_frame["second"] or not previous_key_frame:
                 previous_key_frame = key_frame
             elif not next_key_frame and scene_seconds <= key_frame["second"]:
                 next_key_frame = key_frame
