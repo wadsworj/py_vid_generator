@@ -1,0 +1,28 @@
+{
+  "name" : "rabin-kahn",
+  "resolution" : [1280, 720],
+  "start_scene" : 0,
+  "back_color" : [26, 26, 26],
+  "scenes" : [
+    {
+      "scene_name" : "intro",
+      "scene_index" : 1,
+      "duration" : 6.5,
+      "elements" :
+      [
+        {
+          "type" : "ANIMATED_TEXT",
+          "name" : "02_text",
+          "text" : "Move this text",
+          "font_size" : 50,
+          "font_type" : "Comic Sans MS",
+          "text_align" : "center",
+          "key_frames" :  [
+            { "second" : 0, "grid_position" : [0,0] },
+            { "second" : 6.5, "grid_position" : [8,15] }
+          ]
+        }
+      ]
+    }
+  ]
+}

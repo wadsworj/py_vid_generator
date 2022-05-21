@@ -7,16 +7,16 @@ from pygame import mixer
 
 
 class Video:
-    def __init__(self, name, resolution, audio_file, back_color):
-        self.name = name
+    def __init__(self):
+        self.name = None
         self.video = None
-        self.resolution = resolution
-        self.screen = pygame.display.set_mode(resolution)
+        self.resolution = None
+        self.screen = None
         self.scenes = []
         self.current_scene = None
-        self.audio_file = audio_file
+        self.audio_file = None
         self.playing_audio = False
-        self.back_color = back_color
+        self.back_color = None
 
     def add_scene(self, scene):
         self.scenes.append(scene)
@@ -73,7 +73,7 @@ class Video:
         images = [img for img in os.listdir("output") if img.endswith(".png")]
         frame = cv2.imread(os.path.join("output", images[0]))
         fourcc = cv2.VideoWriter_fourcc(*'XVID')
-        video = cv2.VideoWriter(str(scene_file_start) + "_" + str(scene_file_end) + ".avi", fourcc, config.FRAME_RATE, (self.resolution[0], self.resolution[1]))
+        video = cv2.VideoWriter("output_video/" + str(scene_file_start) + "_" + str(scene_file_end) + ".avi", fourcc, config.FRAME_RATE, (self.resolution[0], self.resolution[1]))
 
         for image in images[scene_file_start:scene_file_end]:
             video.write(cv2.imread(os.path.join("output", image)))

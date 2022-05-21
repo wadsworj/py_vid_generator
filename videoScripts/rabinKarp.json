@@ -1,5 +1,5 @@
 {
-  "name" : "rubin-kahn",
+  "name" : "rabin-karp",
   "resolution" : [1280, 720],
   "audio" : ["Untitled.mp3"],
   "start_scene" : 0,

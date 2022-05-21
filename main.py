@@ -10,15 +10,17 @@ from elements.textElement import TextElement
 from scene import Scene
 from sceneBuilder import SceneBuilder
 from video import Video
+from videoBuilder import VideoBuilder
 
 pygame.init()
 pygame.camera.init()
 pygame.font.init()  # you have to call this at the start,
 
-with open('videoScripts/rabinKarp.json') as data_file:
+with open('videoScripts/animated_test.json') as data_file:
     data = json.load(data_file)
 
-video = Video(data["name"], data["resolution"], data["audio"], data["back_color"])
+video_builder = VideoBuilder()
+video = video_builder.build(data)
 
 scene_builder = SceneBuilder(ElementBuilder())
 
