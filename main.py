@@ -16,7 +16,7 @@ pygame.init()
 pygame.camera.init()
 pygame.font.init()  # you have to call this at the start,
 
-with open('videoScripts/animated_test.json') as data_file:
+with open('videoScripts/rabinKarp.json') as data_file:
     data = json.load(data_file)
 
 video_builder = VideoBuilder()

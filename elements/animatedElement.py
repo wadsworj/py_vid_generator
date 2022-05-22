@@ -22,14 +22,18 @@ class AnimatedTextElement:
         if time_1 == time_2:
             return point_1
 
-        dx = point_2[0] - point_1[0]
-        dy = point_2[1] - point_1[1]
+
         dt = (t - time_1) / (time_2 - time_1)
-        return dt * dx + point_1[0], dt * dy + point_1[1]
+
+        returned_points = []
+
+        for point in point_1:
+            interpolated_point = point_2[0] - point_1[0]
+            returned_points.append(dt * interpolated_point + point)
+
+        return returned_points
 
     def render(self, screen, scene_seconds):
-        print(scene_seconds)
-
         previous_key_frame = None
         next_key_frame = None
 
@@ -56,14 +60,20 @@ class AnimatedTextElement:
                                             previous_position_scaled,
                                             next_position_scaled)
 
+        if "opacity" in next_key_frame:
+            current_opacity = self.interpolate(scene_seconds,
+                                            previous_key_frame["second"],
+                                            next_key_frame["second"],
+                                            [previous_key_frame["opacity"]],
+                                            [next_key_frame["opacity"]])[0]
+        else:
+            current_opacity = 1
+
         line_count = 0
         for line in lines:
             my_font = pygame.font.SysFont(self.font_type, self.font_size)
-            text_surface = my_font.render(line, True, config.WHITE)
-            text_surface_center = my_font.render(line, True, config.WHITE)
-
             text_position = pygame.Rect(current_position[0], current_position[1], screen_rect.width, screen_rect.height)
-
             text_surface = my_font.render(line, True, self.font_color)
+            text_surface.set_alpha(int(255 * current_opacity))
             screen.blit(text_surface, (text_position.left, (text_position.top + (line_count * self.font_size))))
             line_count = line_count + 1

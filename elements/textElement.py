@@ -9,6 +9,7 @@ class TextElement:
     def __init__(self):
         self.name = None
         self.position = None
+        self.grid_position = None
         self.text = None
         self.duration = None
         self.bounding_box = None
@@ -20,15 +21,20 @@ class TextElement:
         self.start_time = None
 
     def render(self, screen, scene_seconds):
-        if self.start_time > scene_seconds:
+        if self.start_time and self.start_time > scene_seconds:
             return
+
+        screen_rect = screen.get_rect()
+
+        if not self.position and self.grid_position:
+            self.position = [self.grid_position[0] * (screen_rect.width / 16), self.grid_position[1] * (screen_rect.height / 9)]
 
         lines = self.text.splitlines()
         line_count = 0
 
         length = len(self.text)
 
-        if self.duration == 0:
+        if self.duration == 0 or not self.duration:
             current = length
         else:
             current = math.floor(self.count * length / (self.duration * config.FRAME_RATE))
@@ -44,7 +50,6 @@ class TextElement:
             text_surface = my_font.render(line[0:current], True, config.WHITE)
             text_surface_center = my_font.render(line, True, config.WHITE)
 
-            screen_rect = screen.get_rect()
             if self.text_align == "top_center":
                 top_center_rect = pygame.Rect(screen_rect.left, screen_rect.top, screen_rect.width, screen_rect.height / 2)
                 text_position = text_surface_center.get_rect(center = top_center_rect.center)
@@ -58,6 +63,6 @@ class TextElement:
             screen.blit(text_surface, (text_position.left, (text_position.top + (line_count * self.font_size))))
             line_count = line_count + 1
 
-            previous_line = length = len(line)
+            previous_line = len(line) + previous_line
 
         self.count = self.count + 1

@@ -16,13 +16,26 @@ class ElementBuilder:
         element = TextElement()
         element.name = data["name"]
         element.text = data["text"]
-        element.position = data["position"]
-        element.bounding_box = data["bounding_box"]
-        element.duration = data["duration"]
-        element.font_size = data["font_size"]
-        element.font_type = data["font_type"]
-        element.text_align = data["text_align"]
-        element.start_time = data["start_time"]
+        if 'position' in data:
+            element.position = data["position"]
+
+        if 'grid_position' in data:
+            element.grid_position = data["grid_position"]
+
+        if 'duration' in data:
+            element.duration = data["duration"]
+
+        if 'font_size' in data:
+            element.font_size = data["font_size"]
+
+        if 'font_type' in data:
+            element.font_type = data["font_type"]
+
+        if 'text_align' in data:
+            element.text_align = data["text_align"]
+
+        if 'start_time' in data:
+            element.start_time = data["start_time"]
 
         if "font_color" in data:
             element.font_color = data["font_color"]
