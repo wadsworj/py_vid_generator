@@ -1,4 +1,5 @@
 import math
+from os.path import exists
 
 import pygame
 
@@ -22,9 +23,7 @@ class AnimatedTextElement:
         if time_1 == time_2:
             return point_1
 
-
         dt = (t - time_1) / (time_2 - time_1)
-
         returned_points = []
 
         for point in point_1:
@@ -62,16 +61,22 @@ class AnimatedTextElement:
 
         if "opacity" in next_key_frame:
             current_opacity = self.interpolate(scene_seconds,
-                                            previous_key_frame["second"],
-                                            next_key_frame["second"],
-                                            [previous_key_frame["opacity"]],
-                                            [next_key_frame["opacity"]])[0]
+                                               previous_key_frame["second"],
+                                               next_key_frame["second"],
+                                               [previous_key_frame["opacity"]],
+                                               [next_key_frame["opacity"]])[0]
         else:
             current_opacity = 1
 
         line_count = 0
         for line in lines:
-            my_font = pygame.font.SysFont(self.font_type, self.font_size)
+            font_exists = exists("fonts/" + self.font_type + ".ttf")
+
+            if font_exists:
+                my_font = pygame.font.Font("fonts/" + self.font_type + ".ttf", 16)
+            else:
+                my_font = pygame.font.SysFont(self.font_type, self.font_size)
+
             text_position = pygame.Rect(current_position[0], current_position[1], screen_rect.width, screen_rect.height)
             text_surface = my_font.render(line, True, self.font_color)
             text_surface.set_alpha(int(255 * current_opacity))

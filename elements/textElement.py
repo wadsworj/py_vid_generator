@@ -1,4 +1,5 @@
 import math
+from os.path import exists
 
 import pygame
 
@@ -46,7 +47,13 @@ class TextElement:
             if current - previous_line > 0:
                 current_line_end = current - previous_line
 
-            my_font = pygame.font.SysFont(self.font_type, self.font_size)
+            font_exists = exists("fonts/" + self.font_type + ".ttf")
+
+            if font_exists:
+                my_font = pygame.font.Font("fonts/" + self.font_type + ".ttf", 16)
+            else:
+                my_font = pygame.font.SysFont(self.font_type, self.font_size)
+
             text_surface = my_font.render(line[0:current], True, config.WHITE)
             text_surface_center = my_font.render(line, True, config.WHITE)
 

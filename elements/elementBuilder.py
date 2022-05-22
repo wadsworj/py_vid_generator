@@ -48,7 +48,8 @@ class ElementBuilder:
         element.text = data["text"]
         element.font_size = data["font_size"]
         element.font_type = data["font_type"]
-        element.text_align = data["text_align"]
+        # if "text_align" in data:
+        #     element.text_align = data["text_align"]
         element.key_frames = data["key_frames"]
 
         if "font_color" in data:
