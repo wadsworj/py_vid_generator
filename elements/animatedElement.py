@@ -73,7 +73,7 @@ class AnimatedTextElement:
             font_exists = exists("fonts/" + self.font_type + ".ttf")
 
             if font_exists:
-                my_font = pygame.font.Font("fonts/" + self.font_type + ".ttf", 16)
+                my_font = pygame.font.Font("fonts/" + self.font_type + ".ttf", self.font_size)
             else:
                 my_font = pygame.font.SysFont(self.font_type, self.font_size)
 
