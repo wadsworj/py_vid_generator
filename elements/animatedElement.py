@@ -29,14 +29,14 @@ class AnimatedTextElement:
         dt = (t - time_1) / (time_2 - time_1)
         returned_points = []
 
-        for point in point_1:
-            interpolated_point = point_2[0] - point_1[0]
-            returned_points.append(dt * interpolated_point + point)
+        for i in range(len(point_1)):
+            interpolated_point = point_2[i] - point_1[i]
+            returned_points.append(dt * interpolated_point + point_1[i])
 
         return returned_points
 
     def render(self, screen, scene_seconds):
-        key_frames = self.get_previous_current_frames()
+        key_frames = self.get_previous_current_frames(scene_seconds)
 
         lines = self.text.splitlines()
         length = len(self.text)

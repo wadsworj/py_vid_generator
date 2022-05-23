@@ -17,6 +17,7 @@ class Video:
         self.audio_file = None
         self.playing_audio = False
         self.back_color = None
+        self.debug = False
 
     def add_scene(self, scene):
         self.scenes.append(scene)
@@ -30,6 +31,7 @@ class Video:
         scene_file_start = 1
         self.current_scene = self.scenes.pop(0)
         clock = pygame.time.Clock()
+
         while not done_capturing:
             pygame.display.update()
 
@@ -42,10 +44,6 @@ class Video:
 
             clock.tick(config.FRAME_RATE)
 
-            # Save every frame
-            # filename = "Snaps/%04d.png" % file_num
-            # pygame.image.save(image, filename)
-
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     done_capturing = True
@@ -54,6 +52,9 @@ class Video:
                         done_capturing = True
 
             if self.current_scene:
+                if self.debug:
+                    self.render_debug_info()
+
                 self.current_scene.render(self.screen)
 
                 if self.current_scene.finished:
@@ -65,9 +66,14 @@ class Video:
                     else:
                         return
 
+    def render_debug_info(self):
+        video_time = pygame.time.get_ticks()
+        seconds = (video_time / 1000) % 60
 
-        # Combine frames to make video
-        # os.system("avconv -r 8 -f image2 -i Snaps/%04d.png -y -qscale 0 -s 640x480 -aspect 4:3 result.avi")
+        my_font = pygame.font.SysFont('Comic Sans MS', 30)
+        text_surface = my_font.render(str(seconds) + " seconds", True, config.RED)
+        screen_rect = self.screen.get_rect()
+        self.screen.blit(text_surface, (0,0))
 
     def save_video_file(self, scene_file_start, scene_file_end):
         images = [img for img in os.listdir("output") if img.endswith(".png")]

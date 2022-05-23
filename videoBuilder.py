@@ -15,5 +15,9 @@ class VideoBuilder:
 
         if 'audio' in data:
             video.audio_file = data["audio"]
+
+        if 'debug' in data:
+            video.debug = data['debug']
+
         video.back_color = data["back_color"]
         return video
