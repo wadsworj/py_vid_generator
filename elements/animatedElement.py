@@ -20,6 +20,9 @@ class AnimatedTextElement:
 
     # https://stackoverflow.com/questions/46732939/how-to-interpolate-2-d-points-between-two-timesteps
     def interpolate(self, t, time_1, time_2, point_1, point_2):
+        if t <= time_1:
+            return point_1
+
         if time_1 == time_2:
             return point_1
 
@@ -33,38 +36,27 @@ class AnimatedTextElement:
         return returned_points
 
     def render(self, screen, scene_seconds):
-        previous_key_frame = None
-        next_key_frame = None
-
-        for key_frame in self.key_frames:
-            if scene_seconds >= key_frame["second"] or not previous_key_frame:
-                previous_key_frame = key_frame
-            elif not next_key_frame and scene_seconds <= key_frame["second"]:
-                next_key_frame = key_frame
-
-        # if done next animation then set to previous
-        if not next_key_frame:
-            next_key_frame = previous_key_frame
+        key_frames = self.get_previous_current_frames()
 
         lines = self.text.splitlines()
         length = len(self.text)
 
         screen_rect = screen.get_rect()
-        previous_position_scaled = [previous_key_frame["grid_position"][0] * (screen_rect.width / 16), previous_key_frame["grid_position"][1] * (screen_rect.height / 9)]
-        next_position_scaled = [next_key_frame["grid_position"][0] * (screen_rect.width / 16), next_key_frame["grid_position"][1] * (screen_rect.height / 9)]
+        previous_position_scaled = [key_frames[0]["grid_position"][0] * (screen_rect.width / 16), key_frames[0]["grid_position"][1] * (screen_rect.height / 9)]
+        next_position_scaled = [key_frames[1]["grid_position"][0] * (screen_rect.width / 16), key_frames[1]["grid_position"][1] * (screen_rect.height / 9)]
 
         current_position = self.interpolate(scene_seconds,
-                                            previous_key_frame["second"],
-                                            next_key_frame["second"],
+                                            key_frames[0]["second"],
+                                            key_frames[1]["second"],
                                             previous_position_scaled,
                                             next_position_scaled)
 
-        if "opacity" in next_key_frame:
+        if "opacity" in key_frames[1]:
             current_opacity = self.interpolate(scene_seconds,
-                                               previous_key_frame["second"],
-                                               next_key_frame["second"],
-                                               [previous_key_frame["opacity"]],
-                                               [next_key_frame["opacity"]])[0]
+                                               key_frames[0]["second"],
+                                               key_frames[1]["second"],
+                                               [key_frames[0]["opacity"]],
+                                               [key_frames[1]["opacity"]])[0]
         else:
             current_opacity = 1
 
@@ -82,3 +74,18 @@ class AnimatedTextElement:
             text_surface.set_alpha(int(255 * current_opacity))
             screen.blit(text_surface, (text_position.left, (text_position.top + (line_count * self.font_size))))
             line_count = line_count + 1
+
+    def get_previous_current_frames(self, scene_seconds):
+        previous_key_frame = None
+        next_key_frame = None
+        for key_frame in self.key_frames:
+            if scene_seconds >= key_frame["second"] or not previous_key_frame:
+                previous_key_frame = key_frame
+            elif not next_key_frame and scene_seconds <= key_frame["second"]:
+                next_key_frame = key_frame
+
+        # if done next animation then set to previous
+        if not next_key_frame:
+            next_key_frame = previous_key_frame
+
+        return [previous_key_frame, next_key_frame]

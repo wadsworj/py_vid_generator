@@ -1,4 +1,5 @@
 from elements.animatedElement import AnimatedTextElement
+from elements.imageElement import ImageElement
 from elements.textElement import TextElement
 
 
@@ -11,6 +12,23 @@ class ElementBuilder:
             return self.build_text_element(data)
         elif data["type"] == "ANIMATED_TEXT":
             return self.build_animated_text_element(data)
+        elif data["type"] == "IMAGE":
+            return self.build_image_element(data)
+
+    def build_image_element(self, data):
+        element = ImageElement()
+        element.name = data["name"]
+        element.image_string = data["image"]
+
+        if 'position' in data:
+            element.position = data["position"]
+
+        if 'key_frames' in data:
+            element.key_frames = data["key_frames"]
+
+        if 'grid_position' in data:
+            element.grid_position = data["grid_position"]
+        return element
 
     def build_text_element(self, data):
         element = TextElement()
