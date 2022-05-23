@@ -69,7 +69,7 @@ class Video:
 
     def render_debug_info(self):
         video_time = pygame.time.get_ticks()
-        seconds = (video_time / 1000) % 60
+        seconds = ((video_time / 1000) % 60) + self.start_seconds
 
         my_font = pygame.font.SysFont('Comic Sans MS', 30)
         text_surface = my_font.render(str(seconds) + " seconds", True, config.RED)
