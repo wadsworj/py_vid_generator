@@ -13,12 +13,12 @@ class Scene:
     def add_element(self, element):
         self.elements.append(element)
 
-    def render(self, screen):
+    def render(self, screen, start_seconds):
         if self.start_time is None:
             self.start_time = pygame.time.get_ticks()
 
         scene_time = pygame.time.get_ticks() - self.start_time
-        seconds = (scene_time / 1000) % 60
+        seconds = ((scene_time / 1000) % 60) + start_seconds
 
         for element in self.elements:
             element.render(screen, seconds)

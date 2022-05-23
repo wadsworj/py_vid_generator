@@ -18,6 +18,7 @@ class Video:
         self.playing_audio = False
         self.back_color = None
         self.debug = False
+        self.start_seconds = 0
 
     def add_scene(self, scene):
         self.scenes.append(scene)
@@ -55,7 +56,7 @@ class Video:
                 if self.debug:
                     self.render_debug_info()
 
-                self.current_scene.render(self.screen)
+                self.current_scene.render(self.screen, self.start_seconds)
 
                 if self.current_scene.finished:
                     self.save_video_file(scene_file_start, file_num)
@@ -100,4 +101,5 @@ class Video:
 
                 # Start playing the song
                 mixer.music.play()
+                mixer.music.set_pos(self.start_seconds)
                 count = count + 1

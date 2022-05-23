@@ -16,6 +16,9 @@ class VideoBuilder:
         if 'audio' in data:
             video.audio_file = data["audio"]
 
+        if 'start_seconds' in data:
+            video.start_seconds = data["start_seconds"]
+
         if 'debug' in data:
             video.debug = data['debug']
 
