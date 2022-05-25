@@ -60,6 +60,9 @@ class TextElement:
             if self.text_align == "top_center":
                 top_center_rect = pygame.Rect(screen_rect.left, screen_rect.top, screen_rect.width, screen_rect.height / 2)
                 text_position = text_surface_center.get_rect(center = top_center_rect.center)
+            elif self.text_align == "top_top_center":
+                top_center_rect = pygame.Rect(screen_rect.left, screen_rect.top, screen_rect.width, self.font_size)
+                text_position = text_surface_center.get_rect(center=top_center_rect.center)
             elif self.text_align == "center":
                 top_center_rect = pygame.Rect(screen_rect.left, screen_rect.top, screen_rect.width, screen_rect.height / 2)
                 text_position = text_surface_center.get_rect(center = screen_rect.center)

@@ -17,7 +17,6 @@ class ElementBuilder:
 
     def build_image_element(self, data):
         element = ImageElement()
-        element.name = data["name"]
         element.image_string = data["image"]
 
         if 'position' in data:
@@ -32,7 +31,6 @@ class ElementBuilder:
 
     def build_text_element(self, data):
         element = TextElement()
-        element.name = data["name"]
         element.text = data["text"]
         if 'position' in data:
             element.position = data["position"]
@@ -62,7 +60,6 @@ class ElementBuilder:
 
     def build_animated_text_element(self, data):
         element = AnimatedTextElement()
-        element.name = data["name"]
         element.text = data["text"]
         element.font_size = data["font_size"]
         element.font_type = data["font_type"]
