@@ -3,7 +3,7 @@
   "resolution" : [1280, 720],
   "audio" : ["Untitled.mp3"],
   "start_scene" : 0,
-  "start_seconds" : 0,
+  "start_seconds" : 40,
   "back_color" : [240, 237, 230],
   "debug" : true,
   "scenes" :
@@ -134,7 +134,7 @@
         {
           "type" : "ANIMATED_TEXT",
           "name" : "she_text_to_be_hashed",
-          "text" : "160",
+          "text" : "325",
           "font_size" : 45,
           "font_color" : [20, 20, 20],
           "font_type" : "KAZYcase-scrabble",
@@ -211,7 +211,6 @@
         },
         {
           "type" : "ANIMATED_TEXT",
-          "name" : "she_text_to_be_hashed",
           "text" : "325",
           "font_size" : 45,
           "font_color" : [20, 20, 20],
@@ -219,6 +218,72 @@
           "key_frames" :  [
             { "second" : 40, "grid_position" : [8, 5],  "opacity" : 0 },
             { "second" : 42, "grid_position" : [8, 6],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "ANIMATED_TEXT",
+          "text" : "325",
+          "font_size" : 45,
+          "font_color" : [20, 20, 20],
+          "font_type" : "KAZYcase-scrabble",
+          "key_frames" :  [
+            { "second" : 42.75, "grid_position" : [10, 8.5],  "opacity" : 0 },
+            { "second" : 43.25, "grid_position" : [10, 8.5],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "ANIMATED_TEXT",
+          "text" : "325",
+          "font_size" : 45,
+          "font_color" : [20, 20, 20],
+          "font_type" : "KAZYcase-scrabble",
+          "key_frames" :  [
+            { "second" : 43, "grid_position" : [10, 8],  "opacity" : 0 },
+            { "second" : 43.5, "grid_position" : [10, 8],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "ANIMATED_TEXT",
+          "text" : "325",
+          "font_size" : 45,
+          "font_color" : [20, 20, 20],
+          "font_type" : "KAZYcase-scrabble",
+          "key_frames" :  [
+            { "second" : 43.25, "grid_position" : [10, 7.5],  "opacity" : 0 },
+            { "second" : 43.75, "grid_position" : [10, 7.5],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "ANIMATED_TEXT",
+          "text" : "325",
+          "font_size" : 45,
+          "font_color" : [20, 20, 20],
+          "font_type" : "KAZYcase-scrabble",
+          "key_frames" :  [
+            { "second" : 43.5, "grid_position" : [10, 7],  "opacity" : 0 },
+            { "second" : 44, "grid_position" : [10, 7],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "ANIMATED_TEXT",
+          "text" : "325",
+          "font_size" : 45,
+          "font_color" : [20, 20, 20],
+          "font_type" : "KAZYcase-scrabble",
+          "key_frames" :  [
+            { "second" : 43.75, "grid_position" : [10, 6.5],  "opacity" : 0 },
+            { "second" : 44.25, "grid_position" : [10, 6.5],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "ANIMATED_TEXT",
+          "text" : "325",
+          "font_size" : 45,
+          "font_color" : [20, 20, 20],
+          "font_type" : "KAZYcase-scrabble",
+          "key_frames" :  [
+            { "second" : 44, "grid_position" : [10, 6],  "opacity" : 0 },
+            { "second" : 44.5, "grid_position" : [10, 6],  "opacity" : 1 }
           ]
         },
         {
@@ -240,6 +305,54 @@
             { "second" : 37, "grid_position" : [2.4, 1.7],  "opacity" : 1 },
             { "second" : 38, "grid_position" : [2.4, 1.7],  "opacity" : 1 },
             { "second" : 39, "grid_position" : [2.4, 1.7],  "opacity" : 0 }
+          ]
+        },
+        {
+          "type" : "IMAGE",
+          "image" : "success.png",
+          "key_frames" :  [
+            { "second" : 46.5, "grid_position" : [9.4, 6],  "opacity" : 0 },
+            { "second" : 47, "grid_position" : [9.4, 6],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "IMAGE",
+          "image" : "fail.png",
+          "key_frames" :  [
+            { "second" : 46.5, "grid_position" : [9.4, 6.5],  "opacity" : 0 },
+            { "second" : 47, "grid_position" : [9.4, 6.5],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "IMAGE",
+          "image" : "fail.png",
+          "key_frames" :  [
+            { "second" : 46.5, "grid_position" : [9.4, 7],  "opacity" : 0 },
+            { "second" : 47, "grid_position" : [9.4, 7],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "IMAGE",
+          "image" : "success.png",
+          "key_frames" :  [
+            { "second" : 46.5, "grid_position" : [9.4, 7.5],  "opacity" : 0 },
+            { "second" : 47, "grid_position" : [9.4, 7.5],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "IMAGE",
+          "image" : "fail.png",
+          "key_frames" :  [
+            { "second" : 46.5, "grid_position" : [9.4, 8],  "opacity" : 0 },
+            { "second" : 47, "grid_position" : [9.4, 8],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "IMAGE",
+          "image" : "fail.png",
+          "key_frames" :  [
+            { "second" : 46.5, "grid_position" : [9.4, 8.5],  "opacity" : 0 },
+            { "second" : 47, "grid_position" : [9.4, 8.5],  "opacity" : 1 }
           ]
         }
       ]
