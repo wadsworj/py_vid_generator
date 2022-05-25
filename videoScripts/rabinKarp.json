@@ -3,184 +3,249 @@
   "resolution" : [1280, 720],
   "audio" : ["Untitled.mp3"],
   "start_scene" : 0,
-  "back_color" : [26, 26, 26],
+  "start_seconds" : 0,
+  "back_color" : [240, 237, 230],
+  "debug" : true,
   "scenes" :
   [
     {
       "scene_name" : "intro",
       "scene_index" : 1,
-      "duration" : 6.5,
+      "duration" : 90,
       "elements" :
       [
         {
           "type" : "TEXT",
-          "name" : "01_how_to",
-          "text" : "How to find 'ell' in the string",
-          "position" :  [10, 300],
-          "bounding_box" : [10, 10],
+          "name" : "02_text",
+          "text" : "ell",
+          "grid_position" :  [1, 4.8],
           "duration" : 2,
-          "font_size" : 50,
-          "font_color" : [135, 173, 241],
-          "font_type" : "Comic Sans MS",
-          "start_time" : 0.0,
-          "text_align" : "top_center"
+          "font_size" : 100,
+          "font_color" : [20, 20, 20],
+          "font_type" : "KAZYcase-scrabble",
+          "start_time" : 0.0
         },
         {
           "type" : "TEXT",
           "name" : "02_text",
           "text" : "\"She sells sea-shells by the sea shore.\"",
-          "position" :  [10, 500],
           "bounding_box" : [10, 10],
-          "duration" : 1,
-          "font_size" : 50,
-          "font_type" : "Comic Sans MS",
-          "start_time" : 2.0,
-          "text_align" : "center"
+          "duration" : 5,
+          "font_size" : 150,
+          "font_color" : [20, 20, 20],
+          "font_type" : "Book+Ends",
+          "start_time" : 5,
+          "text_align" : "top_center"
         },
         {
           "type" : "ANIMATED_TEXT",
           "name" : "02_text",
-          "text" : "\"She sells sea-shells by the sea shore.\"",
-          "font_size" : 50,
-          "font_type" : "Comic Sans MS",
-          "text_align" : "center",
+          "text" : "ell",
+          "font_size" : 100,
+          "font_color" : [20, 20, 20],
+          "font_type" : "KAZYcase-scrabble",
           "key_frames" :  [
-            { "second" : 0, "grid_position" : [0,0] },
-            { "second" : 6.5, "grid_position" : [8,15] }
+            { "second" : 10, "grid_position" : [1, 4.8],  "opacity" : 0 },
+            { "second" : 13, "grid_position" : [1, 4.8],  "opacity" : 1 },
+            { "second" : 15, "grid_position" : [8, 4.8],  "opacity" : 0 }
           ]
-        }
-      ]
-    },
-    {
-      "scene_name" : "questions",
-      "scene_index" : 2,
-      "duration" : 2,
-      "elements" :
-      [
-        {
-          "type" : "TEXT",
-          "name" : "03_questions",
-          "text" : "???",
-          "position" :  [10, 300],
-          "bounding_box" : [10, 10],
-          "duration" : 1,
-          "font_size" : 100,
-          "font_type" : "Comic Sans MS",
-          "start_time" : 0.0,
-          "text_align" : "center"
-        }
-      ]
-    },
-    {
-      "scene_name" : "use_rabin-karp",
-      "scene_index" : 3,
-      "duration" : 3,
-      "elements" :
-      [
-        {
-          "type" : "TEXT",
-          "name" : "04_questions",
-          "text" : "USE RABIN-KARP\nALGORITHM",
-          "position" :  [10, 300],
-          "bounding_box" : [10, 10],
-          "duration" : 1,
-          "font_size" : 100,
-          "font_type" : "Comic Sans MS",
-          "start_time" : 0.0,
-          "text_align" : "center"
-        }
-      ]
-    },
-    {
-      "scene_name" : "step_one",
-      "scene_index" : 4,
-      "duration" : 6,
-      "elements" :
-      [
-        {
-          "type" : "TEXT",
-          "name" : "05_step_one",
-          "text" : "step 1:\nhash the pattern",
-          "position" :  [10, 300],
-          "bounding_box" : [10, 10],
-          "duration" : 2,
-          "font_size" : 100,
-          "font_type" : "Comic Sans MS",
-          "font_color" : [135, 173, 241],
-          "start_time" : 0.0,
-          "text_align" : "center"
         },
         {
-          "type" : "TEXT",
-          "name" : "05_step_one",
-          "text" : "hash('ell') == 581",
-          "position" :  [500, 300],
-          "bounding_box" : [10, 10],
-          "duration" : 0,
-          "font_size" : 50,
-          "font_type" : "Monaco",
-          "start_time" : 3.0,
-          "text_align" : ""
-        }
-      ]
-    },
-    {
-      "scene_name" : "step_two",
-      "scene_index" : 4,
-      "duration" : 8,
-      "elements" :
-      [
+          "type" : "ANIMATED_TEXT",
+          "name" : "02_text",
+          "text" : "325",
+          "font_size" : 100,
+          "font_color" : [20, 20, 20],
+          "font_type" : "KAZYcase-scrabble",
+          "key_frames" :  [
+            { "second" : 13, "grid_position" : [1, 4.8],  "opacity" : 0 },
+            { "second" : 15, "grid_position" : [8, 4.8],  "opacity" : 1 }
+          ]
+        },
         {
-          "type" : "TEXT",
-          "name" : "05_step_two",
-          "text" : "step 2:\n'slide' through the text hashing the string\nthat matches the length of the pattern",
-          "position" :  [10, 300],
-          "bounding_box" : [10, 10],
-          "duration" : 3,
-          "font_size" : 50,
-          "font_type" : "Comic Sans MS",
-          "start_time" : 0.0,
-          "text_align" : "center"
-        }
-      ]
-    },
-    {
-      "scene_name" : "step_three",
-      "scene_index" : 4,
-      "duration" : 13,
-      "elements" :
-      [
+          "type" : "IMAGE",
+          "name" : "02_text",
+          "image" : "hashing.png",
+          "key_frames" :  [
+            { "second" : 12, "grid_position" : [5, 4],  "opacity" : 0 },
+            { "second" : 14, "grid_position" : [5, 4],  "opacity" : 1 }
+          ]
+        },
         {
-          "type" : "TEXT",
-          "name" : "05_step_two",
-          "text" : "step 3:\ncompare the hash values\nIf they match they might not actually be the same\n(depending on the hash function)",
-          "position" :  [10, 300],
-          "bounding_box" : [10, 10],
-          "duration" : 3,
+          "type" : "ANIMATED_TEXT",
+          "name" : "she_text_to_be_hashed",
+          "text" : "SHE",
           "font_size" : 50,
-          "font_type" : "Comic Sans MS",
-          "start_time" : 0.0,
-          "text_align" : "center"
-        }
-      ]
-    },
-    {
-      "scene_name" : "step_four",
-      "scene_index" : 4,
-      "duration" : 3,
-      "elements" :
-      [
+          "font_color" : [20, 20, 20],
+          "font_type" : "KAZYcase-scrabble",
+          "key_frames" :  [
+            { "second" : 21, "grid_position" : [0.4, 2.7],  "opacity" : 0 },
+            { "second" : 23, "grid_position" : [0.4, 2.7],  "opacity" : 1 },
+            { "second" : 25, "grid_position" : [5.5, 6],  "opacity" : 1 },
+            { "second" : 27, "grid_position" : [5.5, 8.5],  "opacity" : 1 }
+          ]
+        },
         {
-          "type" : "TEXT",
-          "name" : "05_step_four",
-          "text" : "step 4:\nso now actually compare the strings position by position\n(if they match they match)",
-          "position" :  [10, 300],
-          "bounding_box" : [10, 10],
-          "duration" : 3,
+          "type" : "ANIMATED_TEXT",
+          "name" : "she_text_to_be_hashed",
+          "text" : "232",
           "font_size" : 50,
-          "font_type" : "Comic Sans MS",
-          "start_time" : 0.0,
-          "text_align" : "center"
+          "font_color" : [20, 20, 20],
+          "font_type" : "KAZYcase-scrabble",
+          "key_frames" :  [
+            { "second" : 25, "grid_position" : [8, 6],  "opacity" : 0 },
+            { "second" : 27, "grid_position" : [8, 8.5],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "ANIMATED_TEXT",
+          "name" : "she_text_to_be_hashed",
+          "text" : "HE_",
+          "font_size" : 50,
+          "font_color" : [20, 20, 20],
+          "font_type" : "KAZYcase-scrabble",
+          "key_frames" :  [
+            { "second" : 32, "grid_position" : [0.7, 2.7],  "opacity" : 0 },
+            { "second" : 33, "grid_position" : [0.7, 2.7],  "opacity" : 1 },
+            { "second" : 34, "grid_position" : [5.5, 6],  "opacity" : 1 },
+            { "second" : 36, "grid_position" : [5.5, 8],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "ANIMATED_TEXT",
+          "name" : "she_text_to_be_hashed",
+          "text" : "297",
+          "font_size" : 50,
+          "font_color" : [20, 20, 20],
+          "font_type" : "KAZYcase-scrabble",
+          "key_frames" :  [
+            { "second" : 34, "grid_position" : [8, 6],  "opacity" : 0 },
+            { "second" : 36, "grid_position" : [8, 8],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "ANIMATED_TEXT",
+          "name" : "she_text_to_be_hashed",
+          "text" : "E_S",
+          "font_size" : 50,
+          "font_color" : [20, 20, 20],
+          "font_type" : "KAZYcase-scrabble",
+          "key_frames" :  [
+            { "second" : 34, "grid_position" : [1, 2.7],  "opacity" : 0 },
+            { "second" : 35, "grid_position" : [1, 2.7],  "opacity" : 1 },
+            { "second" : 36, "grid_position" : [5.5, 6],  "opacity" : 1 },
+            { "second" : 38, "grid_position" : [5.5, 7.5],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "ANIMATED_TEXT",
+          "name" : "she_text_to_be_hashed",
+          "text" : "160",
+          "font_size" : 50,
+          "font_color" : [20, 20, 20],
+          "font_type" : "KAZYcase-scrabble",
+          "key_frames" :  [
+            { "second" : 36, "grid_position" : [8, 6],  "opacity" : 0 },
+            { "second" : 38, "grid_position" : [8, 7.5],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "ANIMATED_TEXT",
+          "name" : "she_text_to_be_hashed",
+          "text" : "_se",
+          "font_size" : 50,
+          "font_color" : [20, 20, 20],
+          "font_type" : "KAZYcase-scrabble",
+          "key_frames" :  [
+            { "second" : 39, "grid_position" : [1.3, 2.7],  "opacity" : 0 },
+            { "second" : 40, "grid_position" : [1.3, 2.7],  "opacity" : 1 },
+            { "second" : 41, "grid_position" : [5.5, 6],  "opacity" : 1 },
+            { "second" : 43, "grid_position" : [5.5, 7],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "ANIMATED_TEXT",
+          "name" : "she_text_to_be_hashed",
+          "text" : "156",
+          "font_size" : 50,
+          "font_color" : [20, 20, 20],
+          "font_type" : "KAZYcase-scrabble",
+          "key_frames" :  [
+            { "second" : 41, "grid_position" : [8, 6],  "opacity" : 0 },
+            { "second" : 43, "grid_position" : [8, 7],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "ANIMATED_TEXT",
+          "name" : "she_text_to_be_hashed",
+          "text" : "sel",
+          "font_size" : 50,
+          "font_color" : [20, 20, 20],
+          "font_type" : "KAZYcase-scrabble",
+          "key_frames" :  [
+            { "second" : 41, "grid_position" : [1.6, 2.7],  "opacity" : 0 },
+            { "second" : 42, "grid_position" : [1.6, 2.7],  "opacity" : 1 },
+            { "second" : 43, "grid_position" : [5.5, 6],  "opacity" : 1 },
+            { "second" : 45, "grid_position" : [5.5, 6.5],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "ANIMATED_TEXT",
+          "name" : "she_text_to_be_hashed",
+          "text" : "200",
+          "font_size" : 50,
+          "font_color" : [20, 20, 20],
+          "font_type" : "KAZYcase-scrabble",
+          "key_frames" :  [
+            { "second" : 43, "grid_position" : [8, 6],  "opacity" : 0 },
+            { "second" : 45, "grid_position" : [8, 6.5],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "ANIMATED_TEXT",
+          "name" : "she_text_to_be_hashed",
+          "text" : "ell",
+          "font_size" : 50,
+          "font_color" : [20, 20, 20],
+          "font_type" : "KAZYcase-scrabble",
+          "key_frames" :  [
+            { "second" : 43, "grid_position" : [1.9, 2.7],  "opacity" : 0 },
+            { "second" : 44, "grid_position" : [1.9, 2.7],  "opacity" : 1 },
+            { "second" : 45, "grid_position" : [5.5, 6],  "opacity" : 1 },
+            { "second" : 47, "grid_position" : [5.5, 6],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "ANIMATED_TEXT",
+          "name" : "she_text_to_be_hashed",
+          "text" : "325",
+          "font_size" : 50,
+          "font_color" : [20, 20, 20],
+          "font_type" : "KAZYcase-scrabble",
+          "key_frames" :  [
+            { "second" : 45, "grid_position" : [8, 6],  "opacity" : 0 },
+            { "second" : 47, "grid_position" : [8, 6],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "IMAGE",
+          "name" : "02_text",
+          "image" : "slider.png",
+          "key_frames" :  [
+            { "second" : 20, "grid_position" : [0.4, 2.7],  "opacity" : 0 },
+            { "second" : 21, "grid_position" : [0.4, 2.7],  "opacity" : 1 },
+            { "second" : 30, "grid_position" : [0.4, 2.7],  "opacity" : 1 },
+            { "second" : 32, "grid_position" : [0.8, 2.7],  "opacity" : 1 },
+            { "second" : 33, "grid_position" : [0.8, 2.7],  "opacity" : 1 },
+            { "second" : 35, "grid_position" : [1.2, 2.7],  "opacity" : 1 },
+            { "second" : 36, "grid_position" : [1.2, 2.7],  "opacity" : 1 },
+            { "second" : 38, "grid_position" : [1.6, 2.7],  "opacity" : 1 },
+            { "second" : 39, "grid_position" : [1.6, 2.7],  "opacity" : 1 },
+            { "second" : 41, "grid_position" : [2.0, 2.7],  "opacity" : 1 },
+            { "second" : 42, "grid_position" : [2.0, 2.7],  "opacity" : 1 },
+            { "second" : 44, "grid_position" : [2.4, 2.7],  "opacity" : 1 },
+            { "second" : 45, "grid_position" : [2.4, 2.7],  "opacity" : 1 }
+          ]
         }
       ]
     }
