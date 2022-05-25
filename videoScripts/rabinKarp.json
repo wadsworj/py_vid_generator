@@ -3,7 +3,7 @@
   "resolution" : [1280, 720],
   "audio" : ["Untitled.mp3"],
   "start_scene" : 0,
-  "start_seconds" : 0,
+  "start_seconds" : 20,
   "back_color" : [240, 237, 230],
   "debug" : true,
   "scenes" :
@@ -67,15 +67,15 @@
           "name" : "02_text",
           "image" : "hashing.png",
           "key_frames" :  [
-            { "second" : 12, "grid_position" : [5, 4],  "opacity" : 0 },
-            { "second" : 14, "grid_position" : [5, 4],  "opacity" : 1 }
+            { "second" : 12, "grid_position" : [5, 4.2],  "opacity" : 0 },
+            { "second" : 14, "grid_position" : [5, 4.2],  "opacity" : 1 }
           ]
         },
         {
           "type" : "ANIMATED_TEXT",
           "name" : "she_text_to_be_hashed",
           "text" : "SHE",
-          "font_size" : 50,
+          "font_size" : 45,
           "font_color" : [20, 20, 20],
           "font_type" : "KAZYcase-scrabble",
           "key_frames" :  [
@@ -89,7 +89,7 @@
           "type" : "ANIMATED_TEXT",
           "name" : "she_text_to_be_hashed",
           "text" : "232",
-          "font_size" : 50,
+          "font_size" : 45,
           "font_color" : [20, 20, 20],
           "font_type" : "KAZYcase-scrabble",
           "key_frames" :  [
@@ -101,12 +101,12 @@
           "type" : "ANIMATED_TEXT",
           "name" : "she_text_to_be_hashed",
           "text" : "HE_",
-          "font_size" : 50,
+          "font_size" : 45,
           "font_color" : [20, 20, 20],
           "font_type" : "KAZYcase-scrabble",
           "key_frames" :  [
-            { "second" : 32, "grid_position" : [0.7, 2.7],  "opacity" : 0 },
-            { "second" : 33, "grid_position" : [0.7, 2.7],  "opacity" : 1 },
+            { "second" : 32, "grid_position" : [0.8, 2.7],  "opacity" : 0 },
+            { "second" : 33, "grid_position" : [0.8, 2.7],  "opacity" : 1 },
             { "second" : 34, "grid_position" : [5.5, 6],  "opacity" : 1 },
             { "second" : 36, "grid_position" : [5.5, 8],  "opacity" : 1 }
           ]
@@ -115,7 +115,7 @@
           "type" : "ANIMATED_TEXT",
           "name" : "she_text_to_be_hashed",
           "text" : "297",
-          "font_size" : 50,
+          "font_size" : 45,
           "font_color" : [20, 20, 20],
           "font_type" : "KAZYcase-scrabble",
           "key_frames" :  [
@@ -127,12 +127,12 @@
           "type" : "ANIMATED_TEXT",
           "name" : "she_text_to_be_hashed",
           "text" : "E_S",
-          "font_size" : 50,
+          "font_size" : 45,
           "font_color" : [20, 20, 20],
           "font_type" : "KAZYcase-scrabble",
           "key_frames" :  [
-            { "second" : 34, "grid_position" : [1, 2.7],  "opacity" : 0 },
-            { "second" : 35, "grid_position" : [1, 2.7],  "opacity" : 1 },
+            { "second" : 34, "grid_position" : [1.2, 2.7],  "opacity" : 0 },
+            { "second" : 35, "grid_position" : [1.2, 2.7],  "opacity" : 1 },
             { "second" : 36, "grid_position" : [5.5, 6],  "opacity" : 1 },
             { "second" : 38, "grid_position" : [5.5, 7.5],  "opacity" : 1 }
           ]
@@ -141,7 +141,7 @@
           "type" : "ANIMATED_TEXT",
           "name" : "she_text_to_be_hashed",
           "text" : "160",
-          "font_size" : 50,
+          "font_size" : 45,
           "font_color" : [20, 20, 20],
           "font_type" : "KAZYcase-scrabble",
           "key_frames" :  [
@@ -152,13 +152,13 @@
         {
           "type" : "ANIMATED_TEXT",
           "name" : "she_text_to_be_hashed",
-          "text" : "_se",
-          "font_size" : 50,
+          "text" : "_SE",
+          "font_size" : 45,
           "font_color" : [20, 20, 20],
           "font_type" : "KAZYcase-scrabble",
           "key_frames" :  [
-            { "second" : 39, "grid_position" : [1.3, 2.7],  "opacity" : 0 },
-            { "second" : 40, "grid_position" : [1.3, 2.7],  "opacity" : 1 },
+            { "second" : 39, "grid_position" : [1.6, 2.7],  "opacity" : 0 },
+            { "second" : 40, "grid_position" : [1.6, 2.7],  "opacity" : 1 },
             { "second" : 41, "grid_position" : [5.5, 6],  "opacity" : 1 },
             { "second" : 43, "grid_position" : [5.5, 7],  "opacity" : 1 }
           ]
@@ -167,7 +167,7 @@
           "type" : "ANIMATED_TEXT",
           "name" : "she_text_to_be_hashed",
           "text" : "156",
-          "font_size" : 50,
+          "font_size" : 45,
           "font_color" : [20, 20, 20],
           "font_type" : "KAZYcase-scrabble",
           "key_frames" :  [
@@ -178,13 +178,13 @@
         {
           "type" : "ANIMATED_TEXT",
           "name" : "she_text_to_be_hashed",
-          "text" : "sel",
-          "font_size" : 50,
+          "text" : "SEL",
+          "font_size" : 45,
           "font_color" : [20, 20, 20],
           "font_type" : "KAZYcase-scrabble",
           "key_frames" :  [
-            { "second" : 41, "grid_position" : [1.6, 2.7],  "opacity" : 0 },
-            { "second" : 42, "grid_position" : [1.6, 2.7],  "opacity" : 1 },
+            { "second" : 41, "grid_position" : [2, 2.7],  "opacity" : 0 },
+            { "second" : 42, "grid_position" : [2, 2.7],  "opacity" : 1 },
             { "second" : 43, "grid_position" : [5.5, 6],  "opacity" : 1 },
             { "second" : 45, "grid_position" : [5.5, 6.5],  "opacity" : 1 }
           ]
@@ -193,7 +193,7 @@
           "type" : "ANIMATED_TEXT",
           "name" : "she_text_to_be_hashed",
           "text" : "200",
-          "font_size" : 50,
+          "font_size" : 45,
           "font_color" : [20, 20, 20],
           "font_type" : "KAZYcase-scrabble",
           "key_frames" :  [
@@ -204,13 +204,13 @@
         {
           "type" : "ANIMATED_TEXT",
           "name" : "she_text_to_be_hashed",
-          "text" : "ell",
-          "font_size" : 50,
+          "text" : "ELL",
+          "font_size" : 45,
           "font_color" : [20, 20, 20],
           "font_type" : "KAZYcase-scrabble",
           "key_frames" :  [
-            { "second" : 43, "grid_position" : [1.9, 2.7],  "opacity" : 0 },
-            { "second" : 44, "grid_position" : [1.9, 2.7],  "opacity" : 1 },
+            { "second" : 43, "grid_position" : [2.4, 2.7],  "opacity" : 0 },
+            { "second" : 44, "grid_position" : [2.4, 2.7],  "opacity" : 1 },
             { "second" : 45, "grid_position" : [5.5, 6],  "opacity" : 1 },
             { "second" : 47, "grid_position" : [5.5, 6],  "opacity" : 1 }
           ]
@@ -219,7 +219,7 @@
           "type" : "ANIMATED_TEXT",
           "name" : "she_text_to_be_hashed",
           "text" : "325",
-          "font_size" : 50,
+          "font_size" : 45,
           "font_color" : [20, 20, 20],
           "font_type" : "KAZYcase-scrabble",
           "key_frames" :  [
