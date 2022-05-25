@@ -18,7 +18,7 @@ class Scene:
             self.start_time = pygame.time.get_ticks()
 
         scene_time = pygame.time.get_ticks() - self.start_time
-        seconds = ((scene_time / 1000) % 60) + start_seconds
+        seconds = (scene_time / 1000) + start_seconds
 
         for element in self.elements:
             element.render(screen, seconds)

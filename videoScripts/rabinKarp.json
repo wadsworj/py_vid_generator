@@ -3,15 +3,15 @@
   "resolution" : [1280, 720],
   "audio" : ["Untitled.mp3"],
   "start_scene" : 0,
-  "start_seconds" : 40,
+  "start_seconds" : 0,
   "back_color" : [240, 237, 230],
-  "debug" : true,
+  "debug" : false,
   "scenes" :
   [
     {
       "scene_name" : "intro",
       "scene_index" : 1,
-      "duration" : 90,
+      "duration" : 61,
       "elements" :
       [
         {
@@ -133,7 +133,17 @@
         },
         {
           "type" : "ANIMATED_TEXT",
-          "name" : "she_text_to_be_hashed",
+          "text" : "E",
+          "font_size" : 45,
+          "font_color" : [152, 68, 71],
+          "font_type" : "KAZYcase-scrabble",
+          "key_frames" :  [
+            { "second" : 48, "grid_position" : [5.5, 7.5],  "opacity" : 0 },
+            { "second" : 49, "grid_position" : [5.5, 7.5],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "ANIMATED_TEXT",
           "text" : "325",
           "font_size" : 45,
           "font_color" : [20, 20, 20],
@@ -211,6 +221,39 @@
         },
         {
           "type" : "ANIMATED_TEXT",
+          "text" : "E",
+          "font_size" : 45,
+          "font_color" : [86, 110, 61],
+          "font_type" : "KAZYcase-scrabble",
+          "key_frames" :  [
+            { "second" : 50, "grid_position" : [5.5, 6],  "opacity" : 0 },
+            { "second" : 50.5, "grid_position" : [5.5, 6],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "ANIMATED_TEXT",
+          "text" : "EL",
+          "font_size" : 45,
+          "font_color" : [86, 110, 61],
+          "font_type" : "KAZYcase-scrabble",
+          "key_frames" :  [
+            { "second" : 50.5, "grid_position" : [5.5, 6],  "opacity" : 0 },
+            { "second" : 51, "grid_position" : [5.5, 6],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "ANIMATED_TEXT",
+          "text" : "ELL",
+          "font_size" : 45,
+          "font_color" : [86, 110, 61],
+          "font_type" : "KAZYcase-scrabble",
+          "key_frames" :  [
+            { "second" : 51, "grid_position" : [5.5, 6],  "opacity" : 0 },
+            { "second" : 51.5, "grid_position" : [5.5, 6],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "ANIMATED_TEXT",
           "text" : "325",
           "font_size" : 45,
           "font_color" : [20, 20, 20],
@@ -227,8 +270,8 @@
           "font_color" : [20, 20, 20],
           "font_type" : "KAZYcase-scrabble",
           "key_frames" :  [
-            { "second" : 42.75, "grid_position" : [10, 8.5],  "opacity" : 0 },
-            { "second" : 43.25, "grid_position" : [10, 8.5],  "opacity" : 1 }
+            { "second" : 42.75, "grid_position" : [10.3, 8.5],  "opacity" : 0 },
+            { "second" : 43.25, "grid_position" : [10.3, 8.5],  "opacity" : 1 }
           ]
         },
         {
@@ -238,8 +281,8 @@
           "font_color" : [20, 20, 20],
           "font_type" : "KAZYcase-scrabble",
           "key_frames" :  [
-            { "second" : 43, "grid_position" : [10, 8],  "opacity" : 0 },
-            { "second" : 43.5, "grid_position" : [10, 8],  "opacity" : 1 }
+            { "second" : 43, "grid_position" : [10.3, 8],  "opacity" : 0 },
+            { "second" : 43.5, "grid_position" : [10.3, 8],  "opacity" : 1 }
           ]
         },
         {
@@ -249,8 +292,8 @@
           "font_color" : [20, 20, 20],
           "font_type" : "KAZYcase-scrabble",
           "key_frames" :  [
-            { "second" : 43.25, "grid_position" : [10, 7.5],  "opacity" : 0 },
-            { "second" : 43.75, "grid_position" : [10, 7.5],  "opacity" : 1 }
+            { "second" : 43.25, "grid_position" : [10.3, 7.5],  "opacity" : 0 },
+            { "second" : 43.75, "grid_position" : [10.3, 7.5],  "opacity" : 1 }
           ]
         },
         {
@@ -260,8 +303,8 @@
           "font_color" : [20, 20, 20],
           "font_type" : "KAZYcase-scrabble",
           "key_frames" :  [
-            { "second" : 43.5, "grid_position" : [10, 7],  "opacity" : 0 },
-            { "second" : 44, "grid_position" : [10, 7],  "opacity" : 1 }
+            { "second" : 43.5, "grid_position" : [10.3, 7],  "opacity" : 0 },
+            { "second" : 44, "grid_position" : [10.3, 7],  "opacity" : 1 }
           ]
         },
         {
@@ -271,8 +314,8 @@
           "font_color" : [20, 20, 20],
           "font_type" : "KAZYcase-scrabble",
           "key_frames" :  [
-            { "second" : 43.75, "grid_position" : [10, 6.5],  "opacity" : 0 },
-            { "second" : 44.25, "grid_position" : [10, 6.5],  "opacity" : 1 }
+            { "second" : 43.75, "grid_position" : [10.3, 6.5],  "opacity" : 0 },
+            { "second" : 44.25, "grid_position" : [10.3, 6.5],  "opacity" : 1 }
           ]
         },
         {
@@ -282,8 +325,8 @@
           "font_color" : [20, 20, 20],
           "font_type" : "KAZYcase-scrabble",
           "key_frames" :  [
-            { "second" : 44, "grid_position" : [10, 6],  "opacity" : 0 },
-            { "second" : 44.5, "grid_position" : [10, 6],  "opacity" : 1 }
+            { "second" : 44, "grid_position" : [10.3, 6],  "opacity" : 0 },
+            { "second" : 44.5, "grid_position" : [10.3, 6],  "opacity" : 1 }
           ]
         },
         {
@@ -317,6 +360,14 @@
         },
         {
           "type" : "IMAGE",
+          "image" : "success.png",
+          "key_frames" :  [
+            { "second" : 52, "grid_position" : [9.8, 6],  "opacity" : 0 },
+            { "second" : 52.5, "grid_position" : [9.8, 6],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "IMAGE",
           "image" : "fail.png",
           "key_frames" :  [
             { "second" : 46.5, "grid_position" : [9.4, 6.5],  "opacity" : 0 },
@@ -337,6 +388,14 @@
           "key_frames" :  [
             { "second" : 46.5, "grid_position" : [9.4, 7.5],  "opacity" : 0 },
             { "second" : 47, "grid_position" : [9.4, 7.5],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "IMAGE",
+          "image" : "fail.png",
+          "key_frames" :  [
+            { "second" : 48.5, "grid_position" : [9.8, 7.5],  "opacity" : 0 },
+            { "second" : 49, "grid_position" : [9.8, 7.5],  "opacity" : 1 }
           ]
         },
         {
