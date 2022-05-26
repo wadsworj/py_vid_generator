@@ -27,12 +27,62 @@
         {
           "type" : "TEXT",
           "text" : "\"She sells sea-shells by the sea shore.\"",
-          "duration" : 5,
+          "duration" : 4,
           "font_size" : 150,
           "font_color" : [20, 20, 20],
           "font_type" : "Book+Ends",
           "start_time" : 5,
           "text_align" : "top_top_center"
+        },
+        {
+          "type" : "TEXT",
+          "text" : "use rabin-karp algorithm",
+          "grid_position" :  [8, 2.2],
+          "duration" : 2,
+          "font_size" : 50,
+          "font_color" : [20, 20, 20],
+          "font_type" : "Daily Notes",
+          "start_time" : 8.5
+        },
+        {
+          "type" : "TEXT",
+          "text" : "step 1: hash the pattern",
+          "grid_position" :  [0.2, 5.2],
+          "duration" : 2,
+          "font_size" : 35,
+          "font_color" : [20, 20, 20],
+          "font_type" : "Daily Notes",
+          "start_time" : 12.0
+        },
+        {
+          "type" : "TEXT",
+          "text" : "step 2: slide and hash",
+          "grid_position" :  [0.2, 6.2],
+          "duration" : 2,
+          "font_size" : 35,
+          "font_color" : [20, 20, 20],
+          "font_type" : "Daily Notes",
+          "start_time" : 20.0
+        },
+        {
+          "type" : "TEXT",
+          "text" : "step 3: compare the hashes",
+          "grid_position" :  [0.2, 7.2],
+          "duration" : 2,
+          "font_size" : 35,
+          "font_color" : [20, 20, 20],
+          "font_type" : "Daily Notes",
+          "start_time" : 40.0
+        },
+        {
+          "type" : "TEXT",
+          "text" : "step 4: compare the strings",
+          "grid_position" :  [0.2, 8.2],
+          "duration" : 2,
+          "font_size" : 35,
+          "font_color" : [20, 20, 20],
+          "font_type" : "Daily Notes",
+          "start_time" : 48.0
         },
         {
           "type" : "ANIMATED_TEXT",
@@ -42,8 +92,8 @@
           "font_type" : "KAZYcase-scrabble",
           "key_frames" :  [
             { "second" : 10, "grid_position" : [1, 3.8],  "opacity" : 0 },
-            { "second" : 13, "grid_position" : [1, 3.8],  "opacity" : 1 },
-            { "second" : 15, "grid_position" : [8, 3.8],  "opacity" : 0 }
+            { "second" : 15, "grid_position" : [1, 3.8],  "opacity" : 1 },
+            { "second" : 17, "grid_position" : [8, 3.8],  "opacity" : 0 }
           ]
         },
         {
@@ -53,8 +103,8 @@
           "font_color" : [20, 20, 20],
           "font_type" : "KAZYcase-scrabble",
           "key_frames" :  [
-            { "second" : 13, "grid_position" : [1, 3.8],  "opacity" : 0 },
-            { "second" : 15, "grid_position" : [8, 3.8],  "opacity" : 1 }
+            { "second" : 15, "grid_position" : [1, 3.8],  "opacity" : 0 },
+            { "second" : 17, "grid_position" : [8, 3.8],  "opacity" : 1 }
           ]
         },
         {
