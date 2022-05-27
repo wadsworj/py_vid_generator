@@ -5,7 +5,7 @@
   "start_scene" : 0,
   "start_seconds" : 0,
   "back_color" : [240, 237, 230],
-  "debug" : false,
+  "debug" : true,
   "scenes" :
   [
     {

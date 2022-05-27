@@ -32,9 +32,31 @@ class Video:
         scene_file_start = 1
         self.current_scene = self.scenes.pop(0)
         clock = pygame.time.Clock()
+        paused = False
 
         while not done_capturing:
             pygame.display.update()
+
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    done_capturing = True
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        done_capturing = True
+                    elif event.key == pygame.K_SPACE:
+                        paused = not paused
+                        if not paused:
+                            self.play_audio()
+                        else:
+                            self.playing_audio = False
+                            mixer.music.stop()
+
+            clock.tick(config.FRAME_RATE)
+
+            if paused:
+                self.start_seconds = self.start_seconds - (1 / config.FRAME_RATE)
+                continue
 
             file_num = file_num + 1
             # Save every frame
@@ -43,14 +65,7 @@ class Video:
 
             self.screen.fill(self.back_color)
 
-            clock.tick(config.FRAME_RATE)
 
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    done_capturing = True
-                elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE:
-                        done_capturing = True
 
             if self.current_scene:
                 if self.debug:
@@ -99,7 +114,10 @@ class Video:
                 if count > 0:
                     mixer.music.set_volume(0.5)
 
+                video_time = pygame.time.get_ticks()
+                seconds = ((video_time / 1000) % 60) + self.start_seconds
+
                 # Start playing the song
                 mixer.music.play()
-                mixer.music.set_pos(self.start_seconds)
+                mixer.music.set_pos(seconds)
                 count = count + 1

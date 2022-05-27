@@ -1,0 +1,32 @@
+{
+  "name" : "radix_sort",
+  "resolution" : [1920, 1080],
+  "audio" : [],
+  "start_scene" : 0,
+  "start_seconds" : 0,
+  "back_color" : [240, 237, 230],
+  "debug" : true,
+  "scenes" :
+  [
+    {
+      "scene_name" : "01_title",
+      "scene_index" : 1,
+      "duration" : 5,
+      "elements" :
+      [
+        {
+          "type" : "TEXT",
+          "text" : "Radix Sort",
+          "grid_position" :  [1, 3.8],
+          "duration" : 2,
+          "font_size" : 100,
+          "font_color" : [20, 20, 20],
+          "font_type" : "Gigi",
+          "start_time" : 0.0,
+          "text_align" : "center"
+
+        }
+      ]
+    }
+  ]
+}

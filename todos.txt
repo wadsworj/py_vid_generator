@@ -4,9 +4,23 @@ ToDo:
 -auto export a timeline to davinchi resolve
 -add transitions between scenes
 -play video files
--add images
+
+-text items
+    -colored text
+    -bold text (css? tags?)
+
+-scale images/text with animation
+-box element
+
+-graphical video editor
+
+-'Window' view (ie only show a portion of an image
+-Image fade down
+-Text fade down
 
 
 Completed:
 -render multiple images into video files
 -fix duration on multi-line text element
+-add images
+-'pause' button
