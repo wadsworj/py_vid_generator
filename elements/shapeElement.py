@@ -36,6 +36,11 @@ class ShapeElement:
         previous_position_scaled = [key_frames[0]["grid_position"][0] * (screen_rect.width / 16), key_frames[0]["grid_position"][1] * (screen_rect.height / 9)]
         next_position_scaled = [key_frames[1]["grid_position"][0] * (screen_rect.width / 16), key_frames[1]["grid_position"][1] * (screen_rect.height / 9)]
 
+        previous_size_scaled = [key_frames[0]["grid_size"][0] * (screen_rect.width / 16),
+                                    key_frames[0]["grid_size"][1] * (screen_rect.height / 9)]
+        next_size_scaled = [key_frames[1]["grid_size"][0] * (screen_rect.width / 16),
+                                key_frames[1]["grid_size"][1] * (screen_rect.height / 9)]
+
         current_position = self.interpolate(scene_seconds,
                                             key_frames[0]["second"],
                                             key_frames[1]["second"],
@@ -45,8 +50,8 @@ class ShapeElement:
         current_size = self.interpolate(scene_seconds,
                                             key_frames[0]["second"],
                                             key_frames[1]["second"],
-                                            key_frames[0]["grid_size"],
-                                            key_frames[1]["grid_size"])
+                                            previous_size_scaled,
+                                            next_size_scaled)
 
         current_color = self.interpolate(scene_seconds,
                                         key_frames[0]["second"],
@@ -64,7 +69,7 @@ class ShapeElement:
             current_opacity = 1
 
         s = pygame.Surface((current_size))
-        s.set_alpha(current_opacity)
+        s.set_alpha(int(current_opacity * 255))
         s.fill(current_color)
         screen.blit(s, current_position)
 
