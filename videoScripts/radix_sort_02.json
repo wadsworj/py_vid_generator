@@ -1,0 +1,82 @@
+{
+  "name" : "radix_sort_02",
+  "resolution" : [1920, 1080],
+  "audio" : [],
+  "start_scene" : 0,
+  "start_seconds" : 0,
+  "back_color" : [20, 20, 20],
+  "debug" : true,
+  "scenes" :
+  [
+    {
+      "scene_name" : "01_title",
+      "scene_index" : 1,
+      "duration" : 10,
+      "elements" :
+      [
+        {
+          "type" : "SHAPE",
+          "shape" : "SQUARE",
+          "key_frames" :  [
+            { "second" : 0, "grid_position" : [0, 0], "grid_size" : [2, 4], "opacity" : 1, "color" : [0, 0, 0] },
+            { "second" : 1, "grid_position" : [0, 0], "grid_size" : [2, 4], "opacity" : 1, "color" : [255, 255, 255] }
+          ]
+        },
+        {
+          "type" : "TEXT",
+          "text" : "[655, 987,   6,  93, 940, 680,  33, 918, 165, 837]",
+          "duration" : 1,
+          "font_size" : 55,
+          "font_color" : [255, 255, 255],
+          "font_type" : "Consolas",
+          "start_time" : 0.0,
+          "grid_position" : [0.5,0.5]
+        },
+        {
+          "type" : "IMAGE",
+          "image" : "radix_slots.png",
+          "key_frames" :  [
+            { "second" : 1, "grid_position" : [0.2, 1.1],  "opacity" : 0 },
+            { "second" : 2, "grid_position" : [0.2, 1.1],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "TEXT",
+          "text" : "[655, 987,   6,  93, 940, 680,  33, 918, 165, 837]",
+          "duration" : 1,
+          "font_size" : 55,
+          "font_color" : [255, 255, 255],
+          "font_type" : "Consolas",
+          "start_time" : 3.0,
+          "grid_position" : [0.5,3.4]
+        },
+        {
+          "type" : "IMAGE",
+          "image" : "radix_slots.png",
+          "key_frames" :  [
+            { "second" : 4, "grid_position" : [0.2, 3.9],  "opacity" : 0 },
+            { "second" : 5, "grid_position" : [0.2, 3.9],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "TEXT",
+          "text" : "[655, 987,   6,  93, 940, 680,  33, 918, 165, 837]",
+          "duration" : 1,
+          "font_size" : 55,
+          "font_color" : [255, 255, 255],
+          "font_type" : "Consolas",
+          "start_time" : 3.0,
+          "grid_position" : [0.5,6.4]
+        },
+        {
+          "type" : "IMAGE",
+          "image" : "radix_slots.png",
+          "key_frames" :  [
+            { "second" : 4, "grid_position" : [0.2, 6.9],  "opacity" : 0 },
+            { "second" : 5, "grid_position" : [0.2, 6.9],  "opacity" : 1 }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -17,7 +17,10 @@ ToDo:
 -'Window' view (ie only show a portion of an image
 -Image fade down
 -Text fade down
+-add text offset (for text-align)
 
+Refactoring
+-move animation 'interpolate' to shared resource
 
 Completed:
 -render multiple images into video files

@@ -1,5 +1,6 @@
 from elements.animatedElement import AnimatedTextElement
 from elements.imageElement import ImageElement
+from elements.shapeElement import ShapeElement
 from elements.textElement import TextElement
 
 
@@ -14,6 +15,10 @@ class ElementBuilder:
             return self.build_animated_text_element(data)
         elif data["type"] == "IMAGE":
             return self.build_image_element(data)
+        elif data["type"] == "SHAPE":
+            return self.build_shape_element(data)
+        else:
+            raise NotImplementedError
 
     def build_image_element(self, data):
         element = ImageElement()
@@ -72,3 +77,13 @@ class ElementBuilder:
 
         return element
 
+    def build_shape_element(self, data):
+        element = ShapeElement()
+        # if "text_align" in data:
+        #     element.text_align = data["text_align"]
+        element.key_frames = data["key_frames"]
+
+        if "font_color" in data:
+            element.font_color = data["font_color"]
+
+        return element
