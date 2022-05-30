@@ -66,7 +66,6 @@ class ElementBuilder:
     def build_animated_text_element(self, data):
         element = AnimatedTextElement()
         element.text = data["text"]
-        element.font_size = data["font_size"]
         element.font_type = data["font_type"]
         # if "text_align" in data:
         #     element.text_align = data["text_align"]

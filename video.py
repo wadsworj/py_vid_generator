@@ -74,11 +74,12 @@ class Video:
                 self.current_scene.render(self.screen, self.start_seconds)
 
                 if self.current_scene.finished:
-                    self.save_video_file(scene_file_start, file_num)
-                    scene_file_start = file_num + 1
+                    # self.save_video_file(scene_file_start, file_num)
+                    # scene_file_start = file_num + 1
 
                     if self.scenes:
                         self.current_scene = self.scenes.pop(0)
+                        self.start_seconds = 0
                     else:
                         return
 

@@ -19,8 +19,12 @@ ToDo:
 -Text fade down
 -add text offset (for text-align)
 
+-add color names (ie 'light green') that maps to pre-defined colors
+-add html color codes
+
 Refactoring
 -move animation 'interpolate' to shared resource
+-see if rendering elements (such as keyframes) can be streamlined/refactored
 
 Completed:
 -render multiple images into video files

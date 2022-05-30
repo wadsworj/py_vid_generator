@@ -51,6 +51,13 @@ class AnimatedTextElement:
                                             previous_position_scaled,
                                             next_position_scaled)
 
+        if "font_color" in key_frames[1]:
+            self.font_color = self.interpolate(scene_seconds,
+                                        key_frames[0]["second"],
+                                        key_frames[1]["second"],
+                                        key_frames[0]["font_color"],
+                                        key_frames[1]["font_color"])
+
         if "opacity" in key_frames[1]:
             current_opacity = self.interpolate(scene_seconds,
                                                key_frames[0]["second"],
@@ -60,14 +67,21 @@ class AnimatedTextElement:
         else:
             current_opacity = 1
 
+        if "font_size" in key_frames[1]:
+            self.font_size = self.interpolate(scene_seconds,
+                                               key_frames[0]["second"],
+                                               key_frames[1]["second"],
+                                               [key_frames[0]["font_size"]],
+                                               [key_frames[1]["font_size"]])[0]
+
         line_count = 0
         for line in lines:
             font_exists = exists("fonts/" + self.font_type + ".ttf")
 
             if font_exists:
-                my_font = pygame.font.Font("fonts/" + self.font_type + ".ttf", self.font_size)
+                my_font = pygame.font.Font("fonts/" + self.font_type + ".ttf", int(self.font_size))
             else:
-                my_font = pygame.font.SysFont(self.font_type, self.font_size)
+                my_font = pygame.font.SysFont(self.font_type, int(self.font_size))
 
             text_position = pygame.Rect(current_position[0], current_position[1], screen_rect.width, screen_rect.height)
             text_surface = my_font.render(line, True, self.font_color)

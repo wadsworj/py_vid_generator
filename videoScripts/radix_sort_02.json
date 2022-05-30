@@ -1,9 +1,9 @@
 {
   "name" : "radix_sort_02",
   "resolution" : [1920, 1080],
-  "audio" : [],
+  "audio" : ["radix_sort.mp3"],
   "start_scene" : 0,
-  "start_seconds" : 0,
+  "start_seconds" : 10,
   "back_color" : [20, 20, 20],
   "debug" : true,
   "scenes" :
@@ -11,15 +11,84 @@
     {
       "scene_name" : "01_title",
       "scene_index" : 1,
-      "duration" : 10,
+      "duration" : 12.5,
+      "elements" :
+      [
+        {
+          "type" : "TEXT",
+          "text" : "Radix Sort",
+          "duration" : 1,
+          "font_size" : 300,
+          "font_color" : [255, 255, 255],
+          "font_type" : "Sugiono-3zqyy",
+          "start_time" : 0.0,
+          "text_align" : "center"
+        },
+        {
+          "type" : "TEXT",
+          "text" : "\n\n\na non-comparitive sorting algorithm",
+          "grid_position" :  [4, 5.5],
+          "duration" : 1,
+          "font_size" : 60,
+          "font_color" : [255, 255, 255],
+          "font_type" : "Sugiono-3zqyy",
+          "start_time" : 1.0,
+          "text_align" : "center"
+        },
+        {
+          "type" : "TEXT",
+          "text" : "\n\n\n\n\n\n\n\n(where n = number of keys and k = key length)",
+          "duration" : 0.2,
+          "font_size" : 60,
+          "font_color" : [255, 255, 255],
+          "font_type" : "Sugiono-3zqyy",
+          "start_time" : 9.5,
+          "text_align" : "center"
+        },
+        {
+          "type" : "TEXT",
+          "text" : "Best Case\n(n)",
+          "grid_position" :  [3, 6.4],
+          "duration" : 1.5,
+          "font_size" : 60,
+          "font_color" : [50, 205, 50],
+          "font_type" : "Sugiono-3zqyy",
+          "start_time" : 4.0
+        },
+        {
+          "type" : "TEXT",
+          "text" : "Average Case\n(n * k)",
+          "grid_position" :  [7, 6.4],
+          "duration" : 1.5,
+          "font_size" : 60,
+          "font_color" : [255, 217, 26],
+          "font_type" : "Sugiono-3zqyy",
+          "start_time" : 6.2
+        },
+        {
+          "type" : "TEXT",
+          "text" : "Worst Case\n(n * k)",
+          "grid_position" :  [11, 6.4],
+          "duration" : 1.5,
+          "font_size" : 60,
+          "font_color" : [199, 38, 38],
+          "font_type" : "Sugiono-3zqyy",
+          "start_time" : 8.4
+        }
+      ]
+    },
+    {
+      "scene_name" : "01_title",
+      "scene_index" : 2,
+      "duration" : 48,
       "elements" :
       [
         {
           "type" : "SHAPE",
           "shape" : "SQUARE",
           "key_frames" :  [
-            { "second" : 0, "grid_position" : [0, 0], "grid_size" : [2, 4], "opacity" : 1, "color" : [0, 0, 0] },
-            { "second" : 1, "grid_position" : [0, 0], "grid_size" : [2, 4], "opacity" : 1, "color" : [255, 255, 255] }
+            { "second" : 7, "grid_position" : [1.25, 0.5], "grid_size" : [0.24, 0.43], "opacity" : 0, "color" : [255, 234, 0] },
+            { "second" : 7.5, "grid_position" : [1.25, 0.5], "grid_size" : [0.24, 0.43], "opacity" : 1, "color" : [255, 234, 0] }
           ]
         },
         {
@@ -33,11 +102,12 @@
           "grid_position" : [0.5,0.5]
         },
         {
+          "name" : "radix_slots_01",
           "type" : "IMAGE",
           "image" : "radix_slots.png",
           "key_frames" :  [
-            { "second" : 1, "grid_position" : [0.2, 1.1],  "opacity" : 0 },
-            { "second" : 2, "grid_position" : [0.2, 1.1],  "opacity" : 1 }
+            { "second" : 9.5, "grid_position" : [0.2, 1.1],  "opacity" : 0 },
+            { "second" : 10, "grid_position" : [0.2, 1.1],  "opacity" : 1 }
           ]
         },
         {
@@ -47,15 +117,15 @@
           "font_size" : 55,
           "font_color" : [255, 255, 255],
           "font_type" : "Consolas",
-          "start_time" : 3.0,
+          "start_time" : 19.0,
           "grid_position" : [0.5,3.4]
         },
         {
           "type" : "IMAGE",
           "image" : "radix_slots.png",
           "key_frames" :  [
-            { "second" : 4, "grid_position" : [0.2, 3.9],  "opacity" : 0 },
-            { "second" : 5, "grid_position" : [0.2, 3.9],  "opacity" : 1 }
+            { "second" : 40, "grid_position" : [0.2, 3.9],  "opacity" : 0 },
+            { "second" : 41, "grid_position" : [0.2, 3.9],  "opacity" : 1 }
           ]
         },
         {
@@ -65,15 +135,26 @@
           "font_size" : 55,
           "font_color" : [255, 255, 255],
           "font_type" : "Consolas",
-          "start_time" : 3.0,
+          "start_time" : 50.0,
           "grid_position" : [0.5,6.4]
         },
         {
           "type" : "IMAGE",
           "image" : "radix_slots.png",
           "key_frames" :  [
-            { "second" : 4, "grid_position" : [0.2, 6.9],  "opacity" : 0 },
-            { "second" : 5, "grid_position" : [0.2, 6.9],  "opacity" : 1 }
+            { "second" : 51, "grid_position" : [0.2, 6.9],  "opacity" : 0 },
+            { "second" : 52, "grid_position" : [0.2, 6.9],  "opacity" : 1 }
+          ]
+        },
+        {
+          "type" : "ANIMATED_TEXT",
+          "text" : " 655",
+          "font_type" : "Consolas",
+          "key_frames" :  [
+            { "second" : 5, "grid_position" : [0.5,0.5], "opacity" : 0, "font_color" : [50, 205, 50], "font_size" : 55 },
+            { "second" : 7.5, "grid_position" : [0.5,0.5], "opacity" : 1, "font_color" : [140, 203, 128], "font_size" : 55 },
+            { "second" : 17.5, "grid_position" : [0.5,0.5], "opacity" : 1, "font_size" : 55 },
+            { "second" : 18.5, "grid_position" : [0.9,2.25], "opacity" : 1, "font_size" : 55 }
           ]
         }
       ]
