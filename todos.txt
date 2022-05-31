@@ -25,6 +25,7 @@ ToDo:
 Refactoring
 -move animation 'interpolate' to shared resource
 -see if rendering elements (such as keyframes) can be streamlined/refactored
+-remove all references to pygame out of the 'business logic'
 
 Completed:
 -render multiple images into video files

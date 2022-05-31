@@ -19,6 +19,8 @@ class Video:
         self.back_color = None
         self.debug = False
         self.start_seconds = 0
+        self.mouse_click_pos_x = None
+        self.mouse_click_pos_y = None
 
     def add_scene(self, scene):
         self.scenes.append(scene)
@@ -37,7 +39,6 @@ class Video:
         while not done_capturing:
             pygame.display.update()
 
-
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     done_capturing = True
@@ -51,10 +52,15 @@ class Video:
                         else:
                             self.playing_audio = False
                             mixer.music.stop()
+                elif event.type == pygame.MOUSEBUTTONUP:
+                    self.mouse_click_pos_x, self.mouse_click_pos_y = pygame.mouse.get_pos()
 
             clock.tick(config.FRAME_RATE)
 
             if paused:
+                if self.debug:
+                    self.render_debug_info()
+
                 self.start_seconds = self.start_seconds - (1 / config.FRAME_RATE)
                 continue
 
@@ -85,12 +91,17 @@ class Video:
 
     def render_debug_info(self):
         video_time = pygame.time.get_ticks()
-        seconds = ((video_time / 1000) % 60) + self.start_seconds
+        seconds = round(((video_time / 1000) % 60) + self.start_seconds, 2)
 
         my_font = pygame.font.SysFont('Comic Sans MS', 30)
         text_surface = my_font.render(str(seconds) + " seconds", True, config.RED)
         screen_rect = self.screen.get_rect()
-        self.screen.blit(text_surface, (0,0))
+        self.screen.blit(text_surface, (0, 0))
+
+        if self.mouse_click_pos_x and self.mouse_click_pos_y:
+            mouse_click_text_surface = my_font.render("[" + str(self.mouse_click_pos_x) + "," + str(self.mouse_click_pos_y)
+                                                      + "] position", True, config.RED)
+            self.screen.blit(mouse_click_text_surface, (text_surface.get_width() + 5, 0))
 
     def save_video_file(self, scene_file_start, scene_file_end):
         images = [img for img in os.listdir("output") if img.endswith(".png")]
