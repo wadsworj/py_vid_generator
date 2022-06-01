@@ -57,7 +57,12 @@ class Video:
                 elif event.type == pygame.MOUSEBUTTONUP:
                     self.mouse_click_pos_x, self.mouse_click_pos_y = pygame.mouse.get_pos()
                     clicked_rect = pygame.Rect(self.mouse_click_pos_x, self.mouse_click_pos_y, 1, 1)
-                    rect_clicked = [x for x in self.screen_objects if x.collidepoint(self.mouse_click_pos_x, self.mouse_click_pos_y)]
+                    rect_clicked = []
+                    for rect in self.screen_objects:
+                        center_rect = pygame.Rect(rect.centerx, rect.centery, self.resolution[0] / 128,
+                                                  self.resolution[0] / 128)
+                        if center_rect.collidepoint(self.mouse_click_pos_x, self.mouse_click_pos_y):
+                            rect_clicked.append(rect)
 
             clock.tick(config.FRAME_RATE)
 
@@ -109,6 +114,11 @@ class Video:
         if rect_clicked:
             for rect in rect_clicked:
                 pygame.draw.rect(self.screen, (0, 100, 255), rect, 3)  # width = 3
+
+        # render the center square for each surface
+        for rect in self.screen_objects:
+            center_rect = pygame.Rect(rect.centerx, rect.centery, self.resolution[0]/128, self.resolution[0]/128)
+            pygame.draw.rect(self.screen, config.RED, center_rect)  # width = 3
 
     def save_video_file(self, scene_file_start, scene_file_end):
         images = [img for img in os.listdir("output") if img.endswith(".png")]
