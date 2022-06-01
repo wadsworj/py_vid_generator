@@ -18,6 +18,7 @@ class AnimatedTextElement:
         self.text_align = None
         self.start_time = None
         self.key_frames = None
+        self.data = None
 
     def render(self, screen, scene_seconds, screen_objects):
         key_frames = Interpolator.get_previous_current_frames(self.key_frames, scene_seconds)
@@ -73,5 +74,5 @@ class AnimatedTextElement:
             rect = pygame.Rect(text_position.left, (text_position.top + (line_count * self.font_size)), text_surface.get_width(), text_surface.get_height())
             screen.blit(text_surface, rect)
 
-            screen_objects.append(rect)
+            screen_objects.append([rect, self.data])
             line_count = line_count + 1

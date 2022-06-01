@@ -23,6 +23,7 @@ class ElementBuilder:
     def build_image_element(self, data):
         element = ImageElement()
         element.image_string = data["image"]
+        element.data = data
 
         if 'position' in data:
             element.position = data["position"]
@@ -37,6 +38,8 @@ class ElementBuilder:
     def build_text_element(self, data):
         element = TextElement()
         element.text = data["text"]
+        element.data = data
+
         if 'position' in data:
             element.position = data["position"]
 
@@ -65,6 +68,7 @@ class ElementBuilder:
 
     def build_animated_text_element(self, data):
         element = AnimatedTextElement()
+        element.data = data
         element.text = data["text"]
         element.font_type = data["font_type"]
         # if "text_align" in data:
@@ -78,6 +82,7 @@ class ElementBuilder:
 
     def build_shape_element(self, data):
         element = ShapeElement()
+        element.data = data
         # if "text_align" in data:
         #     element.text_align = data["text_align"]
         element.key_frames = data["key_frames"]

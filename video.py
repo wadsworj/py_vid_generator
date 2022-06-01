@@ -58,11 +58,12 @@ class Video:
                     self.mouse_click_pos_x, self.mouse_click_pos_y = pygame.mouse.get_pos()
                     clicked_rect = pygame.Rect(self.mouse_click_pos_x, self.mouse_click_pos_y, 1, 1)
                     rect_clicked = []
-                    for rect in self.screen_objects:
+                    for rect_object in self.screen_objects:
+                        rect = rect_object[0]
                         center_rect = pygame.Rect(rect.centerx, rect.centery, self.resolution[0] / 128,
                                                   self.resolution[0] / 128)
                         if center_rect.collidepoint(self.mouse_click_pos_x, self.mouse_click_pos_y):
-                            rect_clicked.append(rect)
+                            rect_clicked.append(rect_object)
 
             clock.tick(config.FRAME_RATE)
 
@@ -103,7 +104,6 @@ class Video:
 
         my_font = pygame.font.SysFont('Comic Sans MS', 30)
         text_surface = my_font.render(str(seconds) + " seconds", True, config.RED)
-        screen_rect = self.screen.get_rect()
         self.screen.blit(text_surface, (0, 0))
 
         if self.mouse_click_pos_x and self.mouse_click_pos_y:
@@ -112,13 +112,32 @@ class Video:
             self.screen.blit(mouse_click_text_surface, (text_surface.get_width() + 5, 0))
 
         if rect_clicked:
-            for rect in rect_clicked:
+            for rect_object in rect_clicked:
+                rect = rect_object[0]
                 pygame.draw.rect(self.screen, (0, 100, 255), rect, 3)  # width = 3
 
+                count = 0
+                for x in rect_object[1]:
+                    count = count + 2
+                    text_surface = my_font.render(str(x), True, config.GREEN)
+                    self.screen.blit(text_surface, (0, text_surface.get_height() * count))
+                    if isinstance(rect_object[1][x], list):
+                        for y in rect_object[1][x]:
+                            count = count + 1
+                            text_surface = my_font.render(str(y), True, config.GREEN)
+                            self.screen.blit(text_surface, ((self.resolution[0]/8), text_surface.get_height() * count))
+                    else:
+                        count = count + 1
+                        text_surface = my_font.render(str(rect_object[1][x]), True, config.GREEN)
+                        self.screen.blit(text_surface, (self.resolution[0]/8, text_surface.get_height() * count))
+
         # render the center square for each surface
-        for rect in self.screen_objects:
+        for rect_object in self.screen_objects:
+            rect = rect_object[0]
             center_rect = pygame.Rect(rect.centerx, rect.centery, self.resolution[0]/128, self.resolution[0]/128)
             pygame.draw.rect(self.screen, config.RED, center_rect)  # width = 3
+
+
 
     def save_video_file(self, scene_file_start, scene_file_end):
         images = [img for img in os.listdir("output") if img.endswith(".png")]
