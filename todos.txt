@@ -1,12 +1,12 @@
-ToDo:
--switch from using clock to using frame count to avoid rendering lagging (can't gaurentee realtime rendering)
+ToDo
+---------------
+-switch from using clock to using frame count to avoid rendering lagging (can't guarantee realtime rendering)
 -consider how to easily time stamp multiple audio files
--auto export a timeline to davinchi resolve
+-auto export a timeline to DaVinchi resolve
 -add transitions between scenes
 -play video files
 
 -text items
-    -colored text
     -bold text (css? tags?)
 
 -scale images/text with animation
@@ -22,13 +22,20 @@ ToDo:
 -add color names (ie 'light green') that maps to pre-defined colors
 -add html color codes
 
+
 Refactoring
+---------------
+
 -move animation 'interpolate' to shared resource
 -see if rendering elements (such as keyframes) can be streamlined/refactored
 -remove all references to pygame out of the 'business logic'
 
-Completed:
+
+Completed
+---------------
 -render multiple images into video files
 -fix duration on multi-line text element
 -add images
 -'pause' button
+
+-colored text

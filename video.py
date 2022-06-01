@@ -71,8 +71,6 @@ class Video:
 
             self.screen.fill(self.back_color)
 
-
-
             if self.current_scene:
                 if self.debug:
                     self.render_debug_info()
