@@ -21,6 +21,7 @@ class Video:
         self.start_seconds = 0
         self.mouse_click_pos_x = None
         self.mouse_click_pos_y = None
+        self.screen_objects = []
 
     def add_scene(self, scene):
         self.scenes.append(scene)
@@ -35,6 +36,7 @@ class Video:
         self.current_scene = self.scenes.pop(0)
         clock = pygame.time.Clock()
         paused = False
+        rect_clicked = None
 
         while not done_capturing:
             pygame.display.update()
@@ -54,12 +56,14 @@ class Video:
                             mixer.music.stop()
                 elif event.type == pygame.MOUSEBUTTONUP:
                     self.mouse_click_pos_x, self.mouse_click_pos_y = pygame.mouse.get_pos()
+                    clicked_rect = pygame.Rect(self.mouse_click_pos_x, self.mouse_click_pos_y, 1, 1)
+                    rect_clicked = [x for x in self.screen_objects if x.collidepoint(self.mouse_click_pos_x, self.mouse_click_pos_y)]
 
             clock.tick(config.FRAME_RATE)
 
             if paused:
                 if self.debug:
-                    self.render_debug_info()
+                    self.render_debug_info(rect_clicked)
 
                 self.start_seconds = self.start_seconds - (1 / config.FRAME_RATE)
                 continue
@@ -73,9 +77,10 @@ class Video:
 
             if self.current_scene:
                 if self.debug:
-                    self.render_debug_info()
+                    self.render_debug_info(rect_clicked)
 
-                self.current_scene.render(self.screen, self.start_seconds)
+                self.screen_objects = []
+                self.current_scene.render(self.screen, self.start_seconds, self.screen_objects)
 
                 if self.current_scene.finished:
                     # self.save_video_file(scene_file_start, file_num)
@@ -87,7 +92,7 @@ class Video:
                     else:
                         return
 
-    def render_debug_info(self):
+    def render_debug_info(self, rect_clicked):
         video_time = pygame.time.get_ticks()
         seconds = round(((video_time / 1000) % 60) + self.start_seconds, 2)
 
@@ -100,6 +105,10 @@ class Video:
             mouse_click_text_surface = my_font.render("[" + str(self.mouse_click_pos_x) + "," + str(self.mouse_click_pos_y)
                                                       + "] position", True, config.RED)
             self.screen.blit(mouse_click_text_surface, (text_surface.get_width() + 5, 0))
+
+        if rect_clicked:
+            for rect in rect_clicked:
+                pygame.draw.rect(self.screen, (0, 100, 255), rect, 3)  # width = 3
 
     def save_video_file(self, scene_file_start, scene_file_end):
         images = [img for img in os.listdir("output") if img.endswith(".png")]

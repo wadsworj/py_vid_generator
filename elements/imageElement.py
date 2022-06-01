@@ -14,7 +14,7 @@ class ImageElement:
         self.image_string = None
         self.image = None
 
-    def render(self, screen, scene_seconds):
+    def render(self, screen, scene_seconds, screen_objects):
         if not self.image:
             self.image = pygame.image.load("images/" + self.image_string)
 
@@ -46,4 +46,7 @@ class ImageElement:
             current_opacity = 1
 
         self.image.set_alpha(current_opacity * 255)
+        rect = pygame.Rect(current_position[0], current_position[1], self.image.get_width(), self.image.get_height())
         screen.blit(self.image, (current_position[0], current_position[1]))
+
+        screen_objects.append(rect)

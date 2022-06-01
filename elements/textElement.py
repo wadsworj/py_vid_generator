@@ -21,7 +21,7 @@ class TextElement:
         self.text_align = None
         self.start_time = None
 
-    def render(self, screen, scene_seconds):
+    def render(self, screen, scene_seconds, screen_objects):
         if self.start_time and self.start_time > scene_seconds:
             return
 
@@ -70,7 +70,10 @@ class TextElement:
                 text_position = pygame.Rect(self.position[0], self.position[1], screen_rect.width, screen_rect.height)
 
             text_surface = my_font.render(line[0:current_line_end], True, self.font_color)
-            screen.blit(text_surface, (text_position.left, (text_position.top + (line_count * self.font_size))))
+            rect = pygame.Rect(text_position.left, (text_position.top + (line_count * self.font_size)), text_surface.get_width(), text_surface.get_height())
+            screen.blit(text_surface, rect)
+            screen_objects.append(rect)
+
             line_count = line_count + 1
 
             previous_line = len(line) + previous_line

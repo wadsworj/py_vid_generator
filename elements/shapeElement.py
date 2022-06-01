@@ -13,7 +13,7 @@ class ShapeElement:
         self.count = 0
         self.key_frames = None
 
-    def render(self, screen, scene_seconds):
+    def render(self, screen, scene_seconds, screen_objects):
         key_frames = Interpolator.get_previous_current_frames(self.key_frames, scene_seconds)
 
         screen_rect = screen.get_rect()
@@ -56,3 +56,5 @@ class ShapeElement:
         s.set_alpha(int(current_opacity * 255))
         s.fill(current_color)
         screen.blit(s, current_position)
+
+        screen_objects.append(s.get_rect())
