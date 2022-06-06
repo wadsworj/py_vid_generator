@@ -1,6 +1,4 @@
-from elements.elementBuilder import ElementBuilder
-from elements.textElement import TextElement
-from scene import Scene
+from code.scene import Scene
 
 
 class SceneBuilder:

@@ -1,6 +1,6 @@
 import pygame
 
-from video import Video
+from code.video import Video
 
 
 class VideoBuilder:

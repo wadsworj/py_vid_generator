@@ -1,10 +1,8 @@
 import math
+import os
 from os.path import exists
-
+from code.config import config
 import pygame
-
-import config
-
 
 class TextElement:
     def __init__(self):
@@ -48,10 +46,11 @@ class TextElement:
             if current - previous_line > 0:
                 current_line_end = current - previous_line
 
-            font_exists = exists("fonts/" + self.font_type + ".ttf")
+            font_path = os.path.join(config.RESOURCES_LOCATION, config.RESOURCES_FONTS_LOCATION, self.font_type + ".ttf")
+            font_exists = exists(font_path)
 
             if font_exists:
-                my_font = pygame.font.Font("fonts/" + self.font_type + ".ttf", self.font_size)
+                my_font = pygame.font.Font(font_path, self.font_size)
             else:
                 my_font = pygame.font.SysFont(self.font_type, self.font_size)
 

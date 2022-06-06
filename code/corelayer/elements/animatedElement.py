@@ -1,10 +1,12 @@
-import math
 from os.path import exists
 
 import pygame
+from code.config import config
 
-import config
-from interpolator import Interpolator
+try:
+    from code.corelayer.helpers.interpolator import Interpolator
+except ModuleNotFoundError:
+    from ..helpers.interpolator import Interpolator
 
 
 class AnimatedTextElement:

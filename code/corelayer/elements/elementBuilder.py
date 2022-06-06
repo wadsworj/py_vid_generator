@@ -1,8 +1,13 @@
-from elements.animatedElement import AnimatedTextElement
-from elements.imageElement import ImageElement
-from elements.shapeElement import ShapeElement
-from elements.textElement import TextElement
-
+try:
+    from animatedElement import AnimatedTextElement
+    from imageElement import ImageElement
+    from shapeElement import ShapeElement
+    from textElement import TextElement
+except ImportError:
+    from .animatedElement import AnimatedTextElement
+    from .imageElement import ImageElement
+    from .shapeElement import ShapeElement
+    from .textElement import TextElement
 
 class ElementBuilder:
     def __init__(self):
@@ -71,8 +76,8 @@ class ElementBuilder:
         element.data = data
         element.text = data["text"]
         element.font_type = data["font_type"]
-        # if "text_align" in data:
-        #     element.text_align = data["text_align"]
+        # if "text_align" in datalayer:
+        #     element.text_align = datalayer["text_align"]
         element.key_frames = data["key_frames"]
 
         if "font_color" in data:
@@ -83,8 +88,8 @@ class ElementBuilder:
     def build_shape_element(self, data):
         element = ShapeElement()
         element.data = data
-        # if "text_align" in data:
-        #     element.text_align = data["text_align"]
+        # if "text_align" in datalayer:
+        #     element.text_align = datalayer["text_align"]
         element.key_frames = data["key_frames"]
 
         if "font_color" in data:

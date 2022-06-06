@@ -1,10 +1,9 @@
 import os
 import pygame
-from pygame.locals import *
 import cv2
-import config
+from code import config
 from pygame import mixer
-
+from code.config import config
 
 class Video:
     def __init__(self):
@@ -152,7 +151,8 @@ class Video:
         images = [img for img in os.listdir(image_path) if img.endswith(".png")]
         frame = cv2.imread(os.path.join(image_path, images[0]))
         fourcc = cv2.VideoWriter_fourcc(*'XVID')
-        video = cv2.VideoWriter(config.OUTPUT_VIDEO_LOCATION + str(scene_file_start) + "_" + str(scene_file_end) + ".avi", fourcc, config.FRAME_RATE, (self.resolution[0], self.resolution[1]))
+        video = cv2.VideoWriter(
+            config.OUTPUT_VIDEO_LOCATION + str(scene_file_start) + "_" + str(scene_file_end) + ".avi", fourcc, config.FRAME_RATE, (self.resolution[0], self.resolution[1]))
 
         for image in images[scene_file_start:scene_file_end]:
             video.write(cv2.imread(os.path.join(image_path, image)))

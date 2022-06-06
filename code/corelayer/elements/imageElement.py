@@ -1,9 +1,8 @@
 import os
 
 import pygame
-import config
-from interpolator import Interpolator
-
+from config import config
+from code.corelayer.helpers.interpolator import Interpolator
 
 class ImageElement:
     def __init__(self):
