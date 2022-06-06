@@ -1,7 +1,7 @@
 import pygame
 
 try:
-    from code.corelayer.helpers.interpolator import Interpolator
+    from src.corelayer.helpers.interpolator import Interpolator
 except ModuleNotFoundError:
     from ..helpers.interpolator import Interpolator
 

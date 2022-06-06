@@ -1,4 +1,4 @@
-from code.scene import Scene
+from src.scene import Scene
 
 
 class SceneBuilder:

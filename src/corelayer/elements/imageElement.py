@@ -2,7 +2,7 @@ import os
 
 import pygame
 from config import config
-from code.corelayer.helpers.interpolator import Interpolator
+from src.corelayer.helpers.interpolator import Interpolator
 
 class ImageElement:
     def __init__(self):

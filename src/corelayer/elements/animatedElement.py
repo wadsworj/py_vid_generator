@@ -1,10 +1,10 @@
 from os.path import exists
 
 import pygame
-from code.config import config
+from src.config import config
 
 try:
-    from code.corelayer.helpers.interpolator import Interpolator
+    from src.corelayer.helpers.interpolator import Interpolator
 except ModuleNotFoundError:
     from ..helpers.interpolator import Interpolator
 

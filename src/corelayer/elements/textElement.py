@@ -1,10 +1,10 @@
 import math
 import os
 from os.path import exists
-from code.config import config
+from src.config import config
 import pygame
 
-from code.corelayer.renderers.pygame.textrenderer import TextRenderer
+from src.corelayer.renderers.pygame.textrenderer import TextRenderer
 
 class TextElement:
     def __init__(self):

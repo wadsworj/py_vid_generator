@@ -1,7 +1,7 @@
 import math
 import os
 from os.path import exists
-from code.config import config
+from src.config import config
 import pygame
 
 class TextRenderer:

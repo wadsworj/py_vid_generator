@@ -1,6 +1,8 @@
 import pygame
 
-from code.video import Video
+from src.corelayer.elements.elementBuilder import ElementBuilder
+from src.sceneBuilder import SceneBuilder
+from src.video import Video
 
 
 class VideoBuilder:
@@ -23,4 +25,11 @@ class VideoBuilder:
             video.debug = data['debug']
 
         video.back_color = data["back_color"]
+
+        scene_builder = SceneBuilder(ElementBuilder())
+
+        for data_scene in data["scenes"][data["start_scene"]:]:
+            scene = scene_builder.build(data_scene)
+            video.add_scene(scene)
+
         return video

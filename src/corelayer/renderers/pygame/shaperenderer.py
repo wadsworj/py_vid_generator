@@ -2,8 +2,8 @@ import os
 from os.path import exists
 
 import pygame
-from code.config import config
-from code.corelayer.helpers.interpolator import Interpolator
+from src.config import config
+from src.corelayer.helpers.interpolator import Interpolator
 
 
 class ShapeRenderer:

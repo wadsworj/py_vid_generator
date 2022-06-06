@@ -1,9 +1,11 @@
 import os
 import pygame
 import cv2
-from code import config
+from src import config
 from pygame import mixer
-from code.config import config
+from src.config import config
+from src.corelayer.helpers.frametoseconds import FrameToSeconds
+
 
 class Video:
     def __init__(self):
@@ -17,7 +19,6 @@ class Video:
         self.playing_audio = False
         self.back_color = None
         self.debug = False
-        self.start_seconds = 0
         self.mouse_click_pos_x = None
         self.mouse_click_pos_y = None
         self.screen_objects = []
@@ -25,8 +26,9 @@ class Video:
     def add_scene(self, scene):
         self.scenes.append(scene)
 
-    def render(self):
-        self.play_audio()
+    def render(self, preview):
+        frame = 0
+        self.play_audio(frame)
 
         done_capturing = False
 
@@ -34,6 +36,7 @@ class Video:
         scene_file_start = 1
         self.current_scene = self.scenes.pop(0)
         clock = pygame.time.Clock()
+        current_scene_start = pygame.time.get_ticks()
         paused = False
         rect_clicked = None
 
@@ -49,10 +52,11 @@ class Video:
                     elif event.key == pygame.K_SPACE:
                         paused = not paused
                         if not paused:
-                            self.play_audio()
+                            self.play_audio(frame)
                         else:
                             self.playing_audio = False
                             mixer.music.stop()
+
                 elif event.type == pygame.MOUSEBUTTONUP:
                     self.mouse_click_pos_x, self.mouse_click_pos_y = pygame.mouse.get_pos()
                     clicked_rect = pygame.Rect(self.mouse_click_pos_x, self.mouse_click_pos_y, 1, 1)
@@ -68,10 +72,13 @@ class Video:
 
             if paused:
                 if self.debug:
-                    self.render_debug_info(rect_clicked)
-
-                self.start_seconds = self.start_seconds - (1 / config.FRAME_RATE)
+                    self.render_debug_info(rect_clicked, frame)
                 continue
+
+            if preview:
+                frame = ((pygame.time.get_ticks() - current_scene_start) / 1000) * config.FRAME_RATE
+            else:
+                frame = frame + 1
 
             file_num = file_num + 1
             # Save every frame
@@ -80,29 +87,29 @@ class Video:
 
             self.screen.fill(self.back_color)
 
-            if self.current_scene:
-                if self.debug:
-                    self.render_debug_info(rect_clicked)
+            if not self.current_scene:
+                return
 
-                self.screen_objects = []
-                self.current_scene.render(self.screen, self.start_seconds, self.screen_objects)
+            if self.debug:
+                self.render_debug_info(rect_clicked, frame)
 
-                if self.current_scene.finished:
-                    # self.save_video_file(scene_file_start, file_num)
-                    # scene_file_start = file_num + 1
+            self.screen_objects = []
+            self.current_scene.render(self.screen, frame, self.screen_objects)
 
-                    if self.scenes:
-                        self.current_scene = self.scenes.pop(0)
-                        self.start_seconds = 0
-                    else:
-                        return
+            if self.current_scene.finished:
+                # self.save_video_file(scene_file_start, file_num)
+                # scene_file_start = file_num + 1
 
-    def render_debug_info(self, rect_clicked):
-        video_time = pygame.time.get_ticks()
-        seconds = round(((video_time / 1000) % 60) + self.start_seconds, 2)
+                if self.scenes:
+                    self.current_scene = self.scenes.pop(0)
+                    current_scene_start = pygame.time.get_ticks()
+                else:
+                    return
 
+    def render_debug_info(self, rect_clicked, frame):
         my_font = pygame.font.SysFont('Comic Sans MS', 30)
-        text_surface = my_font.render(str(seconds) + " seconds", True, config.RED)
+        seconds = FrameToSeconds.convert_frame_to_seconds(frame)
+        text_surface = my_font.render(str(frame) + " frame " + str(seconds) + " seconds", True, config.RED)
         self.screen.blit(text_surface, (0, 0))
 
         if self.mouse_click_pos_x and self.mouse_click_pos_y:
@@ -160,21 +167,18 @@ class Video:
         cv2.destroyAllWindows()
         video.release()
 
-    def play_audio(self):
+    def play_audio(self, frame):
         # play music if it is configured
-        if self.audio_file and not self.playing_audio:
-            count = 0
-            mixer.init()
-            for audio in self.audio_file:
-                mixer.music.load(os.path.join(config.RESOURCES_LOCATION, "audio", audio))
-                # Setting the volume
-                if count > 0:
-                    mixer.music.set_volume(0.5)
+        if not self.audio_file or self.playing_audio:
+            return
 
-                video_time = pygame.time.get_ticks()
-                seconds = ((video_time / 1000) % 60) + self.start_seconds
+        mixer.init()
+        for audio in self.audio_file:
+            mixer.music.load(os.path.join(config.RESOURCES_LOCATION, "audio", audio))
 
-                # Start playing the song
-                mixer.music.play()
-                mixer.music.set_pos(seconds)
-                count = count + 1
+            # translate frames to seconds
+            frame_second = FrameToSeconds.convert_frame_to_seconds(frame)
+
+            # Start playing the song
+            mixer.music.play()
+            mixer.music.set_pos(frame_second)
