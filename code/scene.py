@@ -21,7 +21,7 @@ class Scene:
         seconds = (scene_time / 1000) + start_seconds
 
         for element in self.elements:
-            element.render(screen, seconds, screen_objects)
+            element.renderer.render(element, screen, seconds, screen_objects)
 
         if self.duration <= seconds:
             self.finished = True

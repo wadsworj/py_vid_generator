@@ -1,3 +1,8 @@
+from ..renderers.pygame.animatedtextrenderer import AnimatedTextRenderer
+from ..renderers.pygame.imagerenderer import ImageRenderer
+from ..renderers.pygame.shaperenderer import ShapeRenderer
+from ..renderers.pygame.textrenderer import TextRenderer
+
 try:
     from animatedElement import AnimatedTextElement
     from imageElement import ImageElement
@@ -38,6 +43,8 @@ class ElementBuilder:
 
         if 'grid_position' in data:
             element.grid_position = data["grid_position"]
+
+        element.renderer = ImageRenderer()
         return element
 
     def build_text_element(self, data):
@@ -47,28 +54,22 @@ class ElementBuilder:
 
         if 'position' in data:
             element.position = data["position"]
-
         if 'grid_position' in data:
             element.grid_position = data["grid_position"]
-
         if 'duration' in data:
             element.duration = data["duration"]
-
         if 'font_size' in data:
             element.font_size = data["font_size"]
-
         if 'font_type' in data:
             element.font_type = data["font_type"]
-
         if 'text_align' in data:
             element.text_align = data["text_align"]
-
         if 'start_time' in data:
             element.start_time = data["start_time"]
-
         if "font_color" in data:
             element.font_color = data["font_color"]
 
+        element.renderer = TextRenderer()
         return element
 
     def build_animated_text_element(self, data):
@@ -82,7 +83,7 @@ class ElementBuilder:
 
         if "font_color" in data:
             element.font_color = data["font_color"]
-
+        element.renderer = AnimatedTextRenderer()
         return element
 
     def build_shape_element(self, data):
@@ -94,5 +95,5 @@ class ElementBuilder:
 
         if "font_color" in data:
             element.font_color = data["font_color"]
-
+        element.renderer = ShapeRenderer()
         return element

@@ -3,7 +3,7 @@
   "resolution" : [1920, 1080],
   "audio" : ["radix_sort.mp3"],
   "start_scene" : 0,
-  "start_seconds" : 10,
+  "start_seconds" : 0,
   "back_color" : [20, 20, 20],
   "debug" : true,
   "scenes" :
@@ -26,7 +26,7 @@
         },
         {
           "type" : "TEXT",
-          "text" : "\n\n\na non-comparitive sorting algorithm",
+          "text" : "\n\n\na non-comparative sorting algorithm",
           "grid_position" :  [4, 5.5],
           "duration" : 1,
           "font_size" : 60,
