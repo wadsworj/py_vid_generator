@@ -116,6 +116,14 @@ class Video:
                 rect = rect_object[0]
                 pygame.draw.rect(self.screen, (0, 100, 255), rect, 3)  # width = 3
 
+                if "key_frames" in rect_object[1]:
+                    for key_frame in rect_object[1]["key_frames"]:
+                        if "grid_position" in key_frame:
+                            grid_position_center_rect = pygame.Rect(key_frame["grid_position"][0] * (self.resolution[0] / 16), key_frame["grid_position"][1] * (self.resolution[1] / 9), self.resolution[0] / 128,
+                                                      self.resolution[0] / 128)
+
+                            pygame.draw.rect(self.screen, config.GREEN, grid_position_center_rect, 3)  # width = 3
+
                 count = 0
                 for x in rect_object[1]:
                     count = count + 2
