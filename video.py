@@ -76,7 +76,7 @@ class Video:
 
             file_num = file_num + 1
             # Save every frame
-            filename = "output/%04d.png" % file_num
+            filename = os.path.join(config.OUTPUT_LOCATION, config.OUTPUT_FRAMES_LOCATION, "%04d.png" % file_num)
             pygame.image.save(self.screen, filename)
 
             self.screen.fill(self.back_color)
@@ -148,13 +148,14 @@ class Video:
 
 
     def save_video_file(self, scene_file_start, scene_file_end):
-        images = [img for img in os.listdir("output") if img.endswith(".png")]
-        frame = cv2.imread(os.path.join("output", images[0]))
+        image_path = os.path.join(config.OUTPUT_LOCATION, config.OUTPUT_FRAMES_LOCATION)
+        images = [img for img in os.listdir(image_path) if img.endswith(".png")]
+        frame = cv2.imread(os.path.join(image_path, images[0]))
         fourcc = cv2.VideoWriter_fourcc(*'XVID')
-        video = cv2.VideoWriter("output_video/" + str(scene_file_start) + "_" + str(scene_file_end) + ".avi", fourcc, config.FRAME_RATE, (self.resolution[0], self.resolution[1]))
+        video = cv2.VideoWriter(config.OUTPUT_VIDEO_LOCATION + str(scene_file_start) + "_" + str(scene_file_end) + ".avi", fourcc, config.FRAME_RATE, (self.resolution[0], self.resolution[1]))
 
         for image in images[scene_file_start:scene_file_end]:
-            video.write(cv2.imread(os.path.join("output", image)))
+            video.write(cv2.imread(os.path.join(image_path, image)))
 
         cv2.destroyAllWindows()
         video.release()
@@ -165,7 +166,7 @@ class Video:
             count = 0
             mixer.init()
             for audio in self.audio_file:
-                mixer.music.load("audio/" + audio)
+                mixer.music.load(os.path.join(config.RESOURCES_LOCATION, "audio", audio))
                 # Setting the volume
                 if count > 0:
                     mixer.music.set_volume(0.5)

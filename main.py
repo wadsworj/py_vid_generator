@@ -16,7 +16,7 @@ pygame.init()
 pygame.camera.init()
 pygame.font.init()  # you have to call this at the start,
 
-with open('videoScripts/radix_sort_02.json') as data_file:
+with open('resources/videoScripts/radix_sort_02.json') as data_file:
     data = json.load(data_file)
 
 video_builder = VideoBuilder()

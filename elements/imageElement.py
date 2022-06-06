@@ -1,3 +1,5 @@
+import os
+
 import pygame
 import config
 from interpolator import Interpolator
@@ -17,7 +19,8 @@ class ImageElement:
 
     def render(self, screen, scene_seconds, screen_objects):
         if not self.image:
-            self.image = pygame.image.load("images/" + self.image_string)
+            image_location = os.path.join(config.RESOURCES_LOCATION, "images", self.image_string)
+            self.image = pygame.image.load(image_location)
 
         key_frames = Interpolator.get_previous_current_frames(self.key_frames, scene_seconds)
 
