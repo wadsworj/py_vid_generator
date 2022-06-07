@@ -22,6 +22,13 @@ class Video:
         self.mouse_click_pos_x = None
         self.mouse_click_pos_y = None
         self.screen_objects = []
+        self.done_capturing = False
+        self.file_num = 0
+        self.frames_since_start = 0
+        self.current_scene_start = None
+        self.rect_clicked = None
+        self.paused = False
+        self.paused_frame = None
 
     def add_scene(self, scene):
         self.scenes.append(scene)
@@ -29,95 +36,53 @@ class Video:
     def render(self, preview):
         frame = 0
         self.play_audio(frame)
-
-        done_capturing = False
-        frames_since_start = 0
-        file_num = 0
-        scene_file_start = 1
         self.current_scene = self.scenes.pop(0)
-        clock = pygame.time.Clock()
-        current_scene_start = pygame.time.get_ticks()
-        paused = False
-        rect_clicked = None
 
-        while not done_capturing:
+        clock = pygame.time.Clock()
+        self.current_scene_start = pygame.time.get_ticks()
+
+        while not self.done_capturing and self.current_scene:
             pygame.display.update()
 
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    done_capturing = True
-                elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE:
-                        done_capturing = True
-                    elif event.key == pygame.K_SPACE:
-                        paused = not paused
-                        if paused:
-                            paused_frame = pygame.time.get_ticks()
-                            self.playing_audio = False
-                            mixer.music.stop()
-                    elif event.key == pygame.K_LEFT:
-                        paused_frame = paused_frame - FrameToSeconds.convert_frame_to_seconds(1) * 1000
-                    elif event.key == pygame.K_PAGEDOWN:
-                        paused_frame = paused_frame - FrameToSeconds.convert_frame_to_seconds(10) * 1000
-                    elif event.key == pygame.K_RIGHT:
-                        paused_frame = paused_frame + FrameToSeconds.convert_frame_to_seconds(1) * 1000
-                    elif event.key == pygame.K_PAGEUP:
-                        paused_frame = paused_frame + FrameToSeconds.convert_frame_to_seconds(10) * 1000
-
-
-                elif event.type == pygame.MOUSEBUTTONUP:
-                    self.mouse_click_pos_x, self.mouse_click_pos_y = pygame.mouse.get_pos()
-                    clicked_rect = pygame.Rect(self.mouse_click_pos_x, self.mouse_click_pos_y, 1, 1)
-                    rect_clicked = []
-                    for rect_object in self.screen_objects:
-                        rect = rect_object[0]
-                        center_rect = pygame.Rect(rect.centerx, rect.centery, self.resolution[0] / 128,
-                                                  self.resolution[0] / 128)
-                        if center_rect.collidepoint(self.mouse_click_pos_x, self.mouse_click_pos_y):
-                            rect_clicked.append(rect_object)
+            events = pygame.event.get()
+            self.handle_events(events)
 
             clock.tick(config.FRAME_RATE)
 
-            if paused:
-                gap = pygame.time.get_ticks() - paused_frame
-                restart_frame = max((pygame.time.get_ticks() - current_scene_start) - gap, 0)
-                current_scene_start = pygame.time.get_ticks() - restart_frame
-                paused_frame = pygame.time.get_ticks()
+            frame = self.determine_current_frame(preview, frame)
 
-            if preview:
-                frame = ((pygame.time.get_ticks() - current_scene_start) / 1000) * config.FRAME_RATE
-            else:
-                frame = frame + 1
-
-            if not paused:
-                self.play_audio(frame + frames_since_start)
-
-            file_num = file_num + 1
-            # Save every frame
-            filename = os.path.join(config.OUTPUT_LOCATION, config.OUTPUT_FRAMES_LOCATION, "%04d.png" % file_num)
-            pygame.image.save(self.screen, filename)
+            if not self.paused:
+                self.play_audio(frame + self.frames_since_start)
+                self.file_num = self.file_num + 1
+                self.save_image_file(self.file_num)
 
             self.screen.fill(self.back_color)
 
-            if not self.current_scene:
-                return
-
             if self.debug:
-                self.render_debug_info(rect_clicked, frame)
+                self.render_debug_info(self.rect_clicked, frame)
 
             self.screen_objects = []
             self.current_scene.render(self.screen, frame, self.screen_objects)
 
+            # if the current scene is finished then we need to load the next scene
             if self.current_scene.finished:
-                # self.save_video_file(scene_file_start, file_num)
-                # scene_file_start = file_num + 1
-
                 if self.scenes:
-                    frames_since_start = frames_since_start + frame
+                    self.frames_since_start = self.frames_since_start + frame
                     self.current_scene = self.scenes.pop(0)
-                    current_scene_start = pygame.time.get_ticks()
+                    self.current_scene_start = pygame.time.get_ticks()
                 else:
                     return
+
+    def handle_mouse_click(self):
+        self.mouse_click_pos_x, self.mouse_click_pos_y = pygame.mouse.get_pos()
+        rect_clicked = []
+        for rect_object in self.screen_objects:
+            rect = rect_object[0]
+            center_rect = pygame.Rect(rect.centerx, rect.centery, self.resolution[0] / 128,
+                                      self.resolution[0] / 128)
+            if center_rect.collidepoint(self.mouse_click_pos_x, self.mouse_click_pos_y):
+                rect_clicked.append(rect_object)
+        return rect_clicked
 
     def render_debug_info(self, rect_clicked, frame):
         my_font = pygame.font.SysFont('Comic Sans MS', 30)
@@ -164,7 +129,10 @@ class Video:
             center_rect = pygame.Rect(rect.centerx, rect.centery, self.resolution[0]/128, self.resolution[0]/128)
             pygame.draw.rect(self.screen, config.RED, center_rect)  # width = 3
 
-
+    def save_image_file(self, file_num):
+        # Save every frame
+        filename = os.path.join(config.OUTPUT_LOCATION, config.OUTPUT_FRAMES_LOCATION, "%04d.png" % file_num)
+        pygame.image.save(self.screen, filename)
 
     def save_video_file(self, scene_file_start, scene_file_end):
         image_path = os.path.join(config.OUTPUT_LOCATION, config.OUTPUT_FRAMES_LOCATION)
@@ -196,3 +164,44 @@ class Video:
             mixer.music.play()
             mixer.music.set_pos(frame_second)
         self.playing_audio = True
+
+    def handle_events(self, events):
+        for event in events:
+            if event.type == pygame.QUIT:
+                self.done_capturing = True
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    self.done_capturing = True
+                elif event.key == pygame.K_SPACE:
+                    self.paused = not self.paused
+                    if self.paused:
+                        self.paused_frame = pygame.time.get_ticks()
+                        self.playing_audio = False
+                        mixer.music.stop()
+                elif event.key == pygame.K_LEFT:
+                    self.paused_frame = self.paused_frame - FrameToSeconds.convert_frame_to_milliseconds(1)
+                elif event.key == pygame.K_PAGEDOWN:
+                    self.paused_frame = self.paused_frame - FrameToSeconds.convert_frame_to_milliseconds(10)
+                elif event.key == pygame.K_RIGHT:
+                    self.paused_frame = self.paused_frame + FrameToSeconds.convert_frame_to_milliseconds(1)
+                elif event.key == pygame.K_PAGEUP:
+                    self.paused_frame = self.paused_frame + FrameToSeconds.convert_frame_to_milliseconds(10)
+
+            elif event.type == pygame.MOUSEBUTTONUP:
+                self.rect_clicked = self.handle_mouse_click()
+
+    def determine_current_frame(self, preview, frame):
+        if self.paused:
+            self.determine_paused_frame_offset()
+
+        if preview:
+            return ((pygame.time.get_ticks() - self.current_scene_start) / 1000) * config.FRAME_RATE
+        else:
+            return frame + 1
+
+    def determine_paused_frame_offset(self):
+        paused_gap = pygame.time.get_ticks() - self.paused_frame
+        restart_frame = max((pygame.time.get_ticks() - self.current_scene_start) - paused_gap, 0)
+        self.current_scene_start = pygame.time.get_ticks() - restart_frame
+        self.paused_frame = pygame.time.get_ticks()
+
