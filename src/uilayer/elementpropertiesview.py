@@ -1,6 +1,7 @@
 import pygame
 import pygame_gui
 
+from src.uilayer.controls.label import Label
 from src.uilayer.controls.textbox import TextBox
 from src.config import config
 
@@ -16,11 +17,17 @@ class ElementPropertiesView:
         spacing = 0
 
         for key in element:
+            self.add_label(key, spacing)
             self.add_text_box(self.element[key], spacing, None)
             spacing += 30
 
+    def add_label(self, text, spacing):
+        # position: Tuple[float, float] = (0, 0), text: str = "label"):
+        label = Label([x_offset + padding, y_offset + padding + spacing], text)
+        self.controls.append(label)
+
     def add_text_box(self, text, spacing, command):
-        text_box = TextBox([x_offset + padding, y_offset + padding + spacing, 200, 30],
+        text_box = TextBox([x_offset + padding + x_offset, y_offset + padding + spacing, 200, 30],
                            command=command,
                            active=False)
 
@@ -50,3 +57,4 @@ class ElementPropertiesView:
         for control in self.controls:
             control.update()
             control.draw(self.screen)
+

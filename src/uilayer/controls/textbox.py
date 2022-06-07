@@ -21,7 +21,7 @@ class TextBox(object):
         self.blink_timer = 0.0
         self.process_kwargs(kwargs)
 
-    def process_kwargs(self,kwargs):
+    def process_kwargs(self, kwargs):
         defaults = {"id" : None,
                     "command" : None,
                     "active" : True,
@@ -40,7 +40,7 @@ class TextBox(object):
                 raise KeyError("InputBox accepts no keyword {}.".format(kwarg))
         self.__dict__.update(defaults)
 
-    def get_event(self,event):
+    def get_event(self, event):
         if event.type == pg.KEYDOWN and self.active:
             if event.key in (pg.K_RETURN,pg.K_KP_ENTER):
                 self.execute()
@@ -76,7 +76,7 @@ class TextBox(object):
             self.blink = not self.blink
             self.blink_timer = pg.time.get_ticks()
 
-    def draw(self,surface):
+    def draw(self, surface):
         outline_color = self.active_color if self.active else self.outline_color
         outline = self.rect.inflate(self.outline_width*2,self.outline_width*2)
         surface.fill(outline_color,outline)
