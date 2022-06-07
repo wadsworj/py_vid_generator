@@ -1,10 +1,5 @@
-import math
-import os
-from os.path import exists
 from src.config import config
-import pygame
 
-from src.corelayer.renderers.pygame.textrenderer import TextRenderer
 
 class TextElement:
     def __init__(self):

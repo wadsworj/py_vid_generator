@@ -1,12 +1,4 @@
-from os.path import exists
-
-import pygame
 from src.config import config
-
-try:
-    from src.corelayer.helpers.interpolator import Interpolator
-except ModuleNotFoundError:
-    from ..helpers.interpolator import Interpolator
 
 
 class AnimatedTextElement:

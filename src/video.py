@@ -123,11 +123,7 @@ class Video:
                         text_surface = my_font.render(str(rect_object[1][x]), True, config.GREEN)
                         self.screen.blit(text_surface, (self.resolution[0]/8, text_surface.get_height() * count))
 
-        # render the center square for each surface
-        for rect_object in self.screen_objects:
-            rect = rect_object[0]
-            center_rect = pygame.Rect(rect.centerx, rect.centery, self.resolution[0]/128, self.resolution[0]/128)
-            pygame.draw.rect(self.screen, config.RED, center_rect)  # width = 3
+        self.render_center_square_each_surface()
 
     def save_image_file(self, file_num):
         # Save every frame
@@ -204,4 +200,10 @@ class Video:
         restart_frame = max((pygame.time.get_ticks() - self.current_scene_start) - paused_gap, 0)
         self.current_scene_start = pygame.time.get_ticks() - restart_frame
         self.paused_frame = pygame.time.get_ticks()
+
+    def render_center_square_each_surface(self):
+        for rect_object in self.screen_objects:
+            rect = rect_object[0]
+            center_rect = pygame.Rect(rect.centerx, rect.centery, self.resolution[0] / 128, self.resolution[0] / 128)
+            pygame.draw.rect(self.screen, config.RED, center_rect)  # width = 3
 

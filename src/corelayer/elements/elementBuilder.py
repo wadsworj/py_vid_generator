@@ -1,18 +1,12 @@
-from ..renderers.pygame.animatedtextrenderer import AnimatedTextRenderer
-from ..renderers.pygame.imagerenderer import ImageRenderer
-from ..renderers.pygame.shaperenderer import ShapeRenderer
-from ..renderers.pygame.textrenderer import TextRenderer
+from src.corelayer.elements.animatedElement import AnimatedTextElement
+from src.corelayer.elements.imageElement import ImageElement
+from src.corelayer.elements.shapeElement import ShapeElement
+from src.corelayer.elements.textElement import TextElement
+from src.corelayer.renderers.pygame.animatedtextrenderer import AnimatedTextRenderer
+from src.corelayer.renderers.pygame.imagerenderer import ImageRenderer
+from src.corelayer.renderers.pygame.shaperenderer import ShapeRenderer
+from src.corelayer.renderers.pygame.textrenderer import TextRenderer
 
-try:
-    from animatedElement import AnimatedTextElement
-    from imageElement import ImageElement
-    from shapeElement import ShapeElement
-    from textElement import TextElement
-except ImportError:
-    from .animatedElement import AnimatedTextElement
-    from .imageElement import ImageElement
-    from .shapeElement import ShapeElement
-    from .textElement import TextElement
 
 class ElementBuilder:
     def __init__(self):

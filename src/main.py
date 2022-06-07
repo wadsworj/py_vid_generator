@@ -2,11 +2,8 @@ import json
 import os
 
 import pygame.camera
-from config import config
-
-from corelayer.elements.elementBuilder import ElementBuilder
-from sceneBuilder import SceneBuilder
 from videoBuilder import VideoBuilder
+from src.config import config
 
 pygame.init()
 pygame.camera.init()
