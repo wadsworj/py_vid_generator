@@ -31,7 +31,7 @@ class Video:
         self.play_audio(frame)
 
         done_capturing = False
-
+        frames_since_start = 0
         file_num = 0
         scene_file_start = 1
         self.current_scene = self.scenes.pop(0)
@@ -51,11 +51,19 @@ class Video:
                         done_capturing = True
                     elif event.key == pygame.K_SPACE:
                         paused = not paused
-                        if not paused:
-                            self.play_audio(frame)
-                        else:
+                        if paused:
+                            paused_frame = pygame.time.get_ticks()
                             self.playing_audio = False
                             mixer.music.stop()
+                    elif event.key == pygame.K_LEFT:
+                        paused_frame = paused_frame - FrameToSeconds.convert_frame_to_seconds(1) * 1000
+                    elif event.key == pygame.K_PAGEDOWN:
+                        paused_frame = paused_frame - FrameToSeconds.convert_frame_to_seconds(10) * 1000
+                    elif event.key == pygame.K_RIGHT:
+                        paused_frame = paused_frame + FrameToSeconds.convert_frame_to_seconds(1) * 1000
+                    elif event.key == pygame.K_PAGEUP:
+                        paused_frame = paused_frame + FrameToSeconds.convert_frame_to_seconds(10) * 1000
+
 
                 elif event.type == pygame.MOUSEBUTTONUP:
                     self.mouse_click_pos_x, self.mouse_click_pos_y = pygame.mouse.get_pos()
@@ -71,14 +79,18 @@ class Video:
             clock.tick(config.FRAME_RATE)
 
             if paused:
-                if self.debug:
-                    self.render_debug_info(rect_clicked, frame)
-                continue
+                gap = pygame.time.get_ticks() - paused_frame
+                restart_frame = max((pygame.time.get_ticks() - current_scene_start) - gap, 0)
+                current_scene_start = pygame.time.get_ticks() - restart_frame
+                paused_frame = pygame.time.get_ticks()
 
             if preview:
                 frame = ((pygame.time.get_ticks() - current_scene_start) / 1000) * config.FRAME_RATE
             else:
                 frame = frame + 1
+
+            if not paused:
+                self.play_audio(frame + frames_since_start)
 
             file_num = file_num + 1
             # Save every frame
@@ -101,6 +113,7 @@ class Video:
                 # scene_file_start = file_num + 1
 
                 if self.scenes:
+                    frames_since_start = frames_since_start + frame
                     self.current_scene = self.scenes.pop(0)
                     current_scene_start = pygame.time.get_ticks()
                 else:
@@ -109,7 +122,7 @@ class Video:
     def render_debug_info(self, rect_clicked, frame):
         my_font = pygame.font.SysFont('Comic Sans MS', 30)
         seconds = FrameToSeconds.convert_frame_to_seconds(frame)
-        text_surface = my_font.render(str(frame) + " frame " + str(seconds) + " seconds", True, config.RED)
+        text_surface = my_font.render(str(round(frame, 1)) + " frame " + str(round(seconds, 2)) + " seconds", True, config.RED)
         self.screen.blit(text_surface, (0, 0))
 
         if self.mouse_click_pos_x and self.mouse_click_pos_y:
@@ -182,3 +195,4 @@ class Video:
             # Start playing the song
             mixer.music.play()
             mixer.music.set_pos(frame_second)
+        self.playing_audio = True
