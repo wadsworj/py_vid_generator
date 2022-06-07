@@ -5,6 +5,7 @@ from src import config
 from pygame import mixer
 from src.config import config
 from src.corelayer.helpers.frametoseconds import FrameToSeconds
+from src.uilayer.elementpropertiesview import ElementPropertiesView
 
 
 class Video:
@@ -29,12 +30,14 @@ class Video:
         self.rect_clicked = None
         self.paused = False
         self.paused_frame = None
+        self.ui_elements = []
 
     def add_scene(self, scene):
         self.scenes.append(scene)
 
     def render(self, preview):
         frame = 0
+        time_delta = None
         self.play_audio(frame)
         self.current_scene = self.scenes.pop(0)
 
@@ -47,7 +50,7 @@ class Video:
             events = pygame.event.get()
             self.handle_events(events)
 
-            clock.tick(config.FRAME_RATE)
+            time_delta = clock.tick(config.FRAME_RATE)
 
             frame = self.determine_current_frame(preview, frame)
 
@@ -59,10 +62,13 @@ class Video:
             self.screen.fill(self.back_color)
 
             if self.debug:
-                self.render_debug_info(self.rect_clicked, frame)
+                self.render_debug_info(frame)
 
             self.screen_objects = []
             self.current_scene.render(self.screen, frame, self.screen_objects)
+
+            for ui_element in self.ui_elements:
+                ui_element.render()
 
             # if the current scene is finished then we need to load the next scene
             if self.current_scene.finished:
@@ -82,9 +88,10 @@ class Video:
                                       self.resolution[0] / 128)
             if center_rect.collidepoint(self.mouse_click_pos_x, self.mouse_click_pos_y):
                 rect_clicked.append(rect_object)
+
         return rect_clicked
 
-    def render_debug_info(self, rect_clicked, frame):
+    def render_debug_info(self, frame):
         my_font = pygame.font.SysFont('Comic Sans MS', 30)
         seconds = FrameToSeconds.convert_frame_to_seconds(frame)
         text_surface = my_font.render(str(round(frame, 1)) + " frame " + str(round(seconds, 2)) + " seconds", True, config.RED)
@@ -95,34 +102,23 @@ class Video:
                                                       + "] position", True, config.RED)
             self.screen.blit(mouse_click_text_surface, (text_surface.get_width() + 5, 0))
 
-        if rect_clicked:
-            for rect_object in rect_clicked:
-                rect = rect_object[0]
-                pygame.draw.rect(self.screen, (0, 100, 255), rect, 3)  # width = 3
-
-                if "key_frames" in rect_object[1]:
-                    for key_frame in rect_object[1]["key_frames"]:
-                        if "grid_position" in key_frame:
-                            grid_position_center_rect = pygame.Rect(key_frame["grid_position"][0] * (self.resolution[0] / 16), key_frame["grid_position"][1] * (self.resolution[1] / 9), self.resolution[0] / 128,
-                                                      self.resolution[0] / 128)
-
-                            pygame.draw.rect(self.screen, config.GREEN, grid_position_center_rect, 3)  # width = 3
-
-                count = 0
-                for x in rect_object[1]:
-                    count = count + 2
-                    text_surface = my_font.render(str(x), True, config.GREEN)
-                    self.screen.blit(text_surface, (0, text_surface.get_height() * count))
-                    if isinstance(rect_object[1][x], list):
-                        for y in rect_object[1][x]:
-                            count = count + 1
-                            text_surface = my_font.render(str(y), True, config.GREEN)
-                            self.screen.blit(text_surface, ((self.resolution[0]/8), text_surface.get_height() * count))
-                    else:
-                        count = count + 1
-                        text_surface = my_font.render(str(rect_object[1][x]), True, config.GREEN)
-                        self.screen.blit(text_surface, (self.resolution[0]/8, text_surface.get_height() * count))
-
+        if self.rect_clicked:
+            for rect_object in self.rect_clicked:
+                properties = ElementPropertiesView(rect_object[1], self.screen)
+                self.pause_preview()
+                properties.update()
+                #
+                # rect = rect_object[0]
+                # pygame.draw.rect(self.screen, (0, 100, 255), rect, 3)  # width = 3
+                #
+                # if "key_frames" in rect_object[1]:
+                #     for key_frame in rect_object[1]["key_frames"]:
+                #         if "grid_position" in key_frame:
+                #             grid_position_center_rect = pygame.Rect(key_frame["grid_position"][0] * (self.resolution[0] / 16), key_frame["grid_position"][1] * (self.resolution[1] / 9), self.resolution[0] / 128,
+                #                                       self.resolution[0] / 128)
+                #
+                #             pygame.draw.rect(self.screen, config.GREEN, grid_position_center_rect, 3)  # width = 3
+        self.rect_clicked = []
         self.render_center_square_each_surface()
 
     def save_image_file(self, file_num):
@@ -162,6 +158,9 @@ class Video:
         self.playing_audio = True
 
     def handle_events(self, events):
+        for ui_element in self.ui_elements:
+            ui_element.update(events)
+
         for event in events:
             if event.type == pygame.QUIT:
                 self.done_capturing = True
@@ -171,9 +170,7 @@ class Video:
                 elif event.key == pygame.K_SPACE:
                     self.paused = not self.paused
                     if self.paused:
-                        self.paused_frame = pygame.time.get_ticks()
-                        self.playing_audio = False
-                        mixer.music.stop()
+                        self.pause_preview()
                 elif event.key == pygame.K_LEFT:
                     self.paused_frame = self.paused_frame - FrameToSeconds.convert_frame_to_milliseconds(1)
                 elif event.key == pygame.K_PAGEDOWN:
@@ -206,4 +203,9 @@ class Video:
             rect = rect_object[0]
             center_rect = pygame.Rect(rect.centerx, rect.centery, self.resolution[0] / 128, self.resolution[0] / 128)
             pygame.draw.rect(self.screen, config.RED, center_rect)  # width = 3
+
+    def pause_preview(self):
+        self.paused_frame = pygame.time.get_ticks()
+        self.playing_audio = False
+        mixer.music.stop()
 
