@@ -31,6 +31,7 @@ class Video:
         self.paused = False
         self.paused_frame = None
         self.ui_elements = []
+        self.ui_manager = None
 
     def add_scene(self, scene):
         self.scenes.append(scene)
@@ -45,12 +46,15 @@ class Video:
         self.current_scene_start = pygame.time.get_ticks()
 
         while not self.done_capturing and self.current_scene:
+            time_delta = clock.tick(config.FRAME_RATE)
+
+            self.ui_manager.update(time_delta)
+            self.ui_manager.draw_ui(self.screen)
+
             pygame.display.update()
 
             events = pygame.event.get()
             self.handle_events(events)
-
-            time_delta = clock.tick(config.FRAME_RATE)
 
             frame = self.determine_current_frame(preview, frame)
 
@@ -88,6 +92,9 @@ class Video:
                                       self.resolution[0] / 128)
             if center_rect.collidepoint(self.mouse_click_pos_x, self.mouse_click_pos_y):
                 rect_clicked.append(rect_object)
+                properties = ElementPropertiesView(rect_object[1], self.screen, self.ui_manager)
+                # self.pause_preview()
+                properties.update(3)
 
         return rect_clicked
 
@@ -102,23 +109,23 @@ class Video:
                                                       + "] position", True, config.RED)
             self.screen.blit(mouse_click_text_surface, (text_surface.get_width() + 5, 0))
 
-        if self.rect_clicked:
-            for rect_object in self.rect_clicked:
-                properties = ElementPropertiesView(rect_object[1], self.screen)
-                self.pause_preview()
-                properties.update()
-                #
-                # rect = rect_object[0]
-                # pygame.draw.rect(self.screen, (0, 100, 255), rect, 3)  # width = 3
-                #
-                # if "key_frames" in rect_object[1]:
-                #     for key_frame in rect_object[1]["key_frames"]:
-                #         if "grid_position" in key_frame:
-                #             grid_position_center_rect = pygame.Rect(key_frame["grid_position"][0] * (self.resolution[0] / 16), key_frame["grid_position"][1] * (self.resolution[1] / 9), self.resolution[0] / 128,
-                #                                       self.resolution[0] / 128)
-                #
-                #             pygame.draw.rect(self.screen, config.GREEN, grid_position_center_rect, 3)  # width = 3
-        self.rect_clicked = []
+        # if self.rect_clicked:
+            # for rect_object in self.rect_clicked:
+            #     properties = ElementPropertiesView(rect_object[1], self.screen, self.ui_manager)
+            #     # self.pause_preview()
+            #     properties.update(3)
+            #     #
+            #     # rect = rect_object[0]
+            #     # pygame.draw.rect(self.screen, (0, 100, 255), rect, 3)  # width = 3
+            #     #
+            #     # if "key_frames" in rect_object[1]:
+            #     #     for key_frame in rect_object[1]["key_frames"]:
+            #     #         if "grid_position" in key_frame:
+            #     #             grid_position_center_rect = pygame.Rect(key_frame["grid_position"][0] * (self.resolution[0] / 16), key_frame["grid_position"][1] * (self.resolution[1] / 9), self.resolution[0] / 128,
+            #     #                                       self.resolution[0] / 128)
+            #     #
+            #     #             pygame.draw.rect(self.screen, config.GREEN, grid_position_center_rect, 3)  # width = 3
+        # self.rect_clicked = []
         self.render_center_square_each_surface()
 
     def save_image_file(self, file_num):
@@ -161,7 +168,9 @@ class Video:
         for ui_element in self.ui_elements:
             ui_element.update(events)
 
+
         for event in events:
+            self.ui_manager.process_events(event)
             if event.type == pygame.QUIT:
                 self.done_capturing = True
             elif event.type == pygame.KEYDOWN:

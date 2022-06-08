@@ -1,4 +1,5 @@
 import pygame
+from pygame_gui import UIManager
 
 from src.corelayer.elements.elementBuilder import ElementBuilder
 from src.sceneBuilder import SceneBuilder
@@ -16,7 +17,7 @@ class VideoBuilder:
         video.resolution = data["resolution"]
 
         video.screen = pygame.display.set_mode(video.resolution)
-
+        video.ui_manager = UIManager(video.resolution)
         config.SCREEN_WIDTH = video.resolution[0]
         config.SCREEN_HEIGHT = video.resolution[1]
 
