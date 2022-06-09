@@ -1,6 +1,6 @@
 import pygame
 import pygame_gui
-from pygame_gui.elements import UIWindow, UITextEntryLine
+from pygame_gui.elements import UIWindow, UITextEntryLine, UIDropDownMenu, UISelectionList
 
 from src.uilayer.controls.label import Label
 from src.uilayer.controls.textbox import TextBox
@@ -13,6 +13,7 @@ y_offset = 120
 class ElementPropertiesView(UIWindow):
     def __init__(self, element, screen, ui_manager):
         self.test_text_entry = None
+        self.ui_manager = ui_manager
         self.position = [x_offset + padding, y_offset + padding]
         self.size = [config.SCREEN_WIDTH - padding * 2 + x_offset, config.SCREEN_HEIGHT - padding * 2 + y_offset]
 
@@ -23,7 +24,7 @@ class ElementPropertiesView(UIWindow):
         else:
             title = "property"
 
-        super().__init__(pygame.Rect(self.position, self.size), ui_manager,
+        super().__init__(pygame.Rect(self.position, self.size), self.ui_manager,
                          window_display_title=title,
                          object_id='#pong_window',
                          resizable=True)
@@ -34,6 +35,9 @@ class ElementPropertiesView(UIWindow):
         spacing = 0
 
         for key in element:
+            if key == 'key_frames':
+                self.add_key_frames()
+                continue
             self.add_label(key, spacing)
             self.add_text_box(self.element[key], spacing, None)
             spacing += 30
@@ -81,4 +85,14 @@ class ElementPropertiesView(UIWindow):
         for control in self.controls:
             control.update()
             control.draw(self.screen)
+
+    def add_key_frames(self):
+        frames = []
+        for keyframe in self.element['key_frames']:
+            frames.append(str(keyframe['second']))
+
+        self.test_drop_down_menu = UISelectionList(pygame.Rect(10, self.size[1] / 2, 174, 200),
+                                                 item_list=frames,
+                                                 manager=self.ui_manager,
+                                                 container=self)
 

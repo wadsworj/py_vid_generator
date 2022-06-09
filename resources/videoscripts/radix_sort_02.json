@@ -3,7 +3,7 @@
   "resolution" : [1920, 1080],
   "audio" : ["", "5radix_sort.mp3"],
   "start_scene" : 0,
-  "start_seconds" : 0,
+  "start_seconds" : 20,
   "back_color" : [20, 20, 20],
   "debug" : true,
   "scenes" :
