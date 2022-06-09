@@ -1,6 +1,6 @@
 import pygame
 import pygame_gui
-from pygame_gui.elements import UIWindow, UITextEntryLine, UIDropDownMenu, UISelectionList
+from pygame_gui.elements import UIWindow, UITextEntryLine, UIDropDownMenu, UISelectionList, UILabel
 
 from src.uilayer.controls.label import Label
 from src.uilayer.controls.textbox import TextBox
@@ -9,6 +9,8 @@ from src.config import config
 padding = 300
 x_offset = 120
 y_offset = 120
+
+label_width = 100
 
 class ElementPropertiesView(UIWindow):
     def __init__(self, element, screen, ui_manager):
@@ -43,17 +45,14 @@ class ElementPropertiesView(UIWindow):
             spacing += 30
 
     def add_label(self, text, spacing):
-        # position: Tuple[float, float] = (0, 0), text: str = "label"):
-        label = Label([x_offset + padding, y_offset + padding + spacing], text)
-        self.controls.append(label)
+        position = pygame.Rect((int(0), int(0) + spacing), (label_width, -1))
+        label = UILabel(position, text, self.ui_manager, container=self)
 
     def add_text_box(self, text, spacing, command):
         if not str(text):
             return
-
-        self.test_text_entry = UITextEntryLine(pygame.Rect((int(0),
-                                                            int(0) + spacing),
-                                                           (400, -1)),
+        position = pygame.Rect((int(0) + label_width + 10, int(0) + spacing), (400, -1))
+        self.test_text_entry = UITextEntryLine(position,
                                                self.ui_manager,
                                                container=self)
 
