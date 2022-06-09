@@ -154,7 +154,14 @@ class Video:
 
         mixer.init()
         for audio in self.audio_file:
-            mixer.music.load(os.path.join(config.RESOURCES_LOCATION, "audio", audio))
+            if not audio:
+                continue
+
+            audio_location = os.path.join(config.RESOURCES_LOCATION, "audio", audio)
+            if not os.path.exists(audio_location):
+                continue
+
+            mixer.music.load(audio_location)
 
             # translate frames to seconds
             frame_second = FrameToSeconds.convert_frame_to_seconds(frame)

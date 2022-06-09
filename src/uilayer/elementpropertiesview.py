@@ -12,11 +12,19 @@ y_offset = 120
 
 class ElementPropertiesView(UIWindow):
     def __init__(self, element, screen, ui_manager):
+        self.test_text_entry = None
         self.position = [x_offset + padding, y_offset + padding]
         self.size = [config.SCREEN_WIDTH - padding * 2 + x_offset, config.SCREEN_HEIGHT - padding * 2 + y_offset]
 
-        super().__init__(pygame.Rect(self.position, (320, 240)), ui_manager,
-                         window_display_title='Super Awesome Pong!',
+        if 'name' in element:
+            title = element['name']
+        elif 'text' in element:
+            title = element['text']
+        else:
+            title = "property"
+
+        super().__init__(pygame.Rect(self.position, self.size), ui_manager,
+                         window_display_title=title,
                          object_id='#pong_window',
                          resizable=True)
 
@@ -38,18 +46,13 @@ class ElementPropertiesView(UIWindow):
     def add_text_box(self, text, spacing, command):
         if not str(text):
             return
-        # text_box = TextBox([x_offset + padding + x_offset, y_offset + padding + spacing, 200, 30],
-        #                    command=command,
-        #                    active=False)
-        #
-        # text_box.buffer[:] = str(text)
-        # self.controls.append(text_box)
 
         self.test_text_entry = UITextEntryLine(pygame.Rect((int(0),
                                                             int(0) + spacing),
-                                                           (200, -1)),
+                                                           (400, -1)),
                                                self.ui_manager,
                                                container=self)
+
         self.test_text_entry.set_text(str(text))
 
     def update(self, time_delta):
