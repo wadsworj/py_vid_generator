@@ -1,23 +1,25 @@
 import pygame
-import pygame_gui
-from pygame_gui.elements import UIWindow, UITextEntryLine, UIDropDownMenu, UISelectionList, UILabel
+from pygame_gui.elements import UIWindow, UITextEntryLine, UISelectionList, UILabel
 
-from src.uilayer.controls.label import Label
-from src.uilayer.controls.textbox import TextBox
 from src.config import config
+from src.uilayer.elementview.keyframes import KeyFramesView
 
-padding = 300
+padding = 100
 x_offset = 120
 y_offset = 120
 
 label_width = 100
 
+
 class ElementPropertiesView(UIWindow):
     def __init__(self, element, screen, ui_manager):
         self.test_text_entry = None
         self.ui_manager = ui_manager
-        self.position = [x_offset + padding, y_offset + padding]
-        self.size = [config.SCREEN_WIDTH - padding * 2 + x_offset, config.SCREEN_HEIGHT - padding * 2 + y_offset]
+
+        size_x = config.SCREEN_WIDTH / 2
+        size_y = config.SCREEN_HEIGHT / 4
+        self.position = [x_offset, y_offset]
+        self.size = [size_x, size_y]
 
         if 'name' in element:
             title = element['name']
@@ -36,9 +38,9 @@ class ElementPropertiesView(UIWindow):
         self.controls = []
         spacing = 0
 
-        for key in element:
+        for key in self.element:
             if key == 'key_frames':
-                self.add_key_frames()
+                self.add_key_frames_view()
                 continue
             self.add_label(key, spacing)
             self.add_text_box(self.element[key], spacing, None)
@@ -61,23 +63,6 @@ class ElementPropertiesView(UIWindow):
     def update(self, time_delta):
         super().update(time_delta)
 
-    # def update(self):
-    #     pass
-        # while True:
-        #     for event in pygame.event.get():
-        #         if event.type == pygame.QUIT:
-        #             return
-        #         if event.type == pygame.KEYUP:  # Key pressed event
-        #             if event.key == pygame.K_ESCAPE:
-        #                 return
-        #
-        #         for control in self.controls:
-        #             control.get_event(event)
-        #
-        #         self.render()
-        #
-        #         pygame.display.update()
-
     def render(self):
         pygame.draw.rect(self.screen, config.WHITE, [self.position, self.size])
 
@@ -85,13 +70,11 @@ class ElementPropertiesView(UIWindow):
             control.update()
             control.draw(self.screen)
 
-    def add_key_frames(self):
-        frames = []
-        for keyframe in self.element['key_frames']:
-            frames.append(str(keyframe['second']))
+    def add_key_frames_view(self):
+        key_frames = self.element['key_frames']
+        position = list(self.position)
+        position[1] = position[1] + self.size[1]
 
-        self.test_drop_down_menu = UISelectionList(pygame.Rect(10, self.size[1] / 2, 174, 200),
-                                                 item_list=frames,
-                                                 manager=self.ui_manager,
-                                                 container=self)
-
+        size = list(self.size)
+        size[0] = size[0] / 2
+        key_frames_view = KeyFramesView(key_frames, self.screen, self.ui_manager, position, size)

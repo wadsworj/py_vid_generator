@@ -5,7 +5,7 @@ from src import config
 from pygame import mixer
 from src.config import config
 from src.corelayer.helpers.frametoseconds import FrameToSeconds
-from src.uilayer.elementpropertiesview import ElementPropertiesView
+from src.uilayer.elementview.elementpropertiesview import ElementPropertiesView
 
 
 class Video:
