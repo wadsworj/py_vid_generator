@@ -93,7 +93,7 @@ class Video:
                 rect_clicked.append(rect_object)
                 properties = ElementPropertiesView(rect_object[1], self.screen, self.ui_manager)
                 # self.pause_preview()
-                properties.update(3)
+                self.ui_elements.append(properties)
 
         return rect_clicked
 
@@ -172,7 +172,7 @@ class Video:
 
     def handle_events(self, events):
         for ui_element in self.ui_elements:
-            ui_element.update(events)
+            ui_element.handle_events(events)
 
 
         for event in events:

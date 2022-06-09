@@ -2,7 +2,7 @@ import pygame
 from pygame_gui.elements import UIWindow, UITextEntryLine, UISelectionList, UILabel
 
 from src.config import config
-from src.uilayer.elementview.keyframes import KeyFramesView
+from src.uilayer.elementview.keyframesview import KeyFramesView
 
 padding = 100
 x_offset = 120
@@ -35,7 +35,7 @@ class ElementPropertiesView(UIWindow):
 
         self.element = element
         self.screen = screen
-        self.controls = []
+        self.windows = []
         spacing = 0
 
         for key in self.element:
@@ -60,15 +60,18 @@ class ElementPropertiesView(UIWindow):
 
         self.test_text_entry.set_text(str(text))
 
+    def handle_events(self, events):
+        for window in self.windows:
+            window.handle_events(events)
+
     def update(self, time_delta):
         super().update(time_delta)
+        for window in self.windows:
+            window.update(time_delta)
 
     def render(self):
-        pygame.draw.rect(self.screen, config.WHITE, [self.position, self.size])
-
-        for control in self.controls:
-            control.update()
-            control.draw(self.screen)
+        for window in self.windows:
+            window.render()
 
     def add_key_frames_view(self):
         key_frames = self.element['key_frames']
@@ -78,3 +81,6 @@ class ElementPropertiesView(UIWindow):
         size = list(self.size)
         size[0] = size[0] / 2
         key_frames_view = KeyFramesView(key_frames, self.screen, self.ui_manager, position, size)
+
+        self.windows.append(key_frames_view)
+
