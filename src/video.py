@@ -39,11 +39,10 @@ class Video:
     def render(self, preview):
         frame = 0
         time_delta = None
-        self.play_audio(frame)
         self.current_scene = self.scenes.pop(0)
 
         clock = pygame.time.Clock()
-        self.current_scene_start = pygame.time.get_ticks()
+        self.current_scene_start = pygame.time.get_ticks() - (self.start_seconds * 1000)
 
         while not self.done_capturing and self.current_scene:
             time_delta = clock.tick(config.FRAME_RATE)
@@ -165,7 +164,7 @@ class Video:
 
             # translate frames to seconds
             frame_second = FrameToSeconds.convert_frame_to_seconds(frame)
-
+            mixer.music.set_volume(0.3)
             # Start playing the song
             mixer.music.play()
             mixer.music.set_pos(frame_second)
