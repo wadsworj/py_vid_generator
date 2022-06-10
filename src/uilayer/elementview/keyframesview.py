@@ -15,7 +15,7 @@ class KeyFramesView(UIWindow):
         self.position = position
         self.size = size
         self.windows = []
-        self.selected_key_frame_view = None
+        self.selected_key_frame_view: UIWindow = None
         frames = []
         for keyframe in key_frames:
             frames.append(str(keyframe['second']))
@@ -54,11 +54,15 @@ class KeyFramesView(UIWindow):
         if key_frame_found and len(key_frame_found) > 0:
             key_frame = key_frame_found[0]
 
-        position = list(self.position)
-        position[0] = position[0] + (self.size[0])
+        if self.selected_key_frame_view:
+            rect = self.selected_key_frame_view.rect
+        else:
+            position = list(self.position)
+            position[0] = position[0] + (self.size[0])
+            size = list(self.size)
+            rect = pygame.Rect(position, size)
 
-        size = list(self.size)
-        self.selected_key_frame_view = KeyFrameView(key_frame, self.screen, self.ui_manager, position, size)
+        self.selected_key_frame_view = KeyFrameView(key_frame, self.screen, self.ui_manager, rect)
 
         self.windows.append(self.selected_key_frame_view)
 

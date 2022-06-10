@@ -92,7 +92,7 @@ class Video:
             if center_rect.collidepoint(self.mouse_click_pos_x, self.mouse_click_pos_y):
                 rect_clicked.append(rect_object)
                 properties = ElementPropertiesView(rect_object[1], self.screen, self.ui_manager)
-                # self.pause_preview()
+                self.pause_preview()
                 self.ui_elements.append(properties)
 
         return rect_clicked
@@ -183,9 +183,7 @@ class Video:
                 if event.key == pygame.K_ESCAPE:
                     self.done_capturing = True
                 elif event.key == pygame.K_SPACE:
-                    self.paused = not self.paused
-                    if self.paused:
-                        self.pause_preview()
+                    self.handle_space_pressed()
                 elif event.key == pygame.K_LEFT:
                     self.paused_frame = self.paused_frame - FrameToSeconds.convert_frame_to_milliseconds(1)
                 elif event.key == pygame.K_PAGEDOWN:
@@ -220,7 +218,16 @@ class Video:
             pygame.draw.rect(self.screen, config.RED, center_rect)  # width = 3
 
     def pause_preview(self):
+        self.paused = True
         self.paused_frame = pygame.time.get_ticks()
         self.playing_audio = False
         mixer.music.stop()
+
+    def handle_space_pressed(self):
+        if self.ui_elements:
+            return
+
+        self.paused = not self.paused
+        if self.paused:
+            self.pause_preview()
 
