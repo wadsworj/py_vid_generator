@@ -1,7 +1,8 @@
-BLACK = ( 0, 0, 0)
+BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
-RED = ( 255, 0, 0)
+RED = (255, 0, 0)
+BLUE = (0, 0, 255)
 
 FRAME_RATE = 10
 
@@ -16,3 +17,6 @@ OUTPUT_LOCATION = "output"
 OUTPUT_VIDEO_LOCATION = "video"
 SCREEN_WIDTH = None
 SCREEN_HEIGHT = None
+
+ANCHOR_LEFT = {'top': 'top', 'bottom': 'bottom',
+               'left': 'left', 'right': 'right'}

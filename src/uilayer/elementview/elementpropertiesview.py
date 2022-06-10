@@ -12,8 +12,8 @@ label_width = 100
 
 
 class ElementPropertiesView(UIWindow):
-    def __init__(self, element, screen, ui_manager):
-        self.test_text_entry = None
+    def __init__(self, parent, element, screen, ui_manager):
+        self.parent = parent
         self.ui_manager = ui_manager
 
         size_x = config.SCREEN_WIDTH / 2
@@ -48,17 +48,17 @@ class ElementPropertiesView(UIWindow):
 
     def add_label(self, text, spacing):
         position = pygame.Rect((int(0), int(0) + spacing), (label_width, -1))
-        label = UILabel(position, text, self.ui_manager, container=self)
+        label = UILabel(position, text, self.ui_manager, container=self, anchors=config.ANCHOR_LEFT)
 
     def add_text_box(self, text, spacing, command):
         if not str(text):
             return
         position = pygame.Rect((int(0) + label_width + 10, int(0) + spacing), (400, -1))
-        self.test_text_entry = UITextEntryLine(position,
+        test_text_entry = UITextEntryLine(position,
                                                self.ui_manager,
                                                container=self)
 
-        self.test_text_entry.set_text(str(text))
+        test_text_entry.set_text(str(text))
 
     def handle_events(self, events):
         for window in self.windows:
@@ -80,7 +80,15 @@ class ElementPropertiesView(UIWindow):
 
         size = list(self.size)
         size[0] = size[0] / 2
-        key_frames_view = KeyFramesView(key_frames, self.screen, self.ui_manager, position, size)
+        key_frames_view = KeyFramesView(self, key_frames, self.screen, self.ui_manager, position, size)
 
         self.windows.append(key_frames_view)
+
+    def kill_children(self):
+        for window in self.windows:
+            window.kill_children()
+            window.kill()
+
+    def bubble_events_up(self, events):
+        self.parent.bubble_events_up(events)
 

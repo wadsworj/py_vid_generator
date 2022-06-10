@@ -3,11 +3,14 @@ import pygame_gui
 from pygame_gui.elements import UIWindow, UITextEntryLine, UISelectionList, UILabel
 
 from src.config import config
+from src.uilayer import customuieventtype
+from src.uilayer.customuievent import CustomUIEvent
 from src.uilayer.elementview.keyframeview import KeyFrameView
 
 
 class KeyFramesView(UIWindow):
-    def __init__(self, key_frames, screen, ui_manager, position, size):
+    def __init__(self, parent, key_frames, screen, ui_manager, position, size):
+        self.parent = parent
         self.ui_manager = ui_manager
         self.key_frames = key_frames
         self.screen = screen
@@ -53,6 +56,8 @@ class KeyFramesView(UIWindow):
 
         if key_frame_found and len(key_frame_found) > 0:
             key_frame = key_frame_found[0]
+        else:
+            return
 
         if self.selected_key_frame_view:
             rect = self.selected_key_frame_view.rect
@@ -62,9 +67,20 @@ class KeyFramesView(UIWindow):
             size = list(self.size)
             rect = pygame.Rect(position, size)
 
-        self.selected_key_frame_view = KeyFrameView(key_frame, self.screen, self.ui_manager, rect)
+        self.selected_key_frame_view = KeyFrameView(self, key_frame, self.screen, self.ui_manager, rect)
+
+        event = CustomUIEvent(customuieventtype.KEY_FRAME_CLICKED, key_frame)
+        self.bubble_events_up([event])
 
         self.windows.append(self.selected_key_frame_view)
+
+    def kill_children(self):
+        for window in self.windows:
+            window.kill_children()
+            window.kill()
+
+    def bubble_events_up(self, events):
+        self.parent.bubble_events_up(events)
 
 
 

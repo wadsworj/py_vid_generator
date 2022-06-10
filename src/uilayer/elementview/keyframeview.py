@@ -4,36 +4,56 @@ from pygame_gui.elements import UIWindow, UITextEntryLine, UISelectionList, UILa
 
 from src.config import config
 
+label_width = 120
+
+
 class KeyFrameView(UIWindow):
-    def __init__(self, key_frame, screen, ui_manager, rect):
+    def __init__(self, parent, key_frame, screen, ui_manager, rect):
+        self.parent = parent
         self.ui_manager = ui_manager
         self.key_frame = key_frame
         self.screen = screen
         self.windows = []
 
-        frames = []
-        # for keyframe in key_frame:
-        #     frames.append(str(keyframe['second']))
-
         super().__init__(rect, self.ui_manager,
-                         window_display_title= ("second: " + str(key_frame['second'])),
+                         window_display_title=("second: " + str(key_frame['second'])),
                          object_id='#key_frame_window',
                          resizable=True)
 
-        # self.test_drop_down_menu = UISelectionList(pygame.Rect(10, 10, self.size[0] - 10, self.size[1] - 10),
-        #                                          item_list=frames,
-        #                                          manager=self.ui_manager,
-        #                                          container=self)
+        spacing = 0
+        for key in self.key_frame:
+            self.add_label(key, spacing)
+            self.add_text_box(self.key_frame[key], spacing, None)
+            spacing += 30
 
     def handle_events(self, events):
         pass
 
     def update(self, time_delta):
         super().update(time_delta)
-        # for event in pygame.event.get():
-        #     if event.type == pygame_gui.UI_SELECTION_LIST_NEW_SELECTION:
-        #         self.running = False
 
     def render(self):
         for window in self.windows:
             window.render()
+
+    def add_text_box(self, text, spacing, command):
+        if not str(text):
+            return
+        position = pygame.Rect((int(0) + label_width + 10, int(0) + spacing), (400, -1))
+        test_text_entry = UITextEntryLine(position,
+                                          self.ui_manager,
+                                          container=self)
+
+        test_text_entry.set_text(str(text))
+
+    def kill_children(self):
+        for window in self.windows:
+            window.kill_children()
+            window.kill()
+
+    def add_label(self, text, spacing):
+        position = pygame.Rect((int(0), int(0) + spacing), (label_width, -1))
+        label = UILabel(position, text, self.ui_manager, container=self, anchors=config.ANCHOR_LEFT)
+
+    def bubble_events_up(self, events):
+        self.parent.bubble_events_up(events)
