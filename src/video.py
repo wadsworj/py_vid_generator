@@ -37,6 +37,7 @@ class Video:
         self.ui_windows: list[UIWindow] = []
         self.ui_manager = None
         self.selected_key_frame = None
+        self.visible_key_frames = []
 
     def add_scene(self, scene):
         self.scenes.append(scene)
@@ -89,6 +90,20 @@ class Video:
 
     def handle_mouse_click(self):
         self.mouse_click_pos_x, self.mouse_click_pos_y = pygame.mouse.get_pos()
+
+        for visible_key_frame in self.visible_key_frames:
+            rect = pygame.Rect(visible_key_frame["grid_position"][0] * (self.resolution[0] / 16),
+                               visible_key_frame["grid_position"][1] * (self.resolution[1] / 9),
+                               self.resolution[0] / 128,
+                               self.resolution[0] / 128)
+
+            # center_rect = pygame.Rect(rect.centerx, rect.centery, self.resolution[0] / 128,
+            #                           self.resolution[0] / 128)
+
+            if rect.collidepoint(self.mouse_click_pos_x, self.mouse_click_pos_y):
+                event = CustomUIEvent(customuieventtype.KEY_FRAME_CLICKED, visible_key_frame)
+                self.bubble_events_down([event])
+
         rect_clicked = []
         for rect_object in self.screen_objects:
             rect = rect_object[0]
@@ -107,12 +122,14 @@ class Video:
     def render_debug_info(self, frame):
         my_font = pygame.font.SysFont('Comic Sans MS', 30)
         seconds = FrameToSeconds.convert_frame_to_seconds(frame)
-        text_surface = my_font.render(str(round(frame, 1)) + " frame " + str(round(seconds, 2)) + " seconds", True, config.RED)
+        text_surface = my_font.render(str(round(frame, 1)) + " frame " + str(round(seconds, 2)) + " seconds", True,
+                                      config.RED)
         self.screen.blit(text_surface, (0, 0))
 
         if self.mouse_click_pos_x and self.mouse_click_pos_y:
-            mouse_click_text_surface = my_font.render("[" + str(self.mouse_click_pos_x) + "," + str(self.mouse_click_pos_y)
-                                                      + "] position", True, config.RED)
+            mouse_click_text_surface = my_font.render(
+                "[" + str(self.mouse_click_pos_x) + "," + str(self.mouse_click_pos_y)
+                + "] position", True, config.RED)
             self.screen.blit(mouse_click_text_surface, (text_surface.get_width() + 5, 0))
 
         if self.rect_clicked:
@@ -121,11 +138,13 @@ class Video:
                 pygame.draw.rect(self.screen, (0, 100, 255), rect, 3)  # width = 3
 
                 if "key_frames" in rect_object[1]:
+                    self.visible_key_frames = []
                     for key_frame in rect_object[1]["key_frames"]:
-                        self.render_key_frame_center(key_frame, config.GREEN)
+                        self.render_key_frame_center(key_frame, config.BLUE)
+                        self.visible_key_frames.append(key_frame)
 
         if self.selected_key_frame:
-            self.render_key_frame_center(self.selected_key_frame, config.BLUE)
+            self.render_key_frame_center(self.selected_key_frame, config.GREEN)
 
         self.render_center_square_each_surface()
 
@@ -140,7 +159,8 @@ class Video:
         frame = cv2.imread(os.path.join(image_path, images[0]))
         fourcc = cv2.VideoWriter_fourcc(*'XVID')
         video = cv2.VideoWriter(
-            config.OUTPUT_VIDEO_LOCATION + str(scene_file_start) + "_" + str(scene_file_end) + ".avi", fourcc, config.FRAME_RATE, (self.resolution[0], self.resolution[1]))
+            config.OUTPUT_VIDEO_LOCATION + str(scene_file_start) + "_" + str(scene_file_end) + ".avi", fourcc,
+            config.FRAME_RATE, (self.resolution[0], self.resolution[1]))
 
         for image in images[scene_file_start:scene_file_end]:
             video.write(cv2.imread(os.path.join(image_path, image)))
@@ -175,7 +195,6 @@ class Video:
     def handle_events(self, events):
         for ui_window in self.ui_windows:
             ui_window.handle_events(events)
-
 
         for event in events:
             self.ui_manager.process_events(event)
@@ -242,6 +261,10 @@ class Video:
 
         self.ui_windows = []
 
+    def bubble_events_down(self, events: list[CustomUIEvent]):
+        for window in self.ui_windows:
+            window.bubble_events_down(events)
+
     def bubble_events_up(self, events: list[CustomUIEvent]):
         for event in events:
             if event.event_type == customuieventtype.KEY_FRAME_CLICKED:
@@ -257,4 +280,3 @@ class Video:
                                                 self.resolution[0] / 128)
 
         pygame.draw.rect(self.screen, color, grid_position_center_rect, 3)  # width = 3
-

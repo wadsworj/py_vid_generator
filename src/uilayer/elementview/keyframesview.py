@@ -33,13 +33,15 @@ class KeyFramesView(UIWindow):
                                                  manager=self.ui_manager,
                                                  container=self)
 
+        self.test_drop_down_menu.set
+
     def handle_events(self, events):
         for window in self.windows:
             window.handle_events(events)
 
         for event in events:
             if event.type == pygame_gui.UI_SELECTION_LIST_NEW_SELECTION:
-                self.add_key_frame_view(event.text)
+                self.handle_key_frame_click(event.text)
 
     def update(self, time_delta):
         super().update(time_delta)
@@ -48,10 +50,7 @@ class KeyFramesView(UIWindow):
         for window in self.windows:
             window.render()
 
-    def add_key_frame_view(self, text):
-        if self.selected_key_frame_view:
-            self.selected_key_frame_view.kill()
-
+    def handle_key_frame_click(self, text):
         key_frame_found = [x for x in self.key_frames if text == str(x["second"])]
 
         if key_frame_found and len(key_frame_found) > 0:
@@ -59,8 +58,12 @@ class KeyFramesView(UIWindow):
         else:
             return
 
+        self.add_key_frame_view(key_frame)
+
+    def add_key_frame_view(self, key_frame):
         if self.selected_key_frame_view:
             rect = self.selected_key_frame_view.rect
+            self.selected_key_frame_view.kill()
         else:
             position = list(self.position)
             position[0] = position[0] + (self.size[0])
@@ -79,10 +82,18 @@ class KeyFramesView(UIWindow):
             window.kill_children()
             window.kill()
 
-    def bubble_events_up(self, events):
+    def bubble_events_up(self, events: list[CustomUIEvent]):
         self.parent.bubble_events_up(events)
 
+    def bubble_events_down(self, events: list[CustomUIEvent]):
+        for window in self.windows:
+            window.bubble_events_down(events)
 
+        for event in events:
+            if event.event_type == customuieventtype.KEY_FRAME_CLICKED:
+                self.test_drop_down_menu.sel
+
+                self.add_key_frame_view(event.data)
 
 
 

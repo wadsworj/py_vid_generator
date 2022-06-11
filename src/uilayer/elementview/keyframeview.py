@@ -53,7 +53,10 @@ class KeyFrameView(UIWindow):
 
     def add_label(self, text, spacing):
         position = pygame.Rect((int(0), int(0) + spacing), (label_width, -1))
-        label = UILabel(position, text, self.ui_manager, container=self, anchors=config.ANCHOR_LEFT)
+        label = UILabel(position, text, self.ui_manager, container=self)
 
     def bubble_events_up(self, events):
         self.parent.bubble_events_up(events)
+
+    def bubble_events_down(self, events):
+        pass

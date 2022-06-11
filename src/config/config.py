@@ -19,4 +19,4 @@ SCREEN_WIDTH = None
 SCREEN_HEIGHT = None
 
 ANCHOR_LEFT = {'top': 'top', 'bottom': 'bottom',
-               'left': 'left', 'right': 'right'}
+               'left': 'left', 'right': 'left'}

@@ -92,3 +92,6 @@ class ElementPropertiesView(UIWindow):
     def bubble_events_up(self, events):
         self.parent.bubble_events_up(events)
 
+    def bubble_events_down(self, events):
+        for window in self.windows:
+            window.bubble_events_down(events)
