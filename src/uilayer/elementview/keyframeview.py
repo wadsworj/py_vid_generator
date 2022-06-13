@@ -40,11 +40,14 @@ class KeyFrameView(UIWindow):
         if not str(text):
             return
         position = pygame.Rect((int(0) + label_width + 10, int(0) + spacing), (400, -1))
-        test_text_entry = UITextEntryLine(position,
-                                          self.ui_manager,
-                                          container=self)
 
-        test_text_entry.set_text(str(text))
+        test_text_entry = UILabel(position, str(text),
+                                  self.ui_manager,
+                                  container=self)
+
+        # test_text_entry.text_horiz_alignment = "left"
+        # test_text_entry.text_vert_alignment = "left"
+        # test_text_entry.rebuild_from_changed_theme_data()
 
     def kill_children(self):
         for window in self.windows:

@@ -1,6 +1,6 @@
 import pygame
 import pygame_gui
-from pygame_gui.elements import UIWindow, UITextEntryLine, UISelectionList, UILabel
+from pygame_gui.elements import UIWindow, UITextEntryLine, UISelectionList, UILabel, UIButton
 
 from src.config import config
 from src.uilayer import customuieventtype
@@ -28,12 +28,32 @@ class KeyFramesView(UIWindow):
                          object_id='#key_frame_window',
                          resizable=True)
 
-        self.test_drop_down_menu = UISelectionList(pygame.Rect(10, 10, self.size[0] - 10, self.size[1] - 10),
-                                                 item_list=frames,
-                                                 manager=self.ui_manager,
-                                                 container=self)
+        selection_list_size = [self.size[0] / 2, self.size[1] / 2]
 
-        self.test_drop_down_menu.set
+        self.test_drop_down_menu = UISelectionList(pygame.Rect(10, 10, selection_list_size[0], selection_list_size[1]),
+                                                   item_list=frames,
+                                                   manager=self.ui_manager,
+                                                   container=self)
+
+        button_padding = 5
+        button_spacing = 0
+        button_height = 30
+        self.add_new_button = UIButton(pygame.Rect(selection_list_size[0] + 20, 10 + button_spacing, 150, button_height), "Add New",
+                                       manager=self.ui_manager,
+                                       container=self)
+        button_spacing = button_spacing + button_padding + button_height
+        self.delete_button = UIButton(
+            pygame.Rect(selection_list_size[0] + 20, 10 + button_spacing, 150, button_height), "Delete",
+            manager=self.ui_manager,
+            container=self)
+
+        button_spacing = button_spacing + button_padding + button_height
+        self.duplicate_button = UIButton(
+            pygame.Rect(selection_list_size[0] + 20, 10 + button_spacing, 150, button_height), "Duplicate",
+            manager=self.ui_manager,
+            container=self)
+
+        # self.test_drop_down_menu.
 
     def handle_events(self, events):
         for window in self.windows:
@@ -91,10 +111,5 @@ class KeyFramesView(UIWindow):
 
         for event in events:
             if event.event_type == customuieventtype.KEY_FRAME_CLICKED:
-                self.test_drop_down_menu.sel
-
+                # self.test_drop_down_menu.sel
                 self.add_key_frame_view(event.data)
-
-
-
-
