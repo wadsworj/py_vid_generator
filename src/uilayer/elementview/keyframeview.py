@@ -1,8 +1,9 @@
 import pygame
 import pygame_gui
-from pygame_gui.elements import UIWindow, UITextEntryLine, UISelectionList, UILabel
+from pygame_gui.elements import UIWindow, UITextEntryLine, UISelectionList, UILabel, UITextBox
 
 from src.config import config
+from src.uilayer.controls.jsoneditcontrol import JsonEditControl
 
 label_width = 120
 
@@ -21,10 +22,11 @@ class KeyFrameView(UIWindow):
                          resizable=True)
 
         spacing = 0
-        for key in self.key_frame:
-            self.add_label(key, spacing)
-            self.add_text_box(self.key_frame[key], spacing, None)
-            spacing += 30
+        controls = JsonEditControl.return_control_collection(self.ui_manager, self, self.key_frame, 0, 0)
+        # for key in self.key_frame:
+        #     self.add_label(key, spacing)
+        #     self.add_text_box(self.key_frame[key], spacing, None)
+        #     spacing += 30
 
     def handle_events(self, events):
         pass
@@ -41,9 +43,11 @@ class KeyFrameView(UIWindow):
             return
         position = pygame.Rect((int(0) + label_width + 10, int(0) + spacing), (400, -1))
 
-        test_text_entry = UILabel(position, str(text),
-                                  self.ui_manager,
-                                  container=self)
+        test_text_entry = UITextEntryLine(position,
+                                          self.ui_manager,
+                                          container=self)
+
+        test_text_entry.set_text(str(text))
 
         # test_text_entry.text_horiz_alignment = "left"
         # test_text_entry.text_vert_alignment = "left"
