@@ -38,20 +38,24 @@ class KeyFramesView(UIWindow):
         button_padding = 5
         button_spacing = 0
         button_height = 30
-        self.add_new_button = UIButton(pygame.Rect(selection_list_size[0] + 20, 10 + button_spacing, 150, button_height), "Add New",
-                                       manager=self.ui_manager,
-                                       container=self)
+        self.add_new_button = UIButton(
+            pygame.Rect(selection_list_size[0] + 20, 10 + button_spacing, 150, button_height), "Add New",
+            manager=self.ui_manager,
+            container=self,
+            object_id='#add_new_button')
         button_spacing = button_spacing + button_padding + button_height
         self.delete_button = UIButton(
             pygame.Rect(selection_list_size[0] + 20, 10 + button_spacing, 150, button_height), "Delete",
             manager=self.ui_manager,
-            container=self)
+            container=self,
+            object_id='#delete_button')
 
         button_spacing = button_spacing + button_padding + button_height
         self.duplicate_button = UIButton(
             pygame.Rect(selection_list_size[0] + 20, 10 + button_spacing, 150, button_height), "Duplicate",
             manager=self.ui_manager,
-            container=self)
+            container=self,
+            object_id='#duplicate_button')
 
         # self.test_drop_down_menu.
 
@@ -62,6 +66,13 @@ class KeyFramesView(UIWindow):
         for event in events:
             if event.type == pygame_gui.UI_SELECTION_LIST_NEW_SELECTION:
                 self.handle_key_frame_click(event.text)
+            if event.type == pygame_gui.UI_BUTTON_PRESSED:
+                if event.ui_element == self.delete_button:
+                    self.handle_delete_button_click()
+                elif event.ui_element == self.delete_button:
+                    self.handle_duplicate_button_click()
+                elif event.ui_element == self.delete_button:
+                    self.handle_add_new_button_click()
 
     def update(self, time_delta):
         super().update(time_delta)
@@ -113,3 +124,23 @@ class KeyFramesView(UIWindow):
             if event.event_type == customuieventtype.KEY_FRAME_CLICKED:
                 # self.test_drop_down_menu.sel
                 self.add_key_frame_view(event.data)
+
+    def handle_delete_button_click(self):
+        selected_key_frame = self.test_drop_down_menu.get_single_selection()
+        if not selected_key_frame:
+            return
+
+        key_frame_to_remove = None
+        for key_frame in self.key_frames:
+            if str(key_frame['second']) == selected_key_frame:
+                key_frame_to_remove = key_frame
+
+        if key_frame_to_remove:
+            self.key_frames.remove(key_frame)
+
+
+    def handle_duplicate_button_click(self):
+        pass
+
+    def handle_add_new_button_click(self):
+        pass
