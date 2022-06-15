@@ -80,6 +80,7 @@ class ElementPropertiesView(UIWindow):
 
         size = list(self.size)
         size[0] = size[0] / 2
+        size[1] = int(size[1] * 1.5)
         key_frames_view = KeyFramesView(self, key_frames, self.screen, self.ui_manager, position, size)
 
         self.windows.append(key_frames_view)

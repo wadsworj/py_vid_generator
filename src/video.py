@@ -274,8 +274,8 @@ class Video:
         if not "grid_position" in key_frame:
             return
 
-        grid_position_center_rect = pygame.Rect(key_frame["grid_position"][0] * (self.resolution[0] / 16),
-                                                key_frame["grid_position"][1] * (self.resolution[1] / 9),
+        grid_position_center_rect = pygame.Rect(float(key_frame["grid_position"][0]) * (self.resolution[0] / 16),
+                                                float(key_frame["grid_position"][1]) * (self.resolution[1] / 9),
                                                 self.resolution[0] / 128,
                                                 self.resolution[0] / 128)
 

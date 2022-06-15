@@ -3,7 +3,8 @@ import pygame_gui
 from pygame_gui.elements import UIWindow, UITextEntryLine, UISelectionList, UILabel, UITextBox
 
 from src.config import config
-from src.uilayer.controls.jsoneditcontrol import JsonEditControl
+from src.corelayer.helpers.intfloatstringconverter import IntFloatStringConverter
+from src.uilayer.controls.jsoneditcontrol import JsonEditControlBuilder
 
 label_width = 120
 
@@ -15,6 +16,7 @@ class KeyFrameView(UIWindow):
         self.key_frame = key_frame
         self.screen = screen
         self.windows = []
+        self.json_control_builder = JsonEditControlBuilder(self.ui_manager, self)
 
         super().__init__(rect, self.ui_manager,
                          window_display_title=("second: " + str(key_frame['second'])),
@@ -22,14 +24,17 @@ class KeyFrameView(UIWindow):
                          resizable=True)
 
         spacing = 0
-        controls = JsonEditControl.return_control_collection(self.ui_manager, self, self.key_frame, 0, 0)
+        self.controls = self.json_control_builder.return_control_collection(self.key_frame, 0, 0, True)
         # for key in self.key_frame:
         #     self.add_label(key, spacing)
         #     self.add_text_box(self.key_frame[key], spacing, None)
         #     spacing += 30
 
     def handle_events(self, events):
-        pass
+        for event in events:
+            if event.type == pygame_gui.UI_BUTTON_PRESSED:
+                if event.ui_element == self.controls['save_button']:
+                    self.save()
 
     def update(self, time_delta):
         super().update(time_delta)
@@ -67,3 +72,14 @@ class KeyFrameView(UIWindow):
 
     def bubble_events_down(self, events):
         pass
+
+    def save(self):
+        for control_key in self.controls:
+            if control_key in self.key_frame:
+                if isinstance(self.key_frame[control_key], list):
+                    for index, x in enumerate(self.controls[control_key]):
+                        value = self.controls[control_key][index].text
+                        self.key_frame[control_key][index] = IntFloatStringConverter.convert(value)
+                else:
+                    value = self.controls[control_key].text
+                    self.key_frame[control_key] = IntFloatStringConverter.convert(value)
