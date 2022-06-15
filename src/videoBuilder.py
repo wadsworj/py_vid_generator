@@ -31,6 +31,7 @@ class VideoBuilder:
             video.debug = data['debug']
 
         video.back_color = data["back_color"]
+        video.data = data
 
         scene_builder = SceneBuilder(ElementBuilder())
 

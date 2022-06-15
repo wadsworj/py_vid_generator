@@ -19,3 +19,5 @@ video_builder = VideoBuilder()
 video = video_builder.build(data)
 
 video.render(True)
+
+video.save_data_file()

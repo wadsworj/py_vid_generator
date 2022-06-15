@@ -1,3 +1,4 @@
+import json
 import os
 import pygame
 import cv2
@@ -16,6 +17,7 @@ class Video:
     def __init__(self):
         self.name = None
         self.video = None
+        self.data = None
         self.resolution = None
         self.screen = None
         self.scenes = []
@@ -41,6 +43,13 @@ class Video:
 
     def add_scene(self, scene):
         self.scenes.append(scene)
+
+    def save_data_file(self):
+        json_string = json.dumps(self.data)
+        # Directly from dictionary
+        path = os.path.join(config.OUTPUT_LOCATION, config.OUTPUT_DATA_LOCATION, str(self.name) + '.json')
+        with open(path, 'w') as outfile:
+            json.dump(self.data, outfile, indent=4, sort_keys=True)
 
     def render(self, preview):
         frame = 0
