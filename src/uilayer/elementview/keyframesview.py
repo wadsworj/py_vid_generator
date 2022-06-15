@@ -19,9 +19,8 @@ class KeyFramesView(UIWindow):
         self.size = size
         self.windows = []
         self.selected_key_frame_view: UIWindow = None
-        frames = []
-        for keyframe in key_frames:
-            frames.append(str(keyframe['second']))
+
+        frames = self.build_frames_list()
 
         super().__init__(pygame.Rect(self.position, self.size), self.ui_manager,
                          window_display_title="Key Frames",
@@ -43,6 +42,7 @@ class KeyFramesView(UIWindow):
             manager=self.ui_manager,
             container=self,
             object_id='#add_new_button')
+
         button_spacing = button_spacing + button_padding + button_height
         self.delete_button = UIButton(
             pygame.Rect(selection_list_size[0] + 20, 10 + button_spacing, 150, button_height), "Delete",
@@ -57,8 +57,6 @@ class KeyFramesView(UIWindow):
             container=self,
             object_id='#duplicate_button')
 
-        # self.test_drop_down_menu.
-
     def handle_events(self, events):
         for window in self.windows:
             window.handle_events(events)
@@ -69,10 +67,10 @@ class KeyFramesView(UIWindow):
             if event.type == pygame_gui.UI_BUTTON_PRESSED:
                 if event.ui_element == self.delete_button:
                     self.handle_delete_button_click()
-                elif event.ui_element == self.delete_button:
-                    self.handle_duplicate_button_click()
-                elif event.ui_element == self.delete_button:
+                elif event.ui_element == self.add_new_button:
                     self.handle_add_new_button_click()
+                elif event.ui_element == self.duplicate_button:
+                    self.handle_duplicate_button_click()
 
     def update(self, time_delta):
         super().update(time_delta)
@@ -126,21 +124,37 @@ class KeyFramesView(UIWindow):
                 self.add_key_frame_view(event.data)
 
     def handle_delete_button_click(self):
-        selected_key_frame = self.test_drop_down_menu.get_single_selection()
-        if not selected_key_frame:
-            return
-
-        key_frame_to_remove = None
-        for key_frame in self.key_frames:
-            if str(key_frame['second']) == selected_key_frame:
-                key_frame_to_remove = key_frame
+        key_frame_to_remove = self.get_selected_key_frame()
 
         if key_frame_to_remove:
-            self.key_frames.remove(key_frame)
-
+            self.key_frames.remove(key_frame_to_remove)
+            self.update_key_frames_list()
 
     def handle_duplicate_button_click(self):
-        pass
+        selected_key_frame = self.get_selected_key_frame()
+
+        if selected_key_frame:
+            self.key_frames.append(selected_key_frame)
+            self.update_key_frames_list()
 
     def handle_add_new_button_click(self):
         pass
+
+    def get_selected_key_frame(self):
+        selected_key_frame_key = self.test_drop_down_menu.get_single_selection()
+        if not selected_key_frame_key:
+            return None
+
+        for key_frame in self.key_frames:
+            if str(key_frame['second']) == selected_key_frame_key:
+                return key_frame
+
+    def update_key_frames_list(self):
+        frames = self.build_frames_list()
+        self.test_drop_down_menu.set_item_list(frames)
+
+    def build_frames_list(self):
+        frames = []
+        for keyframe in self.key_frames:
+            frames.append(str(keyframe['second']))
+        return frames
