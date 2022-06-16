@@ -2,6 +2,7 @@ import json
 import os
 import pygame
 import cv2
+import pygame_gui
 from pygame_gui.elements import UIWindow
 
 from src import config
@@ -125,6 +126,7 @@ class Video:
                 self.pause_preview()
                 self.close_all_windows()
                 self.ui_windows.append(properties)
+                break
 
         return rect_clicked
 
@@ -209,9 +211,17 @@ class Video:
             self.ui_manager.process_events(event)
             if event.type == pygame.QUIT:
                 self.done_capturing = True
+            if event.type == pygame_gui.UI_WINDOW_CLOSE:
+                if event.ui_element in self.ui_windows:
+                    self.ui_windows.remove(event.ui_element)
+                    event.ui_element.kill()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    self.done_capturing = True
+                    if self.ui_windows and len(self.ui_windows) > 0:
+                        self.close_all_windows()
+                    else:
+                        self.done_capturing = True
+
                 elif event.key == pygame.K_SPACE:
                     self.handle_space_pressed()
                 elif event.key == pygame.K_LEFT:
@@ -256,7 +266,7 @@ class Video:
         mixer.music.stop()
 
     def handle_space_pressed(self):
-        if self.ui_windows:
+        if self.ui_windows and len(self.ui_windows) > 0:
             return
 
         self.paused = not self.paused

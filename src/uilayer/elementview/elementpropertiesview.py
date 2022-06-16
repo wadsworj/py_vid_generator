@@ -1,4 +1,5 @@
 import pygame
+import pygame_gui
 from pygame_gui.elements import UIWindow, UITextEntryLine, UISelectionList, UILabel
 
 from src.config import config
