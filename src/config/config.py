@@ -20,7 +20,7 @@ OUTPUT_DATA_LOCATION = "data"
 SCREEN_WIDTH = None
 SCREEN_HEIGHT = None
 
-ANCHOR_LEFT = {'top': 'top', 'bottom': 'bottom',
+ANCHOR_LEFT = {'top': 'top', 'bottom': 'top',
                'left': 'left', 'right': 'left'}
 
 KEY_FRAME_EMPTY = {

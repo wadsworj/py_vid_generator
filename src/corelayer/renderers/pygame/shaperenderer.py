@@ -51,7 +51,7 @@ class ShapeRenderer:
         else:
             current_opacity = 1
 
-        s = pygame.Surface((current_size))
+        s = pygame.Surface(current_size)
         s.set_alpha(int(current_opacity * 255))
         s.fill(current_color)
         screen.blit(s, current_position)

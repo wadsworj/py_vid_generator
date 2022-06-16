@@ -1,6 +1,6 @@
 import pygame
 import pygame_gui
-from pygame_gui.elements import UIWindow, UITextEntryLine, UISelectionList, UILabel
+from pygame_gui.elements import UIWindow, UITextEntryLine, UISelectionList, UILabel, UIButton
 
 from src.config import config
 from src.uilayer.elementview.keyframesview import KeyFramesView
@@ -38,6 +38,9 @@ class ElementPropertiesView(UIWindow):
         self.screen = screen
         self.windows = []
         spacing = 0
+        button_height = 30
+        button_width = 150
+        button_spacing = 10
 
         for key in self.element:
             if key == 'key_frames':
@@ -46,6 +49,30 @@ class ElementPropertiesView(UIWindow):
             self.add_label(key, spacing)
             self.add_text_box(self.element[key], spacing, None)
             spacing += 30
+
+        spacing = spacing + 10
+
+        self.save_button = UIButton(
+            pygame.Rect(button_spacing, spacing, button_width, button_height), "Save",
+            manager=self.ui_manager,
+            container=self,
+            object_id='#save_button')
+
+        button_spacing = button_spacing + button_width + 10
+
+        self.delete_button = UIButton(
+            pygame.Rect(button_spacing, spacing, button_width, button_height), "Delete",
+            manager=self.ui_manager,
+            container=self,
+            object_id='#delete_button')
+
+        button_spacing = button_spacing + button_width + 10
+
+        self.duplicate_button = UIButton(
+            pygame.Rect(button_spacing, spacing, button_width, button_height), "Duplicate",
+            manager=self.ui_manager,
+            container=self,
+            object_id='#duplicate_button')
 
     def add_label(self, text, spacing):
         position = pygame.Rect((int(0), int(0) + spacing), (label_width, -1))
@@ -56,8 +83,8 @@ class ElementPropertiesView(UIWindow):
             return
         position = pygame.Rect((int(0) + label_width + 10, int(0) + spacing), (400, -1))
         test_text_entry = UITextEntryLine(position,
-                                               self.ui_manager,
-                                               container=self)
+                                          self.ui_manager,
+                                          container=self)
 
         test_text_entry.set_text(str(text))
 

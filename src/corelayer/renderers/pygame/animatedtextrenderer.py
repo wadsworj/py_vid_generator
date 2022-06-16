@@ -13,7 +13,7 @@ class AnimatedTextRenderer:
     def render(self, element, screen, scene_seconds, screen_objects):
         key_frames = Interpolator.get_previous_current_frames(element.key_frames, scene_seconds)
 
-        if not key_frames:
+        if not key_frames or len(key_frames) < 2 or not key_frames[0] or not key_frames[1]:
             return
 
         lines = element.text.splitlines()
