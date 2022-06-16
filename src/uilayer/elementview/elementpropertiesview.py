@@ -115,7 +115,7 @@ class ElementPropertiesView(UIWindow):
 
     def close_all_windows(self):
         for window in self.windows:
-            window.kill_children()
+            window.close_all_windows()
             window.kill()
 
     def bubble_events_up(self, events):

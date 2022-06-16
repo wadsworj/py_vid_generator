@@ -64,11 +64,6 @@ class KeyFrameView(UIWindow):
         # test_text_entry.text_vert_alignment = "left"
         # test_text_entry.rebuild_from_changed_theme_data()
 
-    def kill_children(self):
-        for window in self.windows:
-            window.kill_children()
-            window.kill()
-
     def add_label(self, text, spacing):
         position = pygame.Rect((int(0), int(0) + spacing), (label_width, -1))
         label = UILabel(position, text, self.ui_manager, container=self)
@@ -95,7 +90,7 @@ class KeyFrameView(UIWindow):
 
     def close_all_windows(self):
         for window in self.windows:
-            window.kill_children()
+            window.close_all_windows()
             window.kill()
 
         self.windows = []

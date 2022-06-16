@@ -109,11 +109,6 @@ class KeyFramesView(UIWindow):
 
         self.windows.append(self.selected_key_frame_view)
 
-    def kill_children(self):
-        for window in self.windows:
-            window.kill_children()
-            window.kill()
-
     def bubble_events_up(self, events: list[CustomUIEvent]):
         for event in events:
             if event.event_type == customuieventtype.KEY_FRAME_SAVED:
@@ -179,7 +174,7 @@ class KeyFramesView(UIWindow):
 
     def close_all_windows(self):
         for window in self.windows:
-            window.kill_children()
+            window.close_all_windows()
             window.kill()
 
         self.windows = []

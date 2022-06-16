@@ -276,7 +276,7 @@ class Video:
 
     def close_all_windows(self):
         for ui_window in self.ui_windows:
-            ui_window.kill_children()
+            ui_window.close_all_windows()
             ui_window.kill()
 
         self.ui_windows = []
