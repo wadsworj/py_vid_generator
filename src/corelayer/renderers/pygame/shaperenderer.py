@@ -56,4 +56,4 @@ class ShapeRenderer:
         s.fill(current_color)
         screen.blit(s, current_position)
 
-        screen_objects.append([s.get_rect(), element.data])
+        screen_objects.append([pygame.Rect(current_position, current_size), element.data])
