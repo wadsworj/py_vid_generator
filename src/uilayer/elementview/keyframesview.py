@@ -176,3 +176,10 @@ class KeyFramesView(UIWindow):
         self.key_frames.append(data)
         self.key_frames = sorted(self.key_frames, key=lambda kv: kv['second'])
         self.update_key_frames_list()
+
+    def close_all_windows(self):
+        for window in self.windows:
+            window.kill_children()
+            window.kill()
+
+        self.windows = []

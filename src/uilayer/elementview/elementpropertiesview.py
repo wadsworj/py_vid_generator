@@ -113,7 +113,7 @@ class ElementPropertiesView(UIWindow):
 
         self.windows.append(key_frames_view)
 
-    def kill_children(self):
+    def close_all_windows(self):
         for window in self.windows:
             window.kill_children()
             window.kill()

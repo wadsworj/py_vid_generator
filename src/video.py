@@ -214,6 +214,7 @@ class Video:
             if event.type == pygame_gui.UI_WINDOW_CLOSE:
                 if event.ui_element in self.ui_windows:
                     self.ui_windows.remove(event.ui_element)
+                    event.ui_element.close_all_windows()
                     event.ui_element.kill()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
