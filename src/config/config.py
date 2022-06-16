@@ -22,3 +22,11 @@ SCREEN_HEIGHT = None
 
 ANCHOR_LEFT = {'top': 'top', 'bottom': 'bottom',
                'left': 'left', 'right': 'left'}
+
+KEY_FRAME_EMPTY = {
+    "second": '',
+    "grid_position": [0, 0],
+    "opacity": 0,
+    "font_color": [0, 0, 0],
+    "font_size": 10
+}

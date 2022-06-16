@@ -4,7 +4,9 @@ from pygame_gui.elements import UIWindow, UITextEntryLine, UISelectionList, UILa
 
 from src.config import config
 from src.corelayer.helpers.intfloatstringconverter import IntFloatStringConverter
+from src.uilayer import customuieventtype
 from src.uilayer.controls.jsoneditcontrol import JsonEditControlBuilder
+from src.uilayer.customuievent import CustomUIEvent
 
 label_width = 120
 
@@ -18,8 +20,12 @@ class KeyFrameView(UIWindow):
         self.windows = []
         self.json_control_builder = JsonEditControlBuilder(self.ui_manager, self)
 
+        title = ''
+        if key_frame:
+            title = str(key_frame['second'])
+
         super().__init__(rect, self.ui_manager,
-                         window_display_title=("second: " + str(key_frame['second'])),
+                         window_display_title=("second: " + title),
                          object_id='#key_frame_window',
                          resizable=True)
 
@@ -83,3 +89,6 @@ class KeyFrameView(UIWindow):
                 else:
                     value = self.controls[control_key].text
                     self.key_frame[control_key] = IntFloatStringConverter.convert(value)
+
+        event = CustomUIEvent(customuieventtype.KEY_FRAME_SAVED, self.key_frame)
+        self.bubble_events_up([event])

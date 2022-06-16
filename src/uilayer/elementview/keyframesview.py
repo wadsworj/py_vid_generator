@@ -1,3 +1,5 @@
+import copy
+
 import pygame
 import pygame_gui
 from pygame_gui.elements import UIWindow, UITextEntryLine, UISelectionList, UILabel, UIButton
@@ -101,8 +103,9 @@ class KeyFramesView(UIWindow):
 
         self.selected_key_frame_view = KeyFrameView(self, key_frame, self.screen, self.ui_manager, rect)
 
-        event = CustomUIEvent(customuieventtype.KEY_FRAME_CLICKED, key_frame)
-        self.bubble_events_up([event])
+        if key_frame:
+            event = CustomUIEvent(customuieventtype.KEY_FRAME_CLICKED, key_frame)
+            self.bubble_events_up([event])
 
         self.windows.append(self.selected_key_frame_view)
 
@@ -112,6 +115,10 @@ class KeyFramesView(UIWindow):
             window.kill()
 
     def bubble_events_up(self, events: list[CustomUIEvent]):
+        for event in events:
+            if event.event_type == customuieventtype.KEY_FRAME_SAVED:
+                self.save_key_frame(event.data)
+
         self.parent.bubble_events_up(events)
 
     def bubble_events_down(self, events: list[CustomUIEvent]):
@@ -120,7 +127,6 @@ class KeyFramesView(UIWindow):
 
         for event in events:
             if event.event_type == customuieventtype.KEY_FRAME_CLICKED:
-                # self.test_drop_down_menu.sel
                 self.add_key_frame_view(event.data)
 
     def handle_delete_button_click(self):
@@ -138,7 +144,7 @@ class KeyFramesView(UIWindow):
             self.update_key_frames_list()
 
     def handle_add_new_button_click(self):
-        pass
+        self.add_key_frame_view(copy.deepcopy(config.KEY_FRAME_EMPTY))
 
     def get_selected_key_frame(self):
         selected_key_frame_key = self.test_drop_down_menu.get_single_selection()
@@ -158,3 +164,15 @@ class KeyFramesView(UIWindow):
         for keyframe in self.key_frames:
             frames.append(str(keyframe['second']))
         return frames
+
+    def save_key_frame(self, data):
+        if not data['second']:
+            return
+
+        key_frame_found = [x for x in self.key_frames if str(data['second']) == str(x["second"])]
+        if key_frame_found:
+            return
+
+        self.key_frames.append(data)
+        self.key_frames = sorted(self.key_frames, key=lambda kv: kv['second'])
+        self.update_key_frames_list()
