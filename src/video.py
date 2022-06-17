@@ -9,8 +9,10 @@ from src import config
 from pygame import mixer
 from src.config import config
 from src.corelayer.helpers.frametoseconds import FrameToSeconds
+from src.scene import Scene
 from src.uilayer import customuievent, customuieventtype
 from src.uilayer.customuievent import CustomUIEvent
+from src.uilayer.elementsview.elementsview import ElementsView
 from src.uilayer.elementview.elementpropertiesview import ElementPropertiesView
 
 
@@ -22,7 +24,7 @@ class Video:
         self.resolution = None
         self.screen = None
         self.scenes = []
-        self.current_scene = None
+        self.current_scene: Scene = None
         self.audio_file = None
         self.playing_audio = False
         self.back_color = None
@@ -38,7 +40,7 @@ class Video:
         self.paused = False
         self.paused_frame = None
         self.ui_windows: list[UIWindow] = []
-        self.elements_view = None
+        self.elements_view: ElementsView = None
         self.ui_manager = None
         self.selected_key_frame = None
         self.visible_key_frames = []
@@ -57,6 +59,7 @@ class Video:
         frame = 0
         time_delta = None
         self.current_scene = self.scenes.pop(0)
+        self.elements_view.set_scene(self.current_scene.scene_index)
 
         clock = pygame.time.Clock()
         self.current_scene_start = pygame.time.get_ticks() - (self.start_seconds * 1000)
@@ -87,8 +90,10 @@ class Video:
             self.screen_objects = []
             self.current_scene.render(self.screen, frame, self.screen_objects)
 
+            # I don't think this is needed
             for ui_window in self.ui_windows:
                 ui_window.render()
+            # self.elements_view.render()
 
             # if the current scene is finished then we need to load the next scene
             if self.current_scene.finished:
@@ -96,6 +101,7 @@ class Video:
                     self.frames_since_start = self.frames_since_start + frame
                     self.current_scene = self.scenes.pop(0)
                     self.current_scene_start = pygame.time.get_ticks()
+                    self.elements_view.set_scene(self.current_scene.scene_index)
                 else:
                     return
 
@@ -207,6 +213,8 @@ class Video:
     def handle_events(self, events):
         for ui_window in self.ui_windows:
             ui_window.handle_events(events)
+
+        self.elements_view.handle_events(events)
 
         for event in events:
             self.ui_manager.process_events(event)

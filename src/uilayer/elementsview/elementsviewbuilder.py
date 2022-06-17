@@ -16,3 +16,5 @@ class ElementsViewBuilder:
 
         presenter.view = view
         presenter.data = data
+
+        return view
