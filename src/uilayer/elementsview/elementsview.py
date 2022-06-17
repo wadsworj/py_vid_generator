@@ -69,7 +69,9 @@ class ElementsView(UIWindow):
         #     window.handle_events(events)
 
         for event in events:
-            if event.type == pygame_gui.UI_BUTTON_PRESSED:
+            if event.type == pygame_gui.UI_SELECTION_LIST_NEW_SELECTION and event.ui_element == self.test_drop_down_menu:
+                self.presenter.handle_element_click(event.text)
+            elif event.type == pygame_gui.UI_BUTTON_PRESSED:
                 if event.ui_element == self.delete_button:
                     self.handle_delete_button_click()
                 elif event.ui_element == self.add_new_button:
@@ -90,4 +92,10 @@ class ElementsView(UIWindow):
         pass
 
     def handle_duplicate_button_click(self):
+        pass
+
+    def bubble_events_up(self, events):
+        self.parent.bubble_events_up(events)
+
+    def bubble_events_down(self, events):
         pass

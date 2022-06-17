@@ -64,7 +64,7 @@ class KeyFramesView(UIWindow):
             window.handle_events(events)
 
         for event in events:
-            if event.type == pygame_gui.UI_SELECTION_LIST_NEW_SELECTION:
+            if event.type == pygame_gui.UI_SELECTION_LIST_NEW_SELECTION and event.ui_element == self.test_drop_down_menu:
                 self.handle_key_frame_click(event.text)
             if event.type == pygame_gui.UI_BUTTON_PRESSED:
                 if event.ui_element == self.delete_button:

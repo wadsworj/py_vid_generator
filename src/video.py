@@ -129,10 +129,7 @@ class Video:
 
             if center_rect.collidepoint(self.mouse_click_pos_x, self.mouse_click_pos_y):
                 rect_clicked.append(rect_object)
-                properties = ElementPropertiesView(self, rect_object[1], self.screen, self.ui_manager)
-                self.pause_preview()
-                self.close_all_windows()
-                self.ui_windows.append(properties)
+                self.load_element_properties_view(rect_object[1])
                 break
 
         return rect_clicked
@@ -298,6 +295,9 @@ class Video:
         for event in events:
             if event.event_type == customuieventtype.KEY_FRAME_CLICKED:
                 self.selected_key_frame = event.data
+            if event.event_type == customuieventtype.ELEMENT_CLICKED:
+                self.load_element_properties_view(event.data)
+
 
     def render_key_frame_center(self, key_frame, color):
         if not "grid_position" in key_frame:
@@ -309,3 +309,10 @@ class Video:
                                                 self.resolution[0] / 128)
 
         pygame.draw.rect(self.screen, color, grid_position_center_rect, 3)  # width = 3
+
+    def load_element_properties_view(self, element):
+        properties = ElementPropertiesView(self, element, self.screen, self.ui_manager)
+        self.pause_preview()
+        self.close_all_windows()
+        self.ui_windows.append(properties)
+
