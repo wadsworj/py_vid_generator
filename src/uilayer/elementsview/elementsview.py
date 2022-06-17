@@ -81,6 +81,7 @@ class ElementsView(UIWindow):
 
     def set_scene(self, scene_index):
         self.presenter.set_scene(scene_index)
+        self.set_display_title("elements - scene: " + str(scene_index))
 
     def set_elements(self, elements):
         self.test_drop_down_menu.set_item_list(elements)
@@ -92,10 +93,13 @@ class ElementsView(UIWindow):
         pass
 
     def handle_duplicate_button_click(self):
-        pass
+        self.presenter.duplicate_selected_element()
 
     def bubble_events_up(self, events):
         self.parent.bubble_events_up(events)
 
     def bubble_events_down(self, events):
         pass
+
+    def selected_element(self):
+        return self.test_drop_down_menu.get_single_selection()
