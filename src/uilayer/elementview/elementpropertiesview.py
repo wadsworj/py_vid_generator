@@ -18,7 +18,7 @@ class ElementPropertiesView(UIWindow):
         self.ui_manager = ui_manager
 
         size_x = config.SCREEN_WIDTH / 2
-        size_y = config.SCREEN_HEIGHT / 4
+        size_y = config.SCREEN_HEIGHT / 3
         self.position = [x_offset, y_offset]
         self.size = [size_x, size_y]
 

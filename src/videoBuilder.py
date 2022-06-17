@@ -3,6 +3,7 @@ from pygame_gui import UIManager
 
 from src.corelayer.elements.elementBuilder import ElementBuilder
 from src.sceneBuilder import SceneBuilder
+from src.uilayer.elementsview.elementsviewbuilder import ElementsViewBuilder
 from src.video import Video
 from src.config import config
 
@@ -34,6 +35,9 @@ class VideoBuilder:
         video.data = data
 
         scene_builder = SceneBuilder(ElementBuilder())
+
+        elements_view_builder = ElementsViewBuilder(video.ui_manager)
+        video.elements_view = elements_view_builder.build(video.data, video)
 
         for data_scene in data["scenes"][data["start_scene"]:]:
             scene = scene_builder.build(data_scene)

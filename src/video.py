@@ -38,6 +38,7 @@ class Video:
         self.paused = False
         self.paused_frame = None
         self.ui_windows: list[UIWindow] = []
+        self.elements_view = None
         self.ui_manager = None
         self.selected_key_frame = None
         self.visible_key_frames = []
