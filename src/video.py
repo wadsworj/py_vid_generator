@@ -11,6 +11,7 @@ from src.config import config
 from src.corelayer.helpers.frametoseconds import FrameToSeconds
 from src.scene import Scene
 from src.uilayer import customuievent, customuieventtype
+from src.uilayer.controls.keyframecenter import KeyFrameCenter
 from src.uilayer.customuievent import CustomUIEvent
 from src.uilayer.elementsview.elementsview import ElementsView
 from src.uilayer.elementview.elementpropertiesview import ElementPropertiesView
@@ -44,6 +45,7 @@ class Video:
         self.ui_manager = None
         self.selected_key_frame = None
         self.visible_key_frames = []
+        self.center_sprites = pygame.sprite.Group()
 
     def add_scene(self, scene):
         self.scenes.append(scene)
@@ -86,6 +88,9 @@ class Video:
 
             if self.debug:
                 self.render_debug_info(frame)
+
+            self.center_sprites.draw(self.screen)
+
 
             self.screen_objects = []
             self.current_scene.render(self.screen, frame, self.screen_objects)
@@ -158,8 +163,8 @@ class Video:
                         self.render_key_frame_center(key_frame, config.BLUE)
                         self.visible_key_frames.append(key_frame)
 
-        if self.selected_key_frame:
-            self.render_key_frame_center(self.selected_key_frame, config.GREEN)
+        # if self.selected_key_frame:
+            # self.render_key_frame_center(self.selected_key_frame, config.GREEN)
 
         self.render_center_square_each_surface()
 
@@ -212,6 +217,8 @@ class Video:
             ui_window.handle_events(events)
 
         self.elements_view.handle_events(events)
+
+        self.center_sprites.update(events)
 
         for event in events:
             self.ui_manager.process_events(event)
@@ -295,6 +302,8 @@ class Video:
         for event in events:
             if event.event_type == customuieventtype.KEY_FRAME_CLICKED:
                 self.selected_key_frame = event.data
+                self.add_draggable_key_frame_center(self.selected_key_frame, config.GREEN)
+
             if event.event_type == customuieventtype.ELEMENT_CLICKED:
                 self.load_element_properties_view(event.data)
 
@@ -308,6 +317,20 @@ class Video:
                                                 self.resolution[0] / 128)
 
         pygame.draw.rect(self.screen, color, grid_position_center_rect, 3)  # width = 3
+
+    def add_draggable_key_frame_center(self, key_frame, color):
+        if not "grid_position" in key_frame:
+            return
+
+        self.center_sprites.empty()
+
+        x = float(key_frame["grid_position"][0]) * (self.resolution[0] / 16)
+        y = float(key_frame["grid_position"][1]) * (self.resolution[1] / 9)
+        x_size = self.resolution[0] / 128
+        y_size = self.resolution[0] / 128
+
+        sprite = KeyFrameCenter("test", x , y, x_size, y_size)
+        self.center_sprites.add(sprite)
 
     def load_element_properties_view(self, element):
         properties = ElementPropertiesView(self, element, self.screen, self.ui_manager)

@@ -1,4 +1,4 @@
-from copy import copy
+import copy
 
 from src.uilayer import customuieventtype
 from src.uilayer.customuievent import CustomUIEvent
@@ -82,5 +82,5 @@ class ElementsViewPresenter:
             return
 
         element_data = current_scene['elements'][int(selected_element[1])]
-        current_scene['elements'].append(copy(element_data))
+        current_scene['elements'].append(copy.deepcopy(element_data))
         self.populate_elements()
