@@ -298,7 +298,6 @@ class Video:
             if event.event_type == customuieventtype.ELEMENT_CLICKED:
                 self.load_element_properties_view(event.data)
 
-
     def render_key_frame_center(self, key_frame, color):
         if not "grid_position" in key_frame:
             return

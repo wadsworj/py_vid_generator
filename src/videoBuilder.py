@@ -9,10 +9,8 @@ from src.config import config
 
 
 class VideoBuilder:
-    def __init__(self):
-        pass
-
-    def build(self, data):
+    @staticmethod
+    def build(data):
         video = Video()
         video.name = data["name"]
         video.resolution = data["resolution"]
