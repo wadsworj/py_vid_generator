@@ -35,6 +35,14 @@ class ElementsViewPresenter:
             event = CustomUIEvent(customuieventtype.ELEMENT_CLICKED, element)
             self.view.bubble_events_up([event])
 
+    # Declare function to return the sorted data based on name
+    def sort_by_key(self, list):
+        if 'start_time' in list:
+            return list['start_time']
+        elif 'key_frames' in list:
+            return list['key_frames'][0]['second']
+        return None
+
     def build_elements_list(self):
         if self.scene_index is None or not self.data:
             return
@@ -42,6 +50,9 @@ class ElementsViewPresenter:
         elements = []
         count = 0
         scene = self.data['scenes'][self.scene_index]
+
+        scene['elements'] = sorted(scene['elements'], key=self.sort_by_key)
+
         for element in scene['elements']:
             text = str(count)
             if 'name' in element:
