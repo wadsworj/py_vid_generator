@@ -1,12 +1,17 @@
 import pygame
 
 from src.config import config
+from src.corelayer.helpers.positiontogridposition import PositionToGridPosition
 from src.uilayer.controls.dragoperator import DragOperator
 
 
 class KeyFrameCenter(pygame.sprite.Sprite):
-    def __init__(self, spriteName, x, y, x_size, y_size):
+    def __init__(self, spriteName, grid_position, x, y, x_size, y_size):
         super().__init__()
+        self.spriteName = spriteName
+        self.x = x
+        self.y = y
+        self.grid_position = grid_position
 
         circle_radius = x_size / 2
         # self.original_image = pygame.Surface((50, 50), pygame.SRCALPHA)
@@ -31,3 +36,7 @@ class KeyFrameCenter(pygame.sprite.Sprite):
     def update(self, event_list):
         self.drag.update(event_list)
         self.image = self.drag_image if self.drag.dragging else self.original_image
+        if self.drag.dragging:
+            new_position = PositionToGridPosition.convert_position_to_grid_position([self.rect.centerx, self.rect.centery])
+            self.grid_position[0] = round(new_position[0], 3)
+            self.grid_position[1] = round(new_position[1], 3)

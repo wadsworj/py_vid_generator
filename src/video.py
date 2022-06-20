@@ -88,12 +88,9 @@ class Video:
 
             if self.debug:
                 self.render_debug_info(frame)
-
-            self.center_sprites.draw(self.screen)
-
-
             self.screen_objects = []
             self.current_scene.render(self.screen, frame, self.screen_objects)
+            self.center_sprites.draw(self.screen)
 
             # I don't think this is needed
             for ui_window in self.ui_windows:
@@ -329,7 +326,7 @@ class Video:
         x_size = self.resolution[0] / 128
         y_size = self.resolution[0] / 128
 
-        sprite = KeyFrameCenter("test", x , y, x_size, y_size)
+        sprite = KeyFrameCenter("test", key_frame["grid_position"], x, y, x_size, y_size)
         self.center_sprites.add(sprite)
 
     def load_element_properties_view(self, element):
