@@ -14,4 +14,5 @@ class TextElement:
         self.text_align = None
         self.start_time = None
         self.data = None
+        self.layer_priority = None
 

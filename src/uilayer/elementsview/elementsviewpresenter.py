@@ -36,11 +36,13 @@ class ElementsViewPresenter:
             self.view.bubble_events_up([event])
 
     # Declare function to return the sorted data based on name
-    def sort_by_key(self, list):
-        if 'start_time' in list:
-            return list['start_time']
-        elif 'key_frames' in list:
-            return list['key_frames'][0]['second']
+    def sort_by_key(self, element):
+        if 'layer_priority' in element:
+            return element['layer_priority']
+        if 'start_time' in element:
+            return element['start_time']
+        elif 'key_frames' in element:
+            return element['key_frames'][0]['second']
         return None
 
     def build_elements_list(self):

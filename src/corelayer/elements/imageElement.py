@@ -9,3 +9,4 @@ class ImageElement:
         self.image_string = None
         self.image = None
         self.data = None
+        self.layer_priority = None

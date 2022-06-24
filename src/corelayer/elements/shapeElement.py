@@ -5,3 +5,4 @@ class ShapeElement:
         self.key_frames = None
         self.data = None
         self.renderer = None
+        self.layer_priority = None

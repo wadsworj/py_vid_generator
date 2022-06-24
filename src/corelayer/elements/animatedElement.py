@@ -13,3 +13,4 @@ class AnimatedTextElement:
         self.start_time = None
         self.key_frames = []
         self.data = None
+        self.layer_priority = None

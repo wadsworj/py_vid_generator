@@ -30,3 +30,7 @@ KEY_FRAME_EMPTY = {
     "font_color": [0, 0, 0],
     "font_size": 10
 }
+
+ELEMENT_EMPTY = {
+    "layer_priority": 0
+}

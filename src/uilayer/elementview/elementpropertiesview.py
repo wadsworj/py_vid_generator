@@ -35,6 +35,11 @@ class ElementPropertiesView(UIWindow):
                          resizable=True)
 
         self.element = element
+
+        for base_key in config.ELEMENT_EMPTY:
+            if base_key not in self.element:
+                self.element[base_key] = config.ELEMENT_EMPTY[base_key]
+
         self.screen = screen
         self.windows = []
         spacing = 0

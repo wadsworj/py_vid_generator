@@ -38,6 +38,9 @@ class ElementBuilder:
         if 'grid_position' in data:
             element.grid_position = data["grid_position"]
 
+        if 'layer_priority' in data:
+            element.layer_priority = data["layer_priority"]
+
         element.renderer = ImageRenderer()
         return element
 
@@ -62,6 +65,8 @@ class ElementBuilder:
             element.start_time = data["start_time"]
         if "font_color" in data:
             element.font_color = data["font_color"]
+        if 'layer_priority' in data:
+            element.layer_priority = data["layer_priority"]
 
         element.renderer = TextRenderer()
         return element
@@ -77,6 +82,9 @@ class ElementBuilder:
 
         if "font_color" in data:
             element.font_color = data["font_color"]
+        if 'layer_priority' in data:
+            element.layer_priority = data["layer_priority"]
+
         element.renderer = AnimatedTextRenderer()
         return element
 
@@ -89,5 +97,8 @@ class ElementBuilder:
 
         if "font_color" in data:
             element.font_color = data["font_color"]
+        if 'layer_priority' in data:
+            element.layer_priority = data["layer_priority"]
+
         element.renderer = ShapeRenderer()
         return element
