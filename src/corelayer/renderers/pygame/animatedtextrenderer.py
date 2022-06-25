@@ -16,7 +16,7 @@ class AnimatedTextRenderer:
         if not key_frames or len(key_frames) < 2 or not key_frames[0] or not key_frames[1]:
             return
 
-        lines = element.text.splitlines()
+        lines = str(element.text).splitlines()
 
         screen_rect = screen.get_rect()
         previous_position_scaled = [key_frames[0]["grid_position"][0] * (screen_rect.width / 16),

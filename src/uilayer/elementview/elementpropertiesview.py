@@ -28,11 +28,11 @@ class ElementPropertiesView(UIWindow):
         self.size = [size_x, size_y]
 
         if 'name' in element:
-            title = element['name']
+            title = str(element['name'])
         elif 'text' in element:
-            title = element['text']
+            title = str(element['text'])
         else:
-            title = "property"
+            title = str("property")
 
         super().__init__(pygame.Rect(self.position, self.size), self.ui_manager,
                          window_display_title=title,
@@ -148,10 +148,15 @@ class ElementPropertiesView(UIWindow):
                 if isinstance(self.element[control_key], list):
                     for index, x in enumerate(self.controls[control_key]):
                         value = self.controls[control_key][index].text
-                        self.element[control_key][index] = IntFloatStringConverter.convert(value)
+                        if control_key == 'text':
+                            self.element[control_key][index] = str(value)
+                        else:
+                            self.element[control_key][index] = IntFloatStringConverter.convert(value)
                 else:
                     value = self.controls[control_key].text
-                    self.element[control_key] = IntFloatStringConverter.convert(value)
+                    if control_key != 'text':
+                        value = IntFloatStringConverter.convert(value)
+                    self.element[control_key] = value
 
         event = CustomUIEvent(customuieventtype.ELEMENT_SAVED, self.element)
         self.bubble_events_up([event])

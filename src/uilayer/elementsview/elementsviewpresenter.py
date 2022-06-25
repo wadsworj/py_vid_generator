@@ -1,5 +1,6 @@
 import copy
 
+from src.corelayer.helpers import elementsorter
 from src.uilayer import customuieventtype
 from src.uilayer.customuievent import CustomUIEvent
 
@@ -35,16 +36,6 @@ class ElementsViewPresenter:
             event = CustomUIEvent(customuieventtype.ELEMENT_CLICKED, element)
             self.view.bubble_events_up([event])
 
-    # Declare function to return the sorted data based on name
-    def sort_by_key(self, element):
-        if 'layer_priority' in element:
-            return element['layer_priority']
-        if 'start_time' in element:
-            return element['start_time']
-        elif 'key_frames' in element:
-            return element['key_frames'][0]['second']
-        return None
-
     def build_elements_list(self):
         if self.scene_index is None or not self.data:
             return
@@ -53,7 +44,7 @@ class ElementsViewPresenter:
         count = 0
         scene = self.data['scenes'][self.scene_index]
 
-        scene['elements'] = sorted(scene['elements'], key=self.sort_by_key)
+        scene['elements'] = sorted(scene['elements'], key=elementsorter.sort_by_key, reverse=True)
 
         for element in scene['elements']:
             text = str(count)
@@ -61,7 +52,7 @@ class ElementsViewPresenter:
                 text = text + ': ' + element['name']
 
             if 'text' in element:
-                text = text + ': ' + element['text']
+                text = text + ': ' + str(element['text'])
 
             if 'type' in element:
                 text = text + ': ' + element['type']

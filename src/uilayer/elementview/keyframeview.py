@@ -30,7 +30,7 @@ class KeyFrameView(UIWindow):
                          resizable=True)
 
         spacing = 0
-        self.controls = self.json_control_builder.return_control_collection(self.key_frame, 0, 0, True)
+        self.controls = self.json_control_builder.return_control_collection(self.key_frame, 0, 0, True, False, [])
         # for key in self.key_frame:
         #     self.add_label(key, spacing)
         #     self.add_text_box(self.key_frame[key], spacing, None)

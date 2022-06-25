@@ -103,3 +103,6 @@ class ElementsView(UIWindow):
 
     def selected_element(self):
         return self.test_drop_down_menu.get_single_selection()
+
+    def refresh_events(self):
+        self.presenter.populate_elements()

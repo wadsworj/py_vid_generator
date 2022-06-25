@@ -1,5 +1,6 @@
 import pygame
 
+from src.corelayer.helpers import elementsorter
 from src.corelayer.helpers.frametoseconds import FrameToSeconds
 
 
@@ -17,6 +18,9 @@ class Scene:
 
     def render(self, screen, frame, screen_objects):
         seconds = FrameToSeconds.convert_frame_to_seconds(frame)
+
+        self.elements = sorted(self.elements, key=elementsorter.sort_by_key_elements, reverse=False)
+
         for element in self.elements:
             element.renderer.render(element, screen, seconds, screen_objects)
 

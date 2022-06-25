@@ -22,7 +22,7 @@ class IntFloatStringConverter:
     @staticmethod
     def convert(x):
         if IntFloatStringConverter.__isint(x):
-            return int(x)
+            return int(float(x))
         elif IntFloatStringConverter.__isfloat(x):
             return float(x)
         else:
