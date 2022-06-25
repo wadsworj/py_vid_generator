@@ -3,6 +3,10 @@ import pygame_gui
 from pygame_gui.elements import UIWindow, UITextEntryLine, UISelectionList, UILabel, UIButton
 
 from src.config import config
+from src.corelayer.helpers.intfloatstringconverter import IntFloatStringConverter
+from src.uilayer import customuieventtype
+from src.uilayer.controls.jsoneditcontrol import JsonEditControlBuilder
+from src.uilayer.customuievent import CustomUIEvent
 from src.uilayer.elementview.keyframesview import KeyFramesView
 
 padding = 100
@@ -16,9 +20,10 @@ class ElementPropertiesView(UIWindow):
     def __init__(self, parent, element, screen, ui_manager):
         self.parent = parent
         self.ui_manager = ui_manager
+        self.json_control_builder = JsonEditControlBuilder(self.ui_manager, self)
 
         size_x = config.SCREEN_WIDTH / 2
-        size_y = config.SCREEN_HEIGHT / 3
+        size_y = int(config.SCREEN_HEIGHT / 2.2)
         self.position = [x_offset, y_offset]
         self.size = [size_x, size_y]
 
@@ -47,37 +52,39 @@ class ElementPropertiesView(UIWindow):
         button_width = 150
         button_spacing = 10
 
-        for key in self.element:
-            if key == 'key_frames':
-                self.add_key_frames_view()
-                continue
-            self.add_label(key, spacing)
-            self.add_text_box(self.element[key], spacing, None)
-            spacing += 30
+        self.controls = self.json_control_builder.return_control_collection(self.element,
+                                                                            0,
+                                                                            0,
+                                                                            True,
+                                                                            True,
+                                                                            ['key_frames'])
 
-        spacing = spacing + 10
+        if 'key_frames' in self.element:
+            self.add_key_frames_view()
 
-        self.save_button = UIButton(
-            pygame.Rect(button_spacing, spacing, button_width, button_height), "Save",
-            manager=self.ui_manager,
-            container=self,
-            object_id='#save_button')
+        # spacing = spacing + 10
 
-        button_spacing = button_spacing + button_width + 10
-
-        self.delete_button = UIButton(
-            pygame.Rect(button_spacing, spacing, button_width, button_height), "Delete",
-            manager=self.ui_manager,
-            container=self,
-            object_id='#delete_button')
-
-        button_spacing = button_spacing + button_width + 10
-
-        self.duplicate_button = UIButton(
-            pygame.Rect(button_spacing, spacing, button_width, button_height), "Duplicate",
-            manager=self.ui_manager,
-            container=self,
-            object_id='#duplicate_button')
+        # self.save_button = UIButton(
+        #     pygame.Rect(button_spacing, spacing, button_width, button_height), "Save",
+        #     manager=self.ui_manager,
+        #     container=self,
+        #     object_id='#save_button')
+        #
+        # button_spacing = button_spacing + button_width + 10
+        #
+        # self.delete_button = UIButton(
+        #     pygame.Rect(button_spacing, spacing, button_width, button_height), "Delete",
+        #     manager=self.ui_manager,
+        #     container=self,
+        #     object_id='#delete_button')
+        #
+        # button_spacing = button_spacing + button_width + 10
+        #
+        # self.duplicate_button = UIButton(
+        #     pygame.Rect(button_spacing, spacing, button_width, button_height), "Duplicate",
+        #     manager=self.ui_manager,
+        #     container=self,
+        #     object_id='#duplicate_button')
 
     def add_label(self, text, spacing):
         position = pygame.Rect((int(0), int(0) + spacing), (label_width, -1))
@@ -94,6 +101,11 @@ class ElementPropertiesView(UIWindow):
         test_text_entry.set_text(str(text))
 
     def handle_events(self, events):
+        for event in events:
+            if event.type == pygame_gui.UI_BUTTON_PRESSED:
+                if event.ui_element == self.controls['save_button']:
+                    self.save()
+
         for window in self.windows:
             window.handle_events(events)
 
@@ -129,3 +141,17 @@ class ElementPropertiesView(UIWindow):
     def bubble_events_down(self, events):
         for window in self.windows:
             window.bubble_events_down(events)
+
+    def save(self):
+        for control_key in self.controls:
+            if control_key in self.element:
+                if isinstance(self.element[control_key], list):
+                    for index, x in enumerate(self.controls[control_key]):
+                        value = self.controls[control_key][index].text
+                        self.element[control_key][index] = IntFloatStringConverter.convert(value)
+                else:
+                    value = self.controls[control_key].text
+                    self.element[control_key] = IntFloatStringConverter.convert(value)
+
+        event = CustomUIEvent(customuieventtype.ELEMENT_SAVED, self.element)
+        self.bubble_events_up([event])

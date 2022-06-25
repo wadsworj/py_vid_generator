@@ -17,19 +17,33 @@ class JsonEditControlBuilder:
         self.ui_manager = ui_manager
         self.container = container
 
-    def return_control_collection(self, json_dict, x_offset: 0, y_offset: 0, add_save_button: False):
-        control_collection = self.create_control_collection(json_dict)
+    def return_control_collection(self,
+                                  json_dict,
+                                  x_offset: 0,
+                                  y_offset: 0,
+                                  add_save_button: False,
+                                  add_delete_button: False,
+                                  elements_to_skip: []):
+
+        control_collection = self.create_control_collection(json_dict, elements_to_skip)
 
         if add_save_button:
             save_button = self.add_save_button()
             control_collection['save_button'] = save_button
 
+        if add_delete_button:
+            delete_button = self.add_delete_button()
+            control_collection['delete_button'] = delete_button
+
         return control_collection
 
-    def create_control_collection(self, json_dict):
+    def create_control_collection(self, json_dict, elements_to_skip):
         control_collection = {}
 
         for key in json_dict:
+            if key in elements_to_skip:
+                continue
+
             element = json_dict[key]
             self.add_label(str(key), self.y_spacing)
 
@@ -69,3 +83,7 @@ class JsonEditControlBuilder:
     def add_save_button(self):
         position = pygame.Rect((int(0), int(0) + self.y_spacing), (label_width, control_height))
         return UIButton(position, "Save", self.ui_manager, self.container, object_id="#save_button")
+
+    def add_delete_button(self):
+        position = pygame.Rect((label_width + int(10), int(0) + self.y_spacing), (label_width, control_height))
+        return UIButton(position, "Delete", self.ui_manager, self.container, object_id="#save_button")
