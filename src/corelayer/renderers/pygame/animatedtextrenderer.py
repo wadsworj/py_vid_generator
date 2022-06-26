@@ -31,7 +31,7 @@ class AnimatedTextRenderer:
                                                     previous_position_scaled,
                                                     next_position_scaled)
 
-        if "font_color" in key_frames[1]:
+        if "font_color" in key_frames[1] and "font_color" in key_frames[0]:
             element.font_color = Interpolator.interpolate(scene_seconds,
                                                           key_frames[0]["second"],
                                                           key_frames[1]["second"],
