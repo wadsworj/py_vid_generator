@@ -11,7 +11,7 @@ y_offset = 120
 
 
 class ElementsView(UIWindow):
-    def __init__(self, parent, element, screen, ui_manager):
+    def __init__(self, parent, element, screen, ui_manager, visible):
         self.ui_manager = None
         self.presenter: ElementsViewPresenter = None
 
@@ -63,6 +63,9 @@ class ElementsView(UIWindow):
             manager=self.ui_manager,
             container=self,
             object_id='#duplicate_button')
+
+        if not visible:
+            self.hide()
 
     def handle_events(self, events):
         # for window in self.windows:

@@ -10,7 +10,7 @@ class ElementsViewBuilder:
     def build(self, data, parent: Video):
         presenter = ElementsViewPresenter()
 
-        view = ElementsView(parent, data, parent.screen, self.ui_manager)
+        view = ElementsView(parent, data, parent.screen, self.ui_manager, parent.debug)
         view.ui_manager = self.ui_manager
         view.presenter = presenter
 
