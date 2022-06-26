@@ -29,12 +29,7 @@ class KeyFrameView(UIWindow):
                          object_id='#key_frame_window',
                          resizable=True)
 
-        spacing = 0
         self.controls = self.json_control_builder.return_control_collection(self.key_frame, 0, 0, True, False, [])
-        # for key in self.key_frame:
-        #     self.add_label(key, spacing)
-        #     self.add_text_box(self.key_frame[key], spacing, None)
-        #     spacing += 30
 
     def handle_events(self, events):
         for event in events:

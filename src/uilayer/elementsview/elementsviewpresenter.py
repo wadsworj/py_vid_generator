@@ -44,7 +44,7 @@ class ElementsViewPresenter:
         count = 0
         scene = self.data['scenes'][self.scene_index]
 
-        scene['elements'] = sorted(scene['elements'], key=elementsorter.sort_by_key, reverse=True)
+        scene['elements'] = sorted(scene['elements'], key=elementsorter.sort_element_by_key, reverse=True)
 
         for element in scene['elements']:
             text = str(count)

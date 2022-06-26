@@ -5,6 +5,8 @@ import pygame_gui
 from pygame_gui.elements import UIWindow, UITextEntryLine, UISelectionList, UILabel, UIButton
 
 from src.config import config
+from src.corelayer.helpers import elementsorter
+from src.corelayer.helpers.elementsorter import SortByKey
 from src.uilayer import customuieventtype
 from src.uilayer.customuievent import CustomUIEvent
 from src.uilayer.elementview.keyframeview import KeyFrameView
@@ -132,7 +134,7 @@ class KeyFramesView(UIWindow):
             self.update_key_frames_list()
 
     def handle_duplicate_button_click(self):
-        selected_key_frame = self.get_selected_key_frame()
+        selected_key_frame = copy.deepcopy(self.get_selected_key_frame())
 
         if selected_key_frame:
             self.key_frames.append(selected_key_frame)
@@ -155,6 +157,10 @@ class KeyFramesView(UIWindow):
         self.test_drop_down_menu.set_item_list(frames)
 
     def build_frames_list(self):
+        sorter = SortByKey('second')
+        # self.key_frames = sorted(self.key_frames, key=sorter.sort_by_key)
+        # sorted(self.key_frames, key=sorter.sort_by_key)
+        self.key_frames.sort(key=sorter.sort_by_key)
         frames = []
         for keyframe in self.key_frames:
             frames.append(str(keyframe['second']))
@@ -164,12 +170,15 @@ class KeyFramesView(UIWindow):
         if not data['second']:
             return
 
+        self.update_key_frames_list()
+
         key_frame_found = [x for x in self.key_frames if str(data['second']) == str(x["second"])]
         if key_frame_found:
             return
 
         self.key_frames.append(data)
-        self.key_frames = sorted(self.key_frames, key=lambda kv: kv['second'])
+        # self.key_frames = sorted(self.key_frames, key=lambda kv: kv['second'])
+        self.key_frames.sort(key=lambda kv: kv['second'])
         self.update_key_frames_list()
 
     def close_all_windows(self):

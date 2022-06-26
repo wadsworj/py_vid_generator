@@ -119,14 +119,13 @@ class ElementPropertiesView(UIWindow):
             window.render()
 
     def add_key_frames_view(self):
-        key_frames = self.element['key_frames']
         position = list(self.position)
         position[1] = position[1] + self.size[1]
 
         size = list(self.size)
         size[0] = size[0] / 2
         size[1] = int(size[1] * 1.5)
-        key_frames_view = KeyFramesView(self, key_frames, self.screen, self.ui_manager, position, size)
+        key_frames_view = KeyFramesView(self, self.element['key_frames'], self.screen, self.ui_manager, position, size)
 
         self.windows.append(key_frames_view)
 
@@ -136,6 +135,9 @@ class ElementPropertiesView(UIWindow):
             window.kill()
 
     def bubble_events_up(self, events):
+        # for event in events:
+        #     if event.event_type == customuieventtype.KEY_FRAME_SAVED:
+        #         self.ensure_key_frame_appended(event.data)
         self.parent.bubble_events_up(events)
 
     def bubble_events_down(self, events):
