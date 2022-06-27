@@ -47,11 +47,6 @@ class ElementPropertiesView(UIWindow):
 
         self.screen = screen
         self.windows = []
-        spacing = 0
-        button_height = 30
-        button_width = 150
-        button_spacing = 10
-
         self.controls = self.json_control_builder.return_control_collection(self.element,
                                                                             0,
                                                                             0,
@@ -61,30 +56,6 @@ class ElementPropertiesView(UIWindow):
 
         if 'key_frames' in self.element:
             self.add_key_frames_view()
-
-        # spacing = spacing + 10
-
-        # self.save_button = UIButton(
-        #     pygame.Rect(button_spacing, spacing, button_width, button_height), "Save",
-        #     manager=self.ui_manager,
-        #     container=self,
-        #     object_id='#save_button')
-        #
-        # button_spacing = button_spacing + button_width + 10
-        #
-        # self.delete_button = UIButton(
-        #     pygame.Rect(button_spacing, spacing, button_width, button_height), "Delete",
-        #     manager=self.ui_manager,
-        #     container=self,
-        #     object_id='#delete_button')
-        #
-        # button_spacing = button_spacing + button_width + 10
-        #
-        # self.duplicate_button = UIButton(
-        #     pygame.Rect(button_spacing, spacing, button_width, button_height), "Duplicate",
-        #     manager=self.ui_manager,
-        #     container=self,
-        #     object_id='#duplicate_button')
 
     def add_label(self, text, spacing):
         position = pygame.Rect((int(0), int(0) + spacing), (label_width, -1))
@@ -105,6 +76,8 @@ class ElementPropertiesView(UIWindow):
             if event.type == pygame_gui.UI_BUTTON_PRESSED:
                 if event.ui_element == self.controls['save_button']:
                     self.save()
+                # if event.ui_element == self.controls['delete_button']:
+                #     self.delete()
 
         for window in self.windows:
             window.handle_events(events)

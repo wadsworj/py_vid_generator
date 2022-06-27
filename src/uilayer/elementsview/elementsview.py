@@ -90,7 +90,7 @@ class ElementsView(UIWindow):
         self.test_drop_down_menu.set_item_list(elements)
 
     def handle_delete_button_click(self):
-        pass
+        self.presenter.delete_selected_element()
 
     def handle_add_new_button_click(self):
         pass

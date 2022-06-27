@@ -77,3 +77,17 @@ class ElementsViewPresenter:
         element_data = current_scene['elements'][int(selected_element[1])]
         current_scene['elements'].append(copy.deepcopy(element_data))
         self.populate_elements()
+
+    def delete_selected_element(self):
+        selected_text = self.view.selected_element()
+
+        if not selected_text:
+            return
+
+        current_scene = self.data['scenes'][self.scene_index]
+        selected_element = self.get_element_from_text(selected_text)
+        element_data = current_scene['elements'][int(selected_element[1])]
+
+        if selected_element:
+            current_scene['elements'].remove(element_data)
+        self.populate_elements()
